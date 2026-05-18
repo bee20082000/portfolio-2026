@@ -7,7 +7,7 @@ import Lenis from 'lenis'
 // Import all separated component tiles
 import PanasonicBlog from './blogs/PanasonicBlog'
 import HeinekenBlog from './blogs/HeinekenBlog'
-import PepsicoBlog from './blogs/PepsicoBlog'
+import TuonganBlog from './blogs/TuonganBlog'
 import ExperienceBlog from './blogs/ExperienceBlog'
 import SkillsBlog from './blogs/SkillsBlog'
 import ToolsBlog from './blogs/ToolsBlog'
@@ -20,7 +20,7 @@ import ContactBlog from './blogs/ContactBlog'
 const COMPONENTS = {
   panasonic: PanasonicBlog,
   heineken: HeinekenBlog,
-  pepsico: PepsicoBlog,
+  tuongan: TuonganBlog,
   experience: ExperienceBlog,
   skills: SkillsBlog,
   tools: ToolsBlog,

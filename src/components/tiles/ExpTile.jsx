@@ -23,7 +23,7 @@ export default function ExpTile({ onSelect }) {
 
         {/* Removed inline marginTop so it naturally hugs the list */}
         <div className="view-more-badge badge-inline">
-          <span>+3 more roles</span>
+          <span>Read moreeeeeee</span>
           <span className="arrow-icon">↗</span>
         </div>
 

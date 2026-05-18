@@ -51,29 +51,36 @@ export const casesData = {
     accent: '#00c896',
     stats: [{val:'+45%',lbl:'Engagement'},{val:'2.4M',lbl:'Visitors'}],
   },
-  pepsico: {
-    title: 'PepsiCo Supply Hub',
-    category: 'B2B E-Commerce Design',
-    client: 'PepsiCo Asia-Pacific',
-    role: 'Product Designer & UX Lead',
-    timeline: '6 Months · 2023–2024',
-    services: 'B2B E-Commerce, Journey Optimization, Design Systems',
-    subtitle: 'Re-imagining merchant portal interfaces for high-velocity ordering, tracking and localized promotions.',
-    challenge: 'Small merchants struggled with legacy distributor portals, causing ordering errors, missed promotions, and lost revenue. We designed a lightning-fast, mobile-first ordering app.',
-    strategy1: 'We shadowed local convenience store owners in Vietnam and Philippines — they place orders in cramped, high-distraction environments during short breaks between customers.',
-    quote: 'I need to order 20 crates of Pepsi in less than 30 seconds. Any delay costs me sales.',
-    quoteSrc: 'Store Owner, Ho Chi Minh City',
-    strategy2: 'Our B2B app features an AI-assisted smart reordering engine that forecasts stockouts based on local weather and events, with one-tap refills.',
-    solutionDesc: 'A modular card interface for rapid vertical scrolling lets merchants toggle promotions and verify stock at a glance.',
-    solution: 'Order processing velocity rose 40%. B2B portal conversion surged, netting a $1.2M conversion uplift.',
-    metrics: [{val:'$1.2M',lbl:'Conversion Lift'},{val:'+40%',lbl:'Ordering Speed'},{val:'96%',lbl:'Merchant Retention'}],
-    images: [
-      'https://images.unsplash.com/photo-1563013544-824ae1d704d3?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop',
+  tuongan: {
+    title: 'Tín Hiệu Cát Tường An Khang',
+    category: 'Integrated Campaign Design',
+    client: 'Tường An',
+    role: 'Creative Designer · Campaign Ideation & Visual Development',
+    timeline: '2 Months · 2022–2023',
+    services: 'Creative Campaign, Social Content, Visual Direction, Trend Activation, Tet Communication',
+    subtitle: 'Turning everyday “lucky signs” into a culturally resonant social trend for a heritage brand during Tet.',
+    challenge: 'For younger audiences, Tet campaigns often feel repetitive — emotionally familiar yet visually predictable. The challenge was to help a long-established household brand reconnect with Gen Z without losing its warm, family-rooted identity. We needed to transform traditional New Year wishes into something shareable, culturally relevant, and socially engaging — a concept young people would voluntarily participate in rather than passively consume.',
+    strategy1: 'Tet is filled with small “signals” that people associate with luck — meaningful coincidences, lucky encounters, familiar rituals, and hopeful moments. Instead of communicating prosperity in a conventional advertising tone, we explored a more participatory behavior: What if “Cát Tường An Khang” became something people could actively spot, share, and celebrate?',
+    quote: 'Good fortune doesn’t only arrive at the beginning of the year — sometimes it appears in the smallest moments around us.',
+    quoteSrc: 'Campaign Philosophy',
+    strategy2: 'This insight evolved into the idea of “Tín Hiệu Cát Tường An Khang” — reframing positive everyday moments into social content that invited audiences to interpret and share their own lucky signs during the New Year season. The campaign transformed traditional Tet blessings into a modern, community-driven trend. My contribution extended beyond visual execution into brainstorming campaign directions, shaping creative narratives, and translating ideas into culturally resonant design assets.',
+    solutionDesc: 'The visual language balanced traditional optimism with modern social-native aesthetics. We designed a system that felt youthful & shareable (optimized for social engagement and trend participation), warm & culturally familiar (preserving Tet symbolism and emotional closeness), and flexible & scalable (adaptable across social posts, campaign assets, and digital touchpoints).',
+    solution: 'As part of the creative team, I developed key visual materials and contributed to ideation that helped shape the campaign’s social-first storytelling. Responsibilities included campaign visual exploration, brainstorming engagement concepts, translating ideas into accessible narratives, and supporting a cohesive visual language. The campaign gained traction through social sharing, contributing to broader cultural conversation online.',
+    impact: 'The campaign successfully reframed a traditional Tet message into a participatory social trend, helping the brand feel more relevant to younger audiences while preserving its emotional heritage. Featured media coverage on Kenh14 and youth-focused platforms helped amplify campaign visibility.',
+    metrics: [
+      { val: 'Gen Z', lbl: 'Resonance' },
+      { val: 'Cultural', lbl: 'Relevance' },
+      { val: 'Brand', lbl: 'Affinity' }
     ],
-    accent: '#ffd166',
-    stats: [{val:'$1.2M',lbl:'Lift'},{val:'+40%',lbl:'Speed'}],
+    images: [
+      'https://channel.mediacdn.vn/428462621602512896/2023/1/13/photo-1-16735816419511172277640.jpg',
+      'https://channel.mediacdn.vn/428462621602512896/2023/1/13/photo-1-1673581649635521785855.jpg',
+    ],
+    accent: '#ef4444',
+    stats: [
+      { val: 'Gen Z', lbl: 'Resonance' },
+      { val: 'Cultural', lbl: 'Relevance' }
+    ],
   },
   experience: {
     title: 'Professional Journey',
@@ -88,7 +95,7 @@ export const casesData = {
     quote: 'Data without design is invisible. Design without data is baseless.',
     quoteSrc: 'Huy Nguyen — Creative UX/UI Philosophy',
     strategy2: 'This duality lets me approach interface layout not just as an artist, but as a strategic architect focusing on conversion, speed, and retention.',
-    solutionDesc: 'From high-converting B2B merchant tools at PepsiCo to interactive campaigns for Heineken, I build accessible digital interfaces.',
+    solutionDesc: 'From integrated campaign designs at Tường An to interactive campaigns for Heineken, I build accessible digital interfaces.',
     solution: 'Designed digital systems achieving over 98% user satisfaction rate and 40% increased layout interaction velocities.',
     metrics: [{val:'98%',lbl:'Satisfaction'},{val:'+40%',lbl:'Speed Lift'},{val:'4+',lbl:'Years Work'}],
     images: [
@@ -172,7 +179,7 @@ export const casesData = {
 const cases = [
   { id: 'panasonic', span: 'c2r2', img: casesData.panasonic.images[0] },
   { id: 'heineken',  span: 'c2',   img: casesData.heineken.images[0]  },
-  { id: 'pepsico',   span: 'c2',   img: casesData.pepsico.images[0]   },
+  { id: 'tuongan',   span: 'c2',   img: casesData.tuongan.images[0]   },
 ]
 
 export default function CasesGrid({ onSelect, loaded }) {

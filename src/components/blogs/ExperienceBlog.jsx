@@ -6,7 +6,7 @@ export default function ExperienceBlog({ data }) {
   ];
 
   const notableClients = [
-    'Panasonic', 'Heineken', 'Pepsico', 'Carlsberg', 'Mondelez', 'Lipton', 'Akzo Nobel', 'DDB', 'Ipsos'
+    'Panasonic', 'Heineken', 'Tường An', 'Carlsberg', 'Mondelez', 'Lipton', 'Akzo Nobel', 'DDB', 'Ipsos'
   ];
 
   return (

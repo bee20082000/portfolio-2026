@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react'
 
 export default function OverviewGrid() {
   const gridRef = useRef(null)
-  
+
   // HCMC Live Ticking Clock State
   const [time, setTime] = useState('--:--:--')
   useEffect(() => {
@@ -49,16 +49,16 @@ export default function OverviewGrid() {
         const rect = tile.getBoundingClientRect()
         const x = e.clientX - rect.left
         const y = e.clientY - rect.top
-        
+
         const xc = rect.width / 2
         const yc = rect.height / 2
-        
+
         const dx = x - xc
         const dy = y - yc
-        
+
         const rx = -(dy / yc) * 7
         const ry = (dx / xc) * 7
-        
+
         const tx = (dx / xc) * 8
         const ty = (dy / yc) * 8
 
@@ -102,7 +102,7 @@ export default function OverviewGrid() {
         const yc = rect.height / 2
         const dx = e.clientX - (rect.left + xc)
         const dy = e.clientY - (rect.top + yc)
-        
+
         gsap.to(m, {
           x: dx * 0.32,
           y: dy * 0.32,
@@ -129,7 +129,7 @@ export default function OverviewGrid() {
 
   return (
     <div className="bento" id="bento-overview" ref={gridRef}>
-      
+
       {/* Hero Tile */}
       <div className="tile tile-hero c2r2" data-i="0">
         <div className="inner">
@@ -161,9 +161,14 @@ export default function OverviewGrid() {
       <div className="tile" data-i="3">
         <div className="inner">
           <div className="lbl">education</div>
-          <div className="edu-badge">🎓 UEH · 2018–2021</div>
-          <div className="h3" style={{ marginTop: '6px' }}>Marketing</div>
-          <div className="body" style={{ marginTop: '8px' }}>University of Economics<br />Ho Chi Minh City</div>
+          <div className="lang-row">
+            <div className="lang-left"><span className="lang-flag">🎓</span><span className="lang-name">UEH</span></div>
+            <span className="lang-lvl">2018–2021</span>
+          </div>
+          <div className="lang-row">
+            <div className="lang-left"><span className="lang-flag">📚</span><span className="lang-name">Marketing</span></div>
+            <span className="lang-lvl">Economics Univ.</span>
+          </div>
         </div>
       </div>
 
@@ -227,7 +232,7 @@ export default function OverviewGrid() {
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
             <span className="client-item">Panasonic</span>
             <span className="client-item">Heineken</span>
-            <span className="client-item">Pepsico</span>
+            <span className="client-item">Tường An</span>
             <span className="client-item">Carlsberg</span>
             <span className="client-item">Mondelez</span>
             <span className="client-item">Lipton</span>
