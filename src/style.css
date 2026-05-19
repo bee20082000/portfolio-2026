@@ -95,7 +95,7 @@ body {
   background: #ffffff;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 1000000000;
   transform: translate(-50%, -50%);
   transition: width .18s cubic-bezier(.16, 1, .3, 1), height .18s cubic-bezier(.16, 1, .3, 1), background .2s;
   mix-blend-mode: difference;
@@ -110,7 +110,7 @@ body {
   border: 1.5px solid rgba(255, 255, 255, 0.55);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 99998;
+  z-index: 999999999;
   transform: translate(-50%, -50%);
   transition: width .35s cubic-bezier(.16, 1, .3, 1), height .35s cubic-bezier(.16, 1, .3, 1), opacity .25s, border-color .2s;
 }
@@ -392,7 +392,7 @@ a {
 
   transform-origin: center center;
   will-change: transform;
-  transition: box-shadow .28s cubic-bezier(0.16, 1, 0.3, 1), background .4s, border-color .4s;
+  transition: box-shadow .28s cubic-bezier(0.16, 1, 0.3, 1), background .4s, border-color .4s, opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   opacity: 0;
   transform: none;
   transform-style: preserve-3d;
@@ -2335,4 +2335,431 @@ a {
   font-size: 11.5px !important;
   font-weight: 700 !important;
   color: var(--text3);
+}
+
+/* ── HERO BIOGRAPHY MODAL & TUTORIAL STYLING ── */
+
+.hero-tile-wrapper {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  align-self: flex-start;
+}
+
+.tile-hero {
+  position: relative !important;
+  overflow: hidden !important;
+  /* Contain fat cat image perfectly inside tile bounds */
+}
+
+.hero-expand-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: bold;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+.hero-expand-btn:hover {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+}
+
+[data-theme="light"] .hero-expand-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: var(--text);
+}
+
+[data-theme="light"] .hero-expand-btn:hover {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+}
+
+/* Tutorial sign on the right side of the button, very close to it, Garamond font italics */
+.hero-tutorial {
+  position: absolute;
+  top: 31px;
+  /* Center vertically with expand button */
+  right: -160px;
+  /* Float directly outside right side of card, very close to the button */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transform: translateX(12px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* EB Garamond / Garamond italics font styling */
+  font-family: Garamond, "EB Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #22c55e;
+  white-space: nowrap;
+}
+
+/* Make tutorial visible when user hovers over the Hero Tile Wrapper */
+.hero-tile-wrapper:hover .hero-tutorial {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hero-tutorial-arrow {
+  font-size: 16px;
+  color: #22c55e;
+  font-weight: 900;
+  animation: jigLeft 1s ease-in-out infinite;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  /* Keep arrow shape standard and sharp */
+}
+
+@keyframes jigLeft {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+}
+
+/* Premium Glassmorphic Bio Popup Modal */
+
+.hero-tile-wrapper {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  align-self: flex-start;
+}
+
+.tile-hero.hidden-active {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.bio-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 10, 13, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  /* Vertical alignment stack */
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.bio-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Horizontal scrolling container zooming from grid coordinate variables */
+.bio-modal-scroll-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+
+  /* Zoom/scale animation that starts exactly from the Hero Tile position */
+  transform: translate(var(--zoom-dx, 0px), var(--zoom-dy, 0px)) scale(0.3);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+
+.bio-modal-overlay.open .bio-modal-scroll-container {
+  transform: translate(0px, 0px) scale(1);
+  opacity: 1;
+}
+
+/* Hide Webkit scrollbars completely to use elegant pagination dots instead */
+.bio-modal-scroll-container::-webkit-scrollbar {
+  display: none !important;
+}
+
+.bio-modal-dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 12px;
+  /* Close spacing below pulsing tutorial */
+  margin-bottom: 10px;
+  /* Elegant spacing from screen bottom */
+  width: 100%;
+  z-index: 10000000;
+  pointer-events: auto;
+}
+
+.bio-modal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.bio-modal-dot.active {
+  background: #22c55e;
+  transform: scale(1.4);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
+}
+
+.bio-modal-dot:hover {
+  background: rgba(34, 197, 94, 0.85);
+}
+
+.bio-scroll-card {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 360px;
+  margin-left: -180px !important;
+  /* Half card width offset */
+  margin-top: -240px !important;
+  /* Half card height offset */
+  background: rgba(18, 20, 26, 0.65) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 32px;
+  padding: 36px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+
+  /* Extremely smooth slide deck transitions governed dynamically by React styles */
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    z-index 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.bio-scroll-card.active:hover {
+  border-color: #22c55e !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6) !important;
+  /* High-depth shadow shift */
+}
+
+[data-theme="light"] .bio-scroll-card {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08) !important;
+}
+
+.bio-modal-scroll-tutorial {
+  text-align: center;
+  margin-top: 24px;
+  font-family: 'Comfortaa', cursive, sans-serif !important;
+  /* Switched back to Comfortaa! */
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.02em;
+  animation: pulseTutorial 2.2s infinite ease-in-out;
+  z-index: 10000000;
+  pointer-events: none;
+  width: 100%;
+}
+
+[data-theme="light"] .bio-modal-scroll-tutorial {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+@keyframes pulseTutorial {
+
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.bio-modal-close-global {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10000000;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bio-modal-close-global:hover {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+}
+
+.bio-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.bio-modal-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bio-modal-subtitle {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 12px;
+  color: #22c55e;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.bio-modal-title {
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.bio-modal-close {
+  background: var(--bg3);
+  border: var(--border);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text2);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bio-modal-close:hover {
+  background: var(--bg4);
+  color: var(--text);
+  transform: rotate(90deg);
+}
+
+.bio-modal-body {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-weight: 600;
+}
+
+.bio-modal-body p {
+  margin: 0;
+}
+
+.bio-modal-body em {
+  color: var(--text);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.bio-modal-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  border-top: 1px solid var(--border2);
+  padding-top: 24px;
+  width: 100%;
+}
+
+.bio-stat-box {
+  flex: 1;
+  background: var(--bg3);
+  padding: 14px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+[data-theme="light"] .bio-stat-box {
+  background: var(--bg3);
+}
+
+.bio-stat-box:hover {
+  background: var(--bg4);
+}
+
+.bio-stat-val {
+  font-size: 20px;
+  font-weight: 900;
+  color: #22c55e;
+}
+
+.bio-stat-lbl {
+  font-size: 10.5px;
+  color: var(--text3);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-align: center;
 }

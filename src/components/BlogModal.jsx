@@ -12,7 +12,6 @@ import ExperienceBlog from './blogs/ExperienceBlog'
 import SkillsBlog from './blogs/SkillsBlog'
 import ToolsBlog from './blogs/ToolsBlog'
 import ClientsBlog from './blogs/ClientsBlog'
-import HeroBlog from './blogs/HeroBlog'
 import SpotifyBlog from './blogs/SpotifyBlog'
 import PhotosBlog from './blogs/PhotosBlog'
 import ContactBlog from './blogs/ContactBlog'
@@ -25,7 +24,6 @@ const COMPONENTS = {
   skills: SkillsBlog,
   tools: ToolsBlog,
   clients: ClientsBlog,
-  hero: HeroBlog,
   spotify: SpotifyBlog,
   photos: PhotosBlog,
   contact: ContactBlog,

@@ -47,14 +47,28 @@ export default function App() {
     }
   }, [loaded])
 
-  // Pause Lenis scrolling when blog modal is open
+  // Pause Lenis scrolling when blog modal or biography modal is open
   useEffect(() => {
     if (!lenisRef.current) return
-    if (activeCase) {
+    if (activeCase || window.isBioOpen) {
       lenisRef.current.stop()
     } else {
       lenisRef.current.start()
     }
+  }, [activeCase])
+
+  useEffect(() => {
+    const handleScrollLockEvent = (e) => {
+      if (!lenisRef.current) return
+      if (e.detail || activeCase) {
+        lenisRef.current.stop()
+      } else {
+        lenisRef.current.start()
+      }
+    }
+
+    window.addEventListener("toggleBioScrollLock", handleScrollLockEvent)
+    return () => window.removeEventListener("toggleBioScrollLock", handleScrollLockEvent)
   }, [activeCase])
 
   return (
