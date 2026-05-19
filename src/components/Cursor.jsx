@@ -4,29 +4,24 @@ import { useGSAP } from '@gsap/react'
 
 export default function Cursor() {
   const curRef = useRef(null)
-  const ringRef = useRef(null)
 
   useGSAP(() => {
     let mx = window.innerWidth / 2
     let my = window.innerHeight / 2
     let rx = mx, ry = my
 
-    // Position dot immediately, ring follows with lag
     const setCurLeft  = gsap.quickSetter(curRef.current,  'left', 'px')
     const setCurTop   = gsap.quickSetter(curRef.current,  'top',  'px')
-    const setRingLeft = gsap.quickSetter(ringRef.current, 'left', 'px')
-    const setRingTop  = gsap.quickSetter(ringRef.current, 'top',  'px')
 
     const onMove = e => { mx = e.clientX; my = e.clientY }
     window.addEventListener('mousemove', onMove)
 
-    // GSAP ticker — runs every animation frame
     const tick = () => {
-      // Ring lags behind cursor for liquid trailing effect
-      rx += (mx - rx) * 0.10
-      ry += (my - ry) * 0.10
-      setCurLeft(mx);  setCurTop(my)
-      setRingLeft(rx); setRingTop(ry)
+      // Liquid, buttery-smooth trailing glide interpolation
+      rx += (mx - rx) * 0.22
+      ry += (my - ry) * 0.22
+      setCurLeft(rx)
+      setCurTop(ry)
     }
     gsap.ticker.add(tick)
 
@@ -37,9 +32,17 @@ export default function Cursor() {
   }, [])
 
   return (
-    <>
-      <div id="cursor"      ref={curRef}  />
-      <div id="cursor-ring" ref={ringRef} />
-    </>
+    <div id="cursor" ref={curRef}>
+      {/* Classic premium black cursor arrow SVG — crisp, high-contrast, with white border */}
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path 
+          d="M4.5 3V21L10.5 15H17.5L4.5 3Z" 
+          fill="#000000" 
+          stroke="#FFFFFF"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
   )
 }

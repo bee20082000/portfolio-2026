@@ -12,6 +12,7 @@ export default function App() {
   const [theme, setTheme] = useState('dark')
   const [activeCase, setActiveCase] = useState(null)
   const [loaded, setLoaded] = useState(false)
+  const [isBioOpen, setIsBioOpen] = useState(false)
   const lenisRef = useRef(null)
   const pageRef = useRef(null)
 
@@ -59,6 +60,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScrollLockEvent = (e) => {
+      setIsBioOpen(!!e.detail)
       if (!lenisRef.current) return
       if (e.detail || activeCase) {
         lenisRef.current.stop()
@@ -77,7 +79,7 @@ export default function App() {
       <Cursor />
       <div className={`page-wrapper ${loaded ? 'page-visible' : 'page-hidden'}`}>
         <Topbar theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} />
-        <div className="page" ref={pageRef}>
+        <div className={`page ${isBioOpen ? 'bio-active' : ''}`} ref={pageRef}>
           <div className="page-content">
             <BentoGrid onSelect={setActiveCase} loaded={loaded} />
             <CasesGrid onSelect={setActiveCase} loaded={loaded} />

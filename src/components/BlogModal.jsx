@@ -3,6 +3,7 @@ import { blogData } from '../data/blogData'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Lenis from 'lenis'
+import CloseButton from './CloseButton'
 
 // Import all separated component tiles
 import PanasonicBlog from './blogs/PanasonicBlog'
@@ -47,24 +48,27 @@ export default function BlogModal({ activeCase, onClose }) {
     if (localCase && containerRef.current) {
       const tl = gsap.timeline()
 
+      // Reset overlay position to prevent layout shifts
+      gsap.set(containerRef.current, { yPercent: 0, y: 0 });
+
       // Slide up overlay container smoothly from the bottom with a premium elastic ease
       tl.fromTo(containerRef.current,
-        { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 0.85, ease: "power4.out" }
+        { y: 120, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.85, ease: "power4.out" }
       )
 
-      // Slide in and bounce the floating close button
+      // Slide in and bounce the floating close button (centered via xPercent: -50)
       tl.fromTo('.blog-close',
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
-        "-=0.45"
+        { y: 50, opacity: 0, xPercent: -50 },
+        { y: 0, opacity: 1, xPercent: -50, duration: 0.6, ease: "back.out(1.7)" },
+        "-=0.55"
       )
 
       // Stagger in vertical content panels with a gentle upward lift and fade-in
       tl.fromTo('.blog-slide',
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: "power3.out" },
-        "-=0.4"
+        "-=0.45"
       )
     }
   }, { dependencies: [localCase], scope: modalRef })
@@ -107,10 +111,11 @@ export default function BlogModal({ activeCase, onClose }) {
       }
     })
 
-    // Slide down the floating close button immediately
+    // Slide down the floating close button immediately (centered via xPercent: -50)
     tl.to('.blog-close', {
       y: 35,
       opacity: 0,
+      xPercent: -50,
       duration: 0.25,
       ease: "power2.in"
     }, 0)
@@ -126,10 +131,10 @@ export default function BlogModal({ activeCase, onClose }) {
 
     // Slide down the overlay container completely
     tl.to(containerRef.current, {
-      yPercent: 100,
+      y: 120,
       opacity: 0,
-      duration: 0.6,
-      ease: "power3.inOut"
+      duration: 0.55,
+      ease: "power3.in"
     }, "-=0.15")
   }
 
@@ -149,10 +154,11 @@ export default function BlogModal({ activeCase, onClose }) {
 
   return (
     <div ref={modalRef}>
-      <button className="blog-close" onClick={handleClose} aria-label="Close modal">
-        <span className="blog-close-icon">✕</span>
-        <span className="blog-close-text">Close</span>
-      </button>
+      <CloseButton
+        className="blog-close"
+        onClick={handleClose}
+        label="Close"
+      />
       <div className={`blog-overlay ${activeCase ? 'open' : ''}`} ref={containerRef} data-lenis-prevent>
         <div className="blog-body" ref={scrollRef}>
           {ContentComponent ? <ContentComponent data={data} /> : null}

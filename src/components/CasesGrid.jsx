@@ -197,24 +197,24 @@ export default function CasesGrid({ onSelect, loaded }) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          const delay = (+e.target.dataset.i * 80) / 1000
+          const delay = (+e.target.dataset.i * 90) / 1000
           gsap.fromTo(e.target, {
             opacity: 0,
-            y: 20,
-            scale: 0.97
+            y: 120,
+            scale: 0.85
           }, {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.62,
+            duration: 1.6,
             delay: delay,
-            ease: 'power3.out',
+            ease: 'power4.out',
             clearProps: 'transform'
           })
           io.unobserve(e.target)
         }
       })
-    }, { threshold: .05 })
+    }, { threshold: .01 })
     tiles.forEach(t => io.observe(t))
 
     // 3D Tilt Physics (Dousanmiao Ultra-premium Spring)

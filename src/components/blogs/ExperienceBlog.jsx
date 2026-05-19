@@ -18,7 +18,7 @@ export default function ExperienceBlog({ data }) {
           <div className="case-cat" style={{ color: data.accent }}>{data.category}</div>
           <h1>{data.title}</h1>
           <p className="blog-cover-desc">{data.subtitle}</p>
-          
+
           <div className="blog-meta-grid">
             {[
               ['Practice', data.client],
@@ -48,7 +48,7 @@ export default function ExperienceBlog({ data }) {
         <div className="blog-slide-num">02</div>
         <h2>Film Projects</h2>
         <p>A collection of creative storytelling work, bringing narrative direction and production standard into modern brand expression.</p>
-        
+
         {/* Custom styled list box for film projects */}
         <div style={{
           background: 'var(--bg2)',
@@ -90,7 +90,7 @@ export default function ExperienceBlog({ data }) {
         <div className="blog-slide-num">03</div>
         <h2>Notable Clients</h2>
         <p>Proudly collaborated with leading global consumer brands, delivering award-winning digital experiences, products, and campaign strategies.</p>
-        
+
         {/* Premium Horizontal Auto-Scrolling Box */}
         <div className="auto-scroll-marquee">
           <div className="auto-scroll-track">
@@ -109,7 +109,7 @@ export default function ExperienceBlog({ data }) {
         <div className="blog-slide-num">04</div>
         <h2>Execution & Impact</h2>
         <p>{data.solution}</p>
-        
+
         <div className="blog-metrics-grid">
           {data.metrics.map(m => (
             <div className="blog-metric" key={m.lbl}>

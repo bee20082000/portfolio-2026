@@ -46,24 +46,24 @@ export default function BentoGrid({ onSelect, loaded }) {
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          const delay = (+e.target.dataset.i * 50) / 1000
+          const delay = (+e.target.dataset.i * 70) / 1000
           gsap.fromTo(e.target, {
             opacity: 0,
-            y: 20,
-            scale: 0.2
+            y: 120,
+            scale: 0.85
           }, {
             opacity: 1,
             y: 0, // Animate fully to baseline y: 0
             scale: 1, // Animate fully to baseline scale: 1
-            duration: 2,
+            duration: 1.6,
             delay: delay,
-            ease: "elastic.out(1,0.6)",
+            ease: "power4.out",
             clearProps: 'transform'
           })
           io.unobserve(e.target)
         }
       })
-    }, { threshold: .10 })
+    }, { threshold: .01 })
     tiles.forEach(t => io.observe(t))
 
     // Tool bars animate to target width
