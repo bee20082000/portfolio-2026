@@ -1,33 +1,19 @@
-import { useEffect, useState, useRef } from 'react'
-import { blogData } from '../data/blogData'
+﻿import React, { useEffect, useState, useRef, Suspense, lazy } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import Lenis from 'lenis'
 import CloseButton from './CloseButton'
 
-// Import all separated component tiles
-import PanasonicBlog from './blogs/PanasonicBlog'
-import HeinekenBlog from './blogs/HeinekenBlog'
-import TuonganBlog from './blogs/TuonganBlog'
-import ExperienceBlog from './blogs/ExperienceBlog'
-import SkillsBlog from './blogs/SkillsBlog'
-import ToolsBlog from './blogs/ToolsBlog'
-import ClientsBlog from './blogs/ClientsBlog'
-import SpotifyBlog from './blogs/SpotifyBlog'
-import PhotosBlog from './blogs/PhotosBlog'
-import ContactBlog from './blogs/ContactBlog'
-
+// Lazy-load each case's modal from its own folder
 const COMPONENTS = {
-  panasonic: PanasonicBlog,
-  heineken: HeinekenBlog,
-  tuongan: TuonganBlog,
-  experience: ExperienceBlog,
-  skills: SkillsBlog,
-  tools: ToolsBlog,
-  clients: ClientsBlog,
-  spotify: SpotifyBlog,
-  photos: PhotosBlog,
-  contact: ContactBlog,
+  panasonic:      lazy(() => import('./cases/panasonic/Modal')),
+  heineken:       lazy(() => import('./cases/heineken/Modal')),
+  tuongan:        lazy(() => import('./cases/tuongan/Modal')),
+  pepsico:        lazy(() => import('./cases/pepsico/Modal')),
+  spotify_remix:  lazy(() => import('./cases/spotify_remix/Modal')),
+  urban_frames:   lazy(() => import('./cases/urban_frames/Modal')),
+  brand_campaign: lazy(() => import('./cases/brand_campaign/Modal')),
+  honda_mobility: lazy(() => import('./cases/honda_mobility/Modal')),
 }
 
 export default function BlogModal({ activeCase, onClose }) {
@@ -38,33 +24,23 @@ export default function BlogModal({ activeCase, onClose }) {
 
   // Sync activeCase to localCase immediately when activeCase is active
   useEffect(() => {
-    if (activeCase) {
-      setLocalCase(activeCase)
-    }
+    if (activeCase) setLocalCase(activeCase)
   }, [activeCase])
 
   // GSAP Entry Animation
   useGSAP(() => {
     if (localCase && containerRef.current) {
       const tl = gsap.timeline()
-
-      // Reset overlay position to prevent layout shifts
-      gsap.set(containerRef.current, { yPercent: 0, y: 0 });
-
-      // Slide up overlay container smoothly from the bottom with a premium elastic ease
+      gsap.set(containerRef.current, { yPercent: 0, y: 0 })
       tl.fromTo(containerRef.current,
         { y: 120, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.85, ease: "power4.out" }
       )
-
-      // Slide in and bounce the floating close button (centered via xPercent: -50)
       tl.fromTo('.blog-close',
-        { y: 50, opacity: 0, xPercent: -50 },
-        { y: 0, opacity: 1, xPercent: -50, duration: 0.6, ease: "back.out(1.7)" },
+        { y: 50, opacity: 0, pointerEvents: "none", xPercent: -50 },
+        { y: 0, opacity: 1, pointerEvents: "auto", xPercent: -50, duration: 0.6, ease: "back.out(1.7)" },
         "-=0.55"
       )
-
-      // Stagger in vertical content panels with a gentle upward lift and fade-in
       tl.fromTo('.blog-slide',
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: "power3.out" },
@@ -73,15 +49,13 @@ export default function BlogModal({ activeCase, onClose }) {
     }
   }, { dependencies: [localCase], scope: modalRef })
 
-  // Initialize smooth scrolling specifically for the blog overlay container
+  // Smooth scrolling for the blog overlay
   useEffect(() => {
     const wrapper = containerRef.current
     const content = scrollRef.current
     if (!wrapper || !content || !localCase) return
-
     const lenis = new Lenis({
-      wrapper: wrapper,
-      content: content,
+      wrapper, content,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
@@ -89,53 +63,19 @@ export default function BlogModal({ activeCase, onClose }) {
       smoothWheel: true,
       wheelMultiplier: 1.0,
     })
-
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf) }
     requestAnimationFrame(raf)
-
-    return () => {
-      lenis.destroy()
-    }
+    return () => lenis.destroy()
   }, [localCase])
 
   const handleClose = () => {
     if (!containerRef.current) return
     const tl = gsap.timeline({
-      onComplete: () => {
-        setLocalCase(null)
-        onClose()
-      }
+      onComplete: () => { setLocalCase(null); onClose() }
     })
-
-    // Slide down the floating close button immediately (centered via xPercent: -50)
-    tl.to('.blog-close', {
-      y: 35,
-      opacity: 0,
-      xPercent: -50,
-      duration: 0.25,
-      ease: "power2.in"
-    }, 0)
-
-    // Stagger slide out sections slightly
-    tl.to('.blog-slide', {
-      y: 30,
-      opacity: 0,
-      duration: 0.25,
-      stagger: 0.04,
-      ease: "power2.in"
-    }, 0)
-
-    // Slide down the overlay container completely
-    tl.to(containerRef.current, {
-      y: 120,
-      opacity: 0,
-      duration: 0.55,
-      ease: "power3.in"
-    }, "-=0.15")
+    tl.to('.blog-close', { y: 35, opacity: 0, pointerEvents: "none", xPercent: -50, duration: 0.25, ease: "power2.in" }, 0)
+    tl.to('.blog-slide', { y: 30, opacity: 0, duration: 0.25, stagger: 0.04, ease: "power2.in" }, 0)
+    tl.to(containerRef.current, { y: 120, opacity: 0, duration: 0.55, ease: "power3.in" }, "-=0.15")
   }
 
   // Close on Escape
@@ -147,21 +87,20 @@ export default function BlogModal({ activeCase, onClose }) {
 
   if (!localCase) return null
 
-  const data = blogData[localCase]
-  if (!data) return null
-
   const ContentComponent = COMPONENTS[localCase]
 
   return (
     <div ref={modalRef}>
-      <CloseButton
-        className="blog-close"
-        onClick={handleClose}
-        label="Close"
-      />
+      <CloseButton className="blog-close" onClick={handleClose} label="Close" />
       <div className={`blog-overlay ${activeCase ? 'open' : ''}`} ref={containerRef} data-lenis-prevent>
         <div className="blog-body" ref={scrollRef}>
-          {ContentComponent ? <ContentComponent data={data} /> : null}
+          {ContentComponent ? (
+            <Suspense fallback={<div style={{ padding: '60px', color: 'var(--text3)', textAlign: 'center' }}>Loading…</div>}>
+              <ContentComponent />
+            </Suspense>
+          ) : (
+            <div style={{ padding: '60px', color: 'var(--text3)' }}>Case not found.</div>
+          )}
         </div>
       </div>
     </div>

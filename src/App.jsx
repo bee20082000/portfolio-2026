@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import Cursor from './components/Cursor'
 import Topbar from './components/Topbar'
 import BentoGrid from './components/BentoGrid'
-import CasesGrid from './components/CasesGrid'
 import BlogModal from './components/BlogModal'
 import Marquee from './components/Marquee'
 import LoadingScreen from './components/LoadingScreen'
@@ -13,12 +12,37 @@ export default function App() {
   const [activeCase, setActiveCase] = useState(null)
   const [loaded, setLoaded] = useState(false)
   const [isBioOpen, setIsBioOpen] = useState(false)
+  const [showScrollArrow, setShowScrollArrow] = useState(true)
   const lenisRef = useRef(null)
   const pageRef = useRef(null)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
+
+  // Capture mouse coordinates globally on mount (even while loading screen is active)
+  useEffect(() => {
+    const handleInitialMove = (e) => {
+      window.lastMouseX = e.clientX;
+      window.lastMouseY = e.clientY;
+    };
+    window.addEventListener('mousemove', handleInitialMove);
+    return () => window.removeEventListener('mousemove', handleInitialMove);
+  }, []);
+
+  // Play satisfying mechanical click sound on all clickable element interactions
+  useEffect(() => {
+    const handleGlobalClick = (e) => {
+      const target = e.target.closest('button, a, .tile-hero, .tile-clock, .tile-skills, .tile-contact, .tile-photos, .tile-case, .exp-card-item, .view-more-badge, .unified-close-btn, .spotify-btn, .spotify-track, .spotify-progress, .bio-modal-dot');
+      if (target) {
+        const clickAudio = new Audio('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3');
+        clickAudio.volume = 0.5;
+        clickAudio.play().catch(() => {});
+      }
+    };
+    window.addEventListener('click', handleGlobalClick);
+    return () => window.removeEventListener('click', handleGlobalClick);
+  }, []);
 
   // Initialize buttery-smooth Lenis scroll (only after content is loaded)
   useEffect(() => {
@@ -41,6 +65,15 @@ export default function App() {
     }
 
     requestAnimationFrame(raf)
+
+    // Listen to Lenis scroll to hide scroll indicator
+    lenis.on('scroll', (e) => {
+      if (e.scroll > 50) {
+        setShowScrollArrow(false)
+      } else {
+        setShowScrollArrow(true)
+      }
+    })
 
     return () => {
       lenis.destroy()
@@ -76,13 +109,12 @@ export default function App() {
   return (
     <>
       {!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}
-      <Cursor />
+      {loaded && <Cursor />}
       <div className={`page-wrapper ${loaded ? 'page-visible' : 'page-hidden'}`}>
         <Topbar theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} />
         <div className={`page ${isBioOpen ? 'bio-active' : ''}`} ref={pageRef}>
           <div className="page-content">
             <BentoGrid onSelect={setActiveCase} loaded={loaded} />
-            <CasesGrid onSelect={setActiveCase} loaded={loaded} />
           </div>
         </div>
         <Marquee />

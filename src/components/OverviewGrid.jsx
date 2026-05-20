@@ -69,7 +69,7 @@ export default function OverviewGrid() {
           y: ty,
           scale: 1.015,
           borderColor: 'var(--border2)',
-          boxShadow: 'var(--shadow)',
+          boxShadow: 'none',
           duration: 0.35,
           ease: 'power2.out'
         })

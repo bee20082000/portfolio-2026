@@ -42,14 +42,14 @@ export default function ClockTile({ time: initialTime }) {
     if (cardRef.current) {
       gsap.killTweensOf(cardRef.current)
       // Instantly trigger a gorgeous jelly-like rubber stretch growing down
-      gsap.fromTo(cardRef.current, 
+      gsap.fromTo(cardRef.current,
         { scaleY: 0.88, scaleX: 0.96, opacity: 0.7, transformOrigin: 'top center' },
-        { 
-          scaleY: 1, 
+        {
+          scaleY: 1,
           scaleX: 1,
-          opacity: 1, 
-          duration: 0.6, 
-          ease: 'elastic.out(1.2, 0.65)'
+          opacity: 1,
+          duration: 0.6,
+          ease: 'back.out(1.7)'
         }
       )
     }
@@ -57,10 +57,10 @@ export default function ClockTile({ time: initialTime }) {
 
   if (showWorldClock) {
     return (
-      <div 
+      <div
         ref={cardRef}
-        className="tile tile-clock" 
-        data-i="1" 
+        className="tile tile-clock"
+        data-i="1"
         onClick={() => handleToggle(false)}
         style={{ cursor: 'pointer' }}
       >
@@ -71,28 +71,28 @@ export default function ClockTile({ time: initialTime }) {
               Back ↩
             </span>
           </div>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '4px' }}>
             {CITIES.map(city => (
-              <div 
-                className="lang-row" 
-                key={city.name} 
-                style={{ 
-                  margin: 0, 
-                  padding: '6px 12px', 
+              <div
+                className="lang-row"
+                key={city.name}
+                style={{
+                  margin: 0,
+                  padding: '6px 12px',
                   borderRadius: '10px',
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center' 
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
                 }}
               >
                 <div className="lang-left" style={{ gap: '6px' }}>
                   <span className="lang-name" style={{ fontSize: '11.5px', fontWeight: '700' }}>{city.name}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ 
-                    fontFamily: "'Press Start 2P', monospace", 
-                    fontSize: '9.5px', 
+                  <span style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '9.5px',
                     color: 'var(--accent)',
                     letterSpacing: '-0.02em'
                   }}>
@@ -109,10 +109,10 @@ export default function ClockTile({ time: initialTime }) {
   }
 
   return (
-    <div 
+    <div
       ref={cardRef}
-      className="tile tile-clock" 
-      data-i="1" 
+      className="tile tile-clock"
+      data-i="1"
       onClick={() => handleToggle(true)}
       style={{ cursor: 'pointer' }}
       title="Click to reveal World Clock!"

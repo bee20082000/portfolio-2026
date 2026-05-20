@@ -1,64 +1,114 @@
 import { useEffect, useState, useRef } from "react";
 
 export default function SpotifyTile({ onSelect }) {
-  const audioUrl = "/asset/audio/highway_to_hell.mp3";
+  const audioUrl = "/asset/audio/Taylor Swift - Opalite (Lyric Video).mp3";
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.85);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const audioRef = useRef(null);
+  const audioRef = useRef(new Audio(audioUrl));
+  const progressContainerRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(audioUrl);
-    audioRef.current.loop = true;
-    audioRef.current.volume = volume;
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.loop = true;
+    audio.volume = volume;
 
     const handleTimeUpdate = () => {
-      setCurrentTime(audioRef.current.currentTime);
+      if (!isDragging) {
+        setCurrentTime(audio.currentTime);
+      }
     };
 
     const handleLoadedMetadata = () => {
-      setDuration(audioRef.current.duration);
+      setDuration(audio.duration);
     };
 
-    audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-    audioRef.current.addEventListener("loadedmetadata", handleLoadedMetadata);
+    const handleError = (err) => {
+      console.error("Spotify Audio failed to load:", err);
+    };
+
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("error", handleError);
+
+    // If metadata is already loaded (cached), set it immediately
+    if (audio.duration) {
+      setDuration(audio.duration);
+    }
 
     return () => {
-      if (audioRef.current) {
-        audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-        audioRef.current.removeEventListener("loadedmetadata", handleLoadedMetadata);
-        audioRef.current.pause();
-      }
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("error", handleError);
+      audio.pause();
     };
-  }, [audioUrl]);
+  }, [isDragging]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
+    const audio = audioRef.current;
+    if (!audio) return;
+
     if (isPlaying) {
-      audioRef.current.pause();
+      audio.pause();
       setIsPlaying(false);
     } else {
-      // Force visual state to active immediately, then trigger play silently!
+      // Set to true immediately for responsive visual feedback
       setIsPlaying(true);
-      audioRef.current.play().catch(err => {
-        console.warn("Silent audio play caught/handled cleanly:", err);
+      audio.play().catch(err => {
+        console.warn("Spotify playback blocked or failed:", err);
+        setIsPlaying(false); // Snap back to pause state if browser autoplay blocks
       });
     }
   };
 
-  const handleScrub = (e) => {
-     e.stopPropagation();
-     const rect = e.currentTarget.getBoundingClientRect();
-     const clickX = e.clientX - rect.left;
-     const width = rect.width;
-     const newTime = (clickX / width) * duration;
- 
-     audioRef.current.currentTime = newTime;
-     setCurrentTime(newTime);
+  const handleStartDrag = (e) => {
+    e.stopPropagation();
+    const audio = audioRef.current;
+    if (!audio || !duration) return;
+
+    setIsDragging(true);
+
+    const updateProgress = (clientX) => {
+      if (!progressContainerRef.current) return;
+      const rect = progressContainerRef.current.getBoundingClientRect();
+      const clickX = clientX - rect.left;
+      const width = rect.width;
+      let percent = clickX / width;
+      percent = Math.max(0, Math.min(1, percent));
+      const newTime = percent * duration;
+
+      audio.currentTime = newTime;
+      setCurrentTime(newTime);
+    };
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    updateProgress(clientX);
+
+    const handleMouseMove = (moveEvent) => {
+      const currentX = moveEvent.touches ? moveEvent.touches[0].clientX : moveEvent.clientX;
+      updateProgress(currentX);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleMouseMove);
+      window.removeEventListener("touchend", handleMouseUp);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleMouseMove, { passive: true });
+    window.addEventListener("touchend", handleMouseUp);
   };
 
   const [showVolumeBar, setShowVolumeBar] = useState(false);
@@ -87,7 +137,7 @@ export default function SpotifyTile({ onSelect }) {
     const height = rect.height;
     let newVol = 1 - (clickY / height);
     newVol = Math.max(0, Math.min(1, newVol));
-    
+
     setVolume(newVol);
     if (audioRef.current) {
       audioRef.current.volume = newVol;
@@ -120,7 +170,7 @@ export default function SpotifyTile({ onSelect }) {
               <path d="M10,18 L10,26 L18,26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
             </svg>
             <span className="spotify-dare-tag-text">
-              {isPlaying ? "wow!! awesome" : "Dare you press play!!"}
+              {isPlaying ? "Music that helps survive client feedback :)" : "Music that helps survive client feedback :)"}
             </span>
           </div>
 
@@ -141,24 +191,35 @@ export default function SpotifyTile({ onSelect }) {
 
           <div className="spotify-info">
             <div className="spotify-track-container" style={{ display: "flex", flexDirection: "column" }}>
-              <span className="spotify-track" style={{ fontWeight: 600, fontSize: "14px" }}>Highway to Hell</span>
-              <span className="spotify-artist" style={{ fontSize: "12px", opacity: 0.7 }}>AC/DC — Live At River Plate, 2009</span>
+              <span className="spotify-track" style={{ fontWeight: 600, fontSize: "14px" }}>Opalite</span>
+              <span className="spotify-artist" style={{ fontSize: "12px", opacity: 0.7 }}>Taylor Swift</span>
             </div>
           </div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "14px", marginTop: "10px" }}>
-          <div className="spotify-progress-container" onClick={handleScrub} style={{ flexGrow: 1, marginTop: 0 }}>
-            <div className="spotify-time-display" style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", opacity: 0.7, marginBottom: "6px" }}>
+          <div
+            ref={progressContainerRef}
+            className="spotify-progress-container"
+            onMouseDown={handleStartDrag}
+            onTouchStart={handleStartDrag}
+            style={{
+              flexGrow: 1,
+              marginTop: 0,
+              padding: "6px 0",
+              margin: "-6px 0"
+            }}
+          >
+            <div className="spotify-time-display" style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", opacity: 0.7, marginBottom: "6px", userSelect: "none" }}>
               <span className="time-current">{formatTime(currentTime)}</span>
               <span className="time-duration">{formatTime(duration)}</span>
             </div>
             <div className="spotify-progress-bar-bg" style={{
               width: "100%",
-              height: "4px",
+              height: "8px",
               backgroundColor: "rgba(255, 255, 255, 0.2)",
-              borderRadius: "2px",
-              overflow: "hidden"
+              borderRadius: "4px",
+              position: "relative"
             }}>
               <div
                 className="spotify-progress-bar-fill"
@@ -166,9 +227,29 @@ export default function SpotifyTile({ onSelect }) {
                   width: `${progressPercent}%`,
                   height: "100%",
                   backgroundColor: "#FFFFFF",
-                  transition: "width 0.1s linear"
+                  borderRadius: "4px",
+                  position: "relative",
+                  transition: isDragging ? "none" : "width 0.1s linear"
                 }}
-              ></div>
+              >
+                {/* Visual slider handle dot */}
+                <div
+                  className="spotify-progress-dot"
+                  style={{
+                    position: "absolute",
+                    right: "-7px",
+                    top: "50%",
+                    transform: isDragging ? "translateY(-50%) scale(1.3)" : "translateY(-50%)",
+                    width: "14px",
+                    height: "14px",
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: "50%",
+                    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.35)",
+                    transition: "transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+                    pointerEvents: "none"
+                  }}
+                />
+              </div>
             </div>
           </div>
 
@@ -203,7 +284,6 @@ export default function SpotifyTile({ onSelect }) {
                 opacity: showVolumeBar ? 1 : 0,
                 pointerEvents: showVolumeBar ? "auto" : "none",
                 transition: "opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
                 zIndex: 1000
               }}
               onClick={(e) => e.stopPropagation()}

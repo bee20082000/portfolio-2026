@@ -77,7 +77,7 @@ export default function ExperienceBlog({ data }) {
                 display: 'inline-block'
               }}></span>
               <div>
-                <div style={{ fontWeight: 800, fontSize: '15px', color: 'var(--text)' }}>{f.name}</div>
+                <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--text)' }}>{f.name}</div>
                 <div style={{ fontSize: '12.5px', color: 'var(--text3)', fontWeight: 600 }}>{f.role}</div>
               </div>
             </div>
