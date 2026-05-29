@@ -1,8 +1,8 @@
 {
-  "name": "huy-nguyen-portfolio",
-  "private": true,
+  "name": "portfolio-2026-main",
   "version": "1.0.0",
-  "type": "module",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -17,6 +17,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
+    "postcss": "^8.5.15",
+    "postcss-selector-parser": "^7.1.1",
+    "purgecss": "^8.0.0",
     "vite": "^5.3.1"
   }
 }
