@@ -1,0 +1,5 @@
+.tile-exp .inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}

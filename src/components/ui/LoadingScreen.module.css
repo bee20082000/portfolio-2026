@@ -1,0 +1,81 @@
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  /* Make sure your background variable matches the beige/white from your screenshot */
+  background: #13131A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loading-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 100vw;
+  height: 100vh;
+}
+
+.blob-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 0;
+  /* Ensures they share edges exactly */
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.blob {
+  height: 100%;
+  flex-basis: 0;
+  flex-shrink: 0;
+  /* Prevents blobs from collapsing completely during intense elastic overshoots */
+  background-color: #01CF6A;
+  border-radius: 50%;
+  will-change: flex-grow;
+}
+
+/* Big text hovering over everything */
+.loading-text-big {
+  position: relative;
+  z-index: 2;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #13131A;
+  text-align: left;
+  letter-spacing: -0.03em;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .loading-text-big {
+    font-size: 1.8rem;
+  }
+}
+
+.loading-cursor {
+  display: inline-block;
+  margin-left: 6px;
+  font-weight: 300;
+  animation: cursorBlink 0.8s infinite;
+  color: #13131A;
+}
+
+@keyframes cursorBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}

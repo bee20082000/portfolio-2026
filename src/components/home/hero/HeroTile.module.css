@@ -1,0 +1,48 @@
+.tile-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, var(--glow) 0%, transparent 60%);
+  pointer-events: none;
+  border-radius: calc(var(--tile-radius, 28px) - 3px);
+}
+
+.hero-sub {
+  font-size: clamp(14px, 1.4vw, 17px);
+  font-weight: 600;
+  color: var(--text2);
+  line-height: 1.5;
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.hero-avail {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  font-size: 14.5px;
+  color: var(--text2);
+}
+
+.dot-live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1
+  }
+
+  50% {
+    opacity: .3
+  }
+}

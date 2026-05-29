@@ -1,0 +1,20 @@
+.rightColumn {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: row dense;
+  align-items: start;
+  /* UNIFIED GAP: Edit this value to change the spacing between all modal photos globally */
+  gap: 8px;
+}
+
+.bentoItem {
+  /* 
+    AUTO BORDER RADIUS: 
+    Base is 5px + dynamically calculates based on grid column span.
+    Uses !important to override any legacy inline styles in individual Modal files.
+  */
+
+  overflow: hidden !important;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}

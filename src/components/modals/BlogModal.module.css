@@ -1,0 +1,69 @@
+.blog-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg, #13131a);
+  z-index: 9999;
+  overflow-y: auto;
+  /* Vertically scrollable overlay */
+  overflow-x: hidden;
+  opacity: 0;
+  /* Enforced by GSAP */
+}
+
+/* Custom premium scrollbar for vertical blog modal overlay */
+.blog-overlay::-webkit-scrollbar {
+  width: 6px;
+}
+
+.blog-overlay::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.blog-overlay::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  transition: background 0.2s;
+}
+
+.blog-overlay::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="dark"] .blog-overlay {
+  background: var(--bg, #13131a);
+}
+
+/* Vertical Scrolling Body Container */
+.blog-body {
+  max-width: 90%; /* Expanded from 1080px to 90% of the screen */
+  margin: 0 auto;
+  padding: 120px 24px 180px;
+  /* Generous 180px bottom padding to clear the floating close button */
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Individual Stacked Panels */
+:global(.blog-slide) {
+  width: 100%;
+  position: relative;
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+:global(.blog-slide-num) {
+  font-size: 80px;
+  color: rgba(255, 255, 255, 0.02);
+  position: absolute;
+  top: -40px;
+  left: -10px;
+  z-index: 1;
+  line-height: 1;
+  pointer-events: none;
+}

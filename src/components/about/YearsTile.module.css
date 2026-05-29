@@ -1,0 +1,33 @@
+@keyframes floatPill {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(-2deg);
+  }
+}
+
+@keyframes pulseWeight {
+
+  0%,
+  100% {
+    font-weight: 300;
+  }
+
+  50% {
+    font-weight: 800;
+  }
+}
+
+.animate-pill {
+  animation: floatPill 3.5s ease-in-out infinite;
+}
+
+.animate-weight {
+  animation: pulseWeight 4s ease-in-out infinite;
+  font-weight: 300;
+  /* Initial fallback state */
+}

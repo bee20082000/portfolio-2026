@@ -1,24 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
-import Cursor from './components/Cursor'
-import Topbar from './components/Topbar'
-import BentoGrid from './components/BentoGrid'
-import BlogModal from './components/BlogModal'
-import Marquee from './components/Marquee'
-import LoadingScreen from './components/LoadingScreen'
+import Cursor from './components/ui/Cursor'
+import Topbar from './components/layout/Topbar'
+import HomeGrid from './components/home/HomeGrid'
+import BlogModal from './components/modals/BlogModal'
+import LoadingScreen from './components/ui/LoadingScreen'
+import MobileBlocker from './components/layout/MobileBlocker'
 import Lenis from 'lenis'
+import { audioManager } from './utils/audio'
+import styles from './App.module.css'
 
 export default function App() {
-  const [theme, setTheme] = useState('dark')
+  const [activeTab, setActiveTab] = useState('home')
   const [activeCase, setActiveCase] = useState(null)
   const [loaded, setLoaded] = useState(false)
+  const [screenUnmounted, setScreenUnmounted] = useState(false)
   const [isBioOpen, setIsBioOpen] = useState(false)
-  const [showScrollArrow, setShowScrollArrow] = useState(true)
   const lenisRef = useRef(null)
   const pageRef = useRef(null)
 
+  // Hardcode and lock system data-theme strictly to dark mode on initialization
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
-  }, [theme])
+    document.documentElement.dataset.theme = 'dark'
+  }, [])
 
   // Capture mouse coordinates globally on mount (even while loading screen is active)
   useEffect(() => {
@@ -26,7 +29,7 @@ export default function App() {
       window.lastMouseX = e.clientX;
       window.lastMouseY = e.clientY;
     };
-    window.addEventListener('mousemove', handleInitialMove);
+    window.addEventListener('mousemove', handleInitialMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleInitialMove);
   }, []);
 
@@ -35,9 +38,7 @@ export default function App() {
     const handleGlobalClick = (e) => {
       const target = e.target.closest('button, a, .tile-hero, .tile-clock, .tile-skills, .tile-contact, .tile-photos, .tile-case, .exp-card-item, .view-more-badge, .unified-close-btn, .spotify-btn, .spotify-track, .spotify-progress, .bio-modal-dot');
       if (target) {
-        const clickAudio = new Audio('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3');
-        clickAudio.volume = 0.5;
-        clickAudio.play().catch(() => {});
+        audioManager.play('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3', 0.5).catch(() => { });
       }
     };
     window.addEventListener('click', handleGlobalClick);
@@ -48,77 +49,81 @@ export default function App() {
   useEffect(() => {
     if (!loaded) return
 
+    let isDestroyed = false
+    let rafId
+
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.0,
+      wheelMultiplier: 1.0
     })
 
     lenisRef.current = lenis
+    window.lenis = lenis
 
     function raf(time) {
+      if (isDestroyed) return
       lenis.raf(time)
-      requestAnimationFrame(raf)
+      rafId = requestAnimationFrame(raf)
     }
 
-    requestAnimationFrame(raf)
+    rafId = requestAnimationFrame(raf)
 
-    // Listen to Lenis scroll to hide scroll indicator
+    // Listen to Lenis scroll
     lenis.on('scroll', (e) => {
-      if (e.scroll > 50) {
-        setShowScrollArrow(false)
-      } else {
-        setShowScrollArrow(true)
-      }
+      // scroll logic here if needed
     })
 
     return () => {
+      isDestroyed = true
+      cancelAnimationFrame(rafId)
       lenis.destroy()
       lenisRef.current = null
+      window.lenis = null
     }
   }, [loaded])
 
-  // Pause Lenis scrolling when blog modal or biography modal is open
+  // Unified Scroll Execution State Controller for Modal & Bio overlays
   useEffect(() => {
     if (!lenisRef.current) return
-    if (activeCase || window.isBioOpen) {
+
+    if (activeCase || isBioOpen || window.isBioOpen) {
       lenisRef.current.stop()
     } else {
       lenisRef.current.start()
     }
-  }, [activeCase])
+  }, [activeCase, isBioOpen])
 
+  // Simple event listener mapping for the custom Hero bio toggle action hooks
   useEffect(() => {
     const handleScrollLockEvent = (e) => {
       setIsBioOpen(!!e.detail)
-      if (!lenisRef.current) return
-      if (e.detail || activeCase) {
-        lenisRef.current.stop()
-      } else {
-        lenisRef.current.start()
-      }
     }
 
     window.addEventListener("toggleBioScrollLock", handleScrollLockEvent)
     return () => window.removeEventListener("toggleBioScrollLock", handleScrollLockEvent)
-  }, [activeCase])
+  }, [])
 
   return (
     <>
-      {!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}
+      <MobileBlocker />
+      {!screenUnmounted && <LoadingScreen onReveal={() => setLoaded(true)} onDone={() => setScreenUnmounted(true)} />}
       {loaded && <Cursor />}
-      <div className={`page-wrapper ${loaded ? 'page-visible' : 'page-hidden'}`}>
-        <Topbar theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} />
-        <div className={`page ${isBioOpen ? 'bio-active' : ''}`} ref={pageRef}>
-          <div className="page-content">
-            <BentoGrid onSelect={setActiveCase} loaded={loaded} />
+
+      <div className={`${styles['page-wrapper']} ${loaded ? styles['page-visible'] : styles['page-hidden']}`}>
+        <Topbar activeTab={activeTab} setActiveTab={setActiveTab} />
+
+        <div className={`${styles.page} ${isBioOpen ? 'bio-active' : ''}`} ref={pageRef}>
+          <div className={styles['page-content']}>
+            <HomeGrid onSelect={setActiveCase} loaded={loaded} activeTab={activeTab} />
           </div>
         </div>
-        <Marquee />
+
       </div>
+
       <BlogModal activeCase={activeCase} onClose={() => setActiveCase(null)} />
     </>
   )
