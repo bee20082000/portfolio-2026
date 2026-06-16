@@ -1,0 +1,434 @@
+/* Radial gradient overlay removed as requested */
+
+/* ── Scrollbar hide ── */
+.tile-hero-scroll-container::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
+.tile-hero-scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+/* ── Scroll indicator (mono) ── */
+.scroll-indicator,
+.scroll-indicator * {
+  font-family: var(--font-family) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Sticky Top Bar Overlay ── */
+.hero-topbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  padding: clamp(24px, 4vh, 48px) clamp(20px, 4vw, 48px) 0;
+  box-sizing: border-box;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.hero-topbar-item {
+  align-self: baseline;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.hero-topbar-name {
+  grid-column: 1 / 4;
+  position: relative;
+  pointer-events: none;
+}
+
+.hero-topbar-about {
+  grid-column: 4;
+}
+
+.hero-topbar-contact {
+  grid-column: 7;
+}
+
+.hero-name-placeholder {
+  font-family: 'Maroni Condensed', var(--font-family);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0em;
+  line-height: 0.8;
+  white-space: nowrap;
+  color: transparent;
+  pointer-events: none;
+}
+
+.hero-topbar-link {
+  font-family: var(--font-family) !important;
+  font-weight: 400 !important;
+  font-size: 14px;
+  color: #FFFFFF;
+  text-decoration: none;
+  letter-spacing: -0.02em !important;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  pointer-events: auto;
+}
+
+.hero-topbar-link:hover {
+  color: #FFFFFF;
+}
+
+/* ── Work section ── */
+.hero-work-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 clamp(20px, 4vw, 48px) 0;
+}
+
+/* ── Invisible ghost element for measuring text width ── */
+.hero-name-measure {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  white-space: nowrap;
+  visibility: hidden;
+  pointer-events: none;
+  font-family: 'Maroni Condensed', var(--font-family);
+  font-weight: 400;
+  letter-spacing: 0em;
+  line-height: 0.8;
+}
+
+/* ── 10-column intro grid ── */
+.hero-intro-grid {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: 1fr auto;
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 0 clamp(20px, 4vw, 48px);
+  box-sizing: border-box;
+}
+
+/* ── Scroll down indicator (aligned to desktop grid Row 2, Column 8) ── */
+.hero-scroll-indicator {
+  grid-row: 2;
+  grid-column: 8;
+  align-self: flex-end;
+  padding-bottom: clamp(50px, 8vh, 100px);
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 13px;
+  text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+  z-index: 3;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── Bio (grid columns 4–7, middle) ── */
+.hero-bio-container {
+  grid-row: 1 / -1;
+  grid-column: 4 / 7;
+  display: flex;
+  align-items: center;
+  padding-bottom: 30vh; /* Pushes text up away from hero text */
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.hero-bio-text {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.45;
+  color: #FFFFFF;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  pointer-events: none;
+}
+
+.hero-name-text {
+  font-family: 'Maroni Condensed', var(--font-family);
+  font-weight: 400;
+  font-size: 16vw;
+  line-height: 0.8;
+  letter-spacing: 0em;
+  color: #FFFFFF;
+  white-space: nowrap;
+  display: block;
+  opacity: 0;
+  transform-origin: 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.hero-char {
+  display: inline-block;
+  font-family: inherit;
+  letter-spacing: 0em;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* ── Mobile breakpoint ── */
+@media (max-width: 900px) {
+  .hero-intro-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .hero-topbar {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .hero-topbar-name {
+    grid-column: 1 / 3;
+  }
+  .hero-topbar-about {
+    grid-column: 3;
+  }
+  .hero-topbar-contact {
+    grid-column: 5;
+  }
+  .hero-bio-container {
+    grid-column: 1 / -1;
+    padding-left:  clamp(20px, 4vw, 48px);
+    padding-right: clamp(20px, 4vw, 48px);
+  }
+  .hero-bio-text {
+    font-size: 14px;
+  }
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 80px;
+    right: clamp(20px, 4vw, 48px);
+    padding-bottom: 0;
+    grid-column: auto;
+    grid-row: auto;
+    justify-self: auto;
+    align-self: auto;
+  }
+}
+
+/* ── Contact section ── */
+.hero-contact-section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  column-gap: 2vw;
+  background-color: transparent;
+  padding: 4vh clamp(20px, 4vw, 48px) 40px; /* 40px bottom padding for small gap below footer */
+  margin-top: 40vh;
+  position: relative;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.hero-contact-deck {
+  position: relative;
+  height: 320px;
+  width: 100%;
+  grid-column: 4 / -1;
+}
+
+.hero-contact-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: 280px;
+  background-color: #84D9FF;
+  color: #13131a;
+  border-radius: 8px;
+  padding: 24px 32px;
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.hero-card-email {
+  z-index: 12;
+}
+
+.hero-card-phone {
+  z-index: 11;
+}
+
+.hero-card-linkedin {
+  z-index: 13;
+  background-color: #218BE6;
+}
+
+.hero-card-linkedin .hero-contact-title,
+.hero-card-linkedin .hero-contact-label,
+.hero-card-linkedin .hero-contact-value,
+.hero-card-linkedin .hero-copy-svg {
+  color: #13131A;
+}
+
+.hero-card-linkedin .hero-contact-label {
+  opacity: 0.85;
+}
+
+.hero-card-linkedin .hero-circle-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.hero-card-linkedin .hero-circle-icon-wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.hero-contact-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.hero-contact-rows-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.hero-contact-title {
+  font-family: 'Maroni Condensed', var(--font-family);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
+  letter-spacing: 0em;
+  color: inherit;
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+}
+
+.hero-contact-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+  width: fit-content;
+  text-decoration: none;
+  color: inherit;
+}
+
+.hero-circle-icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(10, 10, 10, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.hero-circle-icon-wrapper:hover {
+  background-color: rgba(10, 10, 10, 0.16);
+  transform: scale(1.05);
+}
+
+.hero-copy-svg {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+.hero-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.hero-contact-label {
+  font-size: 11px;
+  font-weight: 400;
+  color: inherit;
+  opacity: 0.65;
+  line-height: 1.2;
+  text-transform: lowercase;
+}
+
+.hero-contact-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: inherit;
+  line-height: 1.2;
+  text-transform: lowercase;
+}
+
+.contact-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%, 16px) scale(0.96);
+  font-size: 14px;
+  font-weight: 600;
+  color: #0A0A0A;
+  background-color: #C3FB50;
+  padding: 6px 24px;
+  border-radius: 30px;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(10, 10, 10, 0.15);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-toast.toast-active {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+@media (max-width: 900px) {
+  .hero-contact-section {
+    padding: 4vh clamp(20px, 4vw, 48px) 40px;
+    margin-top: 4vh;
+  }
+}
+
+.hero-footer {
+  grid-column: 4 / -1;
+  margin-top: clamp(240px, 28vh, 360px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-family);
+  font-size: clamp(12px, 1.3vw, 14px);
+  color: #8E8E93;
+  text-transform: none;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  opacity: 0.8;
+  z-index: 20;
+}
+
+.hero-footer a {
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.hero-footer a:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .hero-footer {
+    grid-column: 1 / -1;
+    margin-top: 200px;
+  }
+}

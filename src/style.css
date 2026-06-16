@@ -1,0 +1,643 @@
+/* ── CUSTOM FONTS: OTT MOORE-BLACK ───────────────── */
+@font-face {
+  font-family: 'OTT Moore-Black';
+  src: url('./assets/fonts/OTT Moore-Black.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── CUSTOM FONTS: MARONI TRIAL ───────────────── */
+@font-face {
+  font-family: 'Maroni Trial';
+  src: url('./assets/fonts/Maroni-Trial.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Maroni Condensed';
+  src: url('./assets/fonts/Maroni-Condensed.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── CUSTOM FONTS: INSTALL ROUNDED ───────────────── */
+@font-face {
+  font-family: 'Install Rounded';
+  src: url('./assets/fonts/Install-Rounded-Regular.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Install Rounded';
+  src: url('./assets/fonts/Install-Rounded-Regular.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Install Rounded';
+  src: url('./assets/fonts/Install-Rounded-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Install Rounded';
+  src: url('./assets/fonts/Install-Rounded-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Install Rounded';
+  src: url('./assets/fonts/Install-Rounded-Semibold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Install Rounded';
+  src: url('./assets/fonts/Install-Rounded-Semibold.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── CUSTOM FONTS: AKKURAT MONO LL ────────────── */
+@font-face {
+  font-family: 'Akkurat Mono LL';
+  src: url('./assets/fonts/AkkuratMonoLL-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akkurat Mono LL';
+  src: url('./assets/fonts/AkkuratMonoLL-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akkurat Mono LL';
+  src: url('./assets/fonts/AkkuratMonoLL-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akkurat Mono LL';
+  src: url('./assets/fonts/AkkuratMonoLL-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* ── CONFIGURATION & GLOBAL COLOR PALETTE ───── */
+:root {
+  --bg: #13131A;
+  --bg2: #15161A;
+  --bg3: #202127;
+  --bg4: #2B2D36;
+  --border: transparent;
+  --border2: rgba(255, 255, 255, 0.05);
+
+  --text: #FFFFFF;
+  --text2: #9EA2B0;
+  --text3: #626573;
+
+  --accent: #FFFFFF;
+  --accent2: #4F46E5;
+  --glow: rgba(255, 255, 255, 0.03);
+
+  --shadow: none;
+  --shadow-s: none;
+  --tile-border: transparent;
+  --tile-radius: 32px;
+  --body-size: 15px;
+  --h1-size: 48px;
+  --h2-size: 26px;
+  --h3-size: 20px;
+  --lbl-size: 14.5px;
+  --button-radius: 99px;
+  --font-family: 'Install Rounded', sans-serif;
+
+  /* Consistent Spacing Tokens */
+  --letter-spacing-base: -0.02em;
+  --letter-spacing-heading: -0.02em;
+  --letter-spacing-badge: -0.02em;
+}
+
+/* ── RESET ──────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  font-weight: 700;
+  letter-spacing: var(--letter-spacing-base, 0.06em);
+}
+
+/* Unified Scrollbar Hiding */
+html,
+body,
+.bio-modal-overlay,
+.bio-blog-scroll-container {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.bio-modal-overlay::-webkit-scrollbar,
+.bio-blog-scroll-container::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body {
+  font-size: var(--body-size);
+  min-height: 100vh;
+  cursor: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Force absolute exclusion of native pointers on all semantic elements */
+html,
+body,
+a,
+button,
+input,
+[role="button"],
+.tile,
+.clickable,
+.view-more-badge,
+.unified-close-btn,
+.spotify-btn,
+.spotify-control-btn,
+.sticker,
+.fake-alert-toast,
+.chart-row,
+.mini-meme-item,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+/* ── BENTO GRID CONTAINER ────────────────────── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 160px);
+  justify-content: center;
+  grid-auto-flow: row dense;
+  grid-auto-rows: auto;
+  gap: 16px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  perspective: 1500px;
+}
+
+/* ── TILE BASE ───────────────────────────────── */
+.tile {
+  background: var(--bg2);
+  border: var(--tile-border);
+  border-radius: var(--tile-radius, 28px);
+  overflow: hidden;
+  position: relative;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transform-origin: center center;
+  will-change: transform, opacity;
+  height: fit-content;
+  align-self: flex-start;
+  transition: box-shadow .28s cubic-bezier(0.16, 1, 0.3, 1), background .4s, border-color .4s, opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tile:hover {
+  box-shadow: var(--shadow);
+  z-index: 10;
+}
+
+.inner {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  height: auto;
+}
+
+/* Column/Row Spans */
+.c2 {
+  grid-column: span 2;
+}
+
+.r3 {
+  grid-row: span 6;
+}
+
+.c2r2 {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+
+
+
+/* ── TYPOGRAPHY ──────────────────────────────── */
+.lbl {
+  font-size: var(--lbl-size);
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+.h1 {
+  font-size: var(--h1-size);
+  line-height: 1.25;
+  color: var(--text);
+  margin-top: 16px;
+}
+
+.tile-hero .h1 {
+  font-size: clamp(24px, 3.2vw, 36px);
+  line-height: 1.25;
+}
+
+.h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.h2 {
+  font-size: var(--h2-size);
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.h3 {
+  font-size: var(--h3-size);
+  color: var(--text);
+}
+
+.body {
+  font-size: var(--body-size);
+  font-weight: 700;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.mqi {
+  font-size: 14.5px;
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+.mqi em {
+  color: var(--accent);
+  font-style: normal;
+  margin-right: 6px;
+}
+
+
+
+/* ── UNIFIED BADGES & TAGS SYSTEM ────────────── */
+.view-more-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg3);
+  padding: 9px 18px;
+  border-radius: var(--button-radius, 99px);
+  font-size: 12.5px;
+  color: var(--text2);
+  margin-top: auto;
+  border: var(--border);
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.tile:hover .view-more-badge,
+.view-more-badge:hover {
+  background: #22c55e !important;
+  color: #ffffff !important;
+  border-color: #22c55e !important;
+  transform: scale(1.06);
+}
+
+.view-more-badge:active {
+  transform: scale(0.96) !important;
+}
+
+.view-more-badge .arrow-icon {
+  margin-left: 6px;
+  transition: transform .2s;
+  color: var(--accent);
+}
+
+.tile:hover .view-more-badge .arrow-icon,
+.view-more-badge:hover .arrow-icon {
+  transform: translate(2px, -2px);
+  color: #ffffff !important;
+}
+
+
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.tag {
+  font-size: 14px;
+  padding: 5px 13px;
+  border-radius: var(--button-radius, 99px);
+  border: var(--border2);
+  color: var(--text2);
+  transition: border-color .18s, color .18s, background .18s, transform .18s;
+}
+
+.tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--glow);
+  transform: scale(1.07);
+}
+
+.tool-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.2s cubic-bezier(.16, 1, .3, 1);
+}
+
+
+
+/* ── UNIFIED BENTO TYPOGRAPHIC HARMONIZATION ───── */
+.tile:not(.tile-hero) .lbl {
+  font-size: 13.5px !important;
+}
+
+.tile:not(.tile-hero) .h3,
+.spotify-track {
+  font-size: 14.5px !important;
+  line-height: 1.25 !important;
+}
+
+.tile:not(.tile-hero) .body,
+.spotify-artist {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+/* ── HERO DETAILS & HOVER EFFECTS ────────────── */
+.hover-bold-target {
+  font-weight: 700;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.hero-tile-wrapper {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  align-self: flex-start;
+}
+
+.tile-hero {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.tile-hero .inner {
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+}
+
+.tile-hero.content-hidden .inner {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.95);
+}
+
+/* ── PREMIUM EXPANDING BIO MODAL ─────────────── */
+.bio-modal-overlay {
+  position: fixed;
+  left: var(--zoom-x, 0px);
+  top: var(--zoom-y, 0px);
+  width: var(--zoom-w, 0px);
+  height: var(--zoom-h, 0px);
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: var(--tile-radius, 28px);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 20px;
+  will-change: left, top, width, height, border-radius, opacity;
+}
+
+.bio-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+  left: 0px !important;
+  top: 0px !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0px !important;
+  background: var(--bg, #13131a) !important;
+  display: block !important;
+  overflow-y: auto !important;
+}
+
+.bio-modal-overlay.mounted,
+.bio-modal-overlay.expanding {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bio-modal-overlay.expanding {
+  left: 0px !important;
+  top: 0px !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0px !important;
+}
+
+/* ── HARDWARE-ACCELERATED VIDEO CONTAINERS ───── */
+.hw-accel-container,
+.hw-accel-container video {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.hw-accel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.hw-accel-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+}
+
+/* ── WORK TILE HOVER COMPRESSION ──────────────── */
+.tile-visual-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 2;
+}
+
+h1,
+h2,
+h3,
+h4,
+.h1,
+.h2,
+.h3,
+.h4,
+.logo {
+  letter-spacing: var(--letter-spacing-heading, 0.06em);
+}
+
+.lbl,
+.unified-close-btn {
+  letter-spacing: var(--letter-spacing-badge, 0.06em);
+}
+
+/* ── ACTIVE KEYFRAME ANIMATIONS ───────────────── */
+@keyframes bentoMarquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* ── GLOBAL HOME PILL BUTTON ── */
+.global-home-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #0A0A0A !important;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: lowercase;
+  padding: 10px 24px;
+  border-radius: 99px;
+  cursor: none !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+  will-change: transform;
+}
+
+.global-home-pill:hover {
+  background-color: #C3FB50 !important;
+  transform: scale(1.08);
+}
+
+.global-home-pill:active {
+  transform: scale(0.96);
+}
+
+/* ── VIEWPORT ADAPTATION MEDIA QUERIES ───────── */
+@media (max-width: 1024px) {
+  .page {
+    padding: 0 20px 20px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .page {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    padding: 16px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .page-content {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 24px !important;
+    width: 100% !important;
+  }
+
+  .bento {
+    display: grid;
+    grid-auto-flow: column dense;
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-columns: 140px;
+    gap: 16px;
+    height: calc(100vh - 180px);
+    max-height: 860px;
+    min-height: 600px;
+    align-self: center;
+  }
+
+  .tile {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  .topbar {
+    padding: 16px 20px 12px 20px !important;
+  }
+}

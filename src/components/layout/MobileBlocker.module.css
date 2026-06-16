@@ -1,0 +1,37 @@
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #01CF6A;
+  color: #fff;
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  font-family: var(--font-family);
+}
+
+.content h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+
+}
+
+.content p {
+  font-size: 1.5rem;
+  color: #ffffff;
+  line-height: 1;
+}
+
+@media (max-width: 1024px) {
+  .overlay {
+    display: flex;
+  }
+}

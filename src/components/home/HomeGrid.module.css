@@ -1,0 +1,22 @@
+.bento-masonry {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  /* 20 equal-width columns */
+  grid-auto-flow: row dense;
+  /* Mathematically calculates perfectly square row cells responsively: 
+     (100vw - 56px page padding - 19 gaps * 8px) / 20 columns = 5vw - 10.4px */
+  grid-auto-rows: calc(5vw - 10.4px);
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  perspective: 1500px;
+}
+
+/* Maintain perfectly square base cells when screen exceeds 1440px desktop content width */
+@media (min-width: 1440px) {
+  .bento-masonry {
+    grid-auto-rows: 62px;
+  }
+}

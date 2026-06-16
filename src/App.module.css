@@ -1,0 +1,26 @@
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.4s ease;
+}
+
+.page-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-visible {
+  opacity: 1;
+}
+
+
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto; /* Align to top to prevent vertical jumping during tab transitions */
+}

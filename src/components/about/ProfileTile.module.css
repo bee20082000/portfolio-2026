@@ -1,0 +1,29 @@
+.profile-row-top {
+  margin-bottom: 6vw;
+}
+
+.text-white {
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.text-accent {
+  font-size: 14px;
+  font-weight: 500;
+  color: #C3FB50;
+}
+
+.stat-number {
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 400;
+  color: #C3FB50;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}

@@ -1,0 +1,64 @@
+import WorkModalLayout from '../shared/WorkModalLayout';
+
+const data = {
+  title: 'Santen',
+  category: 'Thematic Campaign',
+  client: 'Santen Pharmaceutical',
+  role: 'Creative Art Director',
+  timeline: '2023',
+  services: 'Visual Strategy, Campaign Design, Digital Assets',
+  subtitle: 'Engaging digital thematic campaigns promoting healthy eye care practices across target demographics.',
+  challenge: 'Santen needed to raise awareness about eye health and strain prevention in an engaging, relatable way on digital media.',
+  strategy1: 'Created highly contextual visual formats, integrating popular lifestyle trends and expert advice posts to maximize readability.',
+  strategy2: 'Used crisp, informative layouts and educational color schemas to build credibility and high brand recall.',
+  solutionDesc: 'A series of vibrant, eye-catching social posts and animations designed to capture feed attention and deliver health insights.',
+  solution: 'Achieved high organic share rates and successfully educated audiences on daily digital eye strain relief.',
+  metrics: [{ val: '+48%', lbl: 'Audience Reach' }, { val: '5M+', lbl: 'Campaign Views' }, { val: '+35%', lbl: 'Engagement Rate' }],
+  images: [
+    '/asset/images/santen/ST_DramaTrend_Post1_220914.gif',
+    '/asset/images/santen/ST_KARI-UNI_230221_FA.jpg',
+    '/asset/images/santen/ST_Sancoba_230203.FA.jpg',
+    '/asset/images/santen/ST_Sancoba_230210.jpg',
+    '/asset/images/santen/ST_Sancoba_Trend_post 7.png',
+    '/asset/images/santen/Sancoba - Post school life.png',
+    '/asset/images/santen/Sancoba - This that.png',
+    '/asset/images/santen/Sancoba expert advice post 8.png',
+    '/asset/images/santen/Sancoba-Moment-Post2-1801.jpg',
+    '/asset/images/santen/Santen - HA post.png',
+    '/asset/images/santen/Santen - Nam Nu post.png',
+    '/asset/images/santen/Santen - trend post5 - opt 2.gif',
+    '/asset/images/santen/sancoba product - post 8.png',
+    '/asset/images/santen/sancoba product post 4.png'
+  ],
+  accent: '#00a896',
+}
+
+export default function SantenModal() {
+  return (
+    <WorkModalLayout data={data}>
+      {data.images.map((src, index) => (
+        <div
+          key={src}
+          style={{
+            gridColumn: 'span 3',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            backgroundColor: '#1c1d22',
+          }}
+        >
+          <img
+            src={src}
+            alt={`Santen Campaign ${index + 1}`}
+            loading="lazy"
+            decoding="async"
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+            }}
+          />
+        </div>
+      ))}
+    </WorkModalLayout>
+  );
+}
