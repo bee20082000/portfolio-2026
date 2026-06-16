@@ -19,30 +19,33 @@ Portfolio/
     ├── main.jsx        # Bootstrap file mounting React inside index.html root
     ├── App.jsx         # Global controller tracking theme state, tab selector, and modals
     ├── style.css       # Visual HSL variables, desktop coord configurations, and metrics CSS
-    └── components/
-        ├── Cursor.jsx        # Stretchy custom cursor running inside GSAP ticker context
-        ├── Topbar.jsx        # Navigation bar incorporating SVG theme toggles & magnetic pulls
-        ├── BentoSwitcher.jsx # Pill select button triggering staggers & spring attractions
-        ├── OverviewGrid.jsx  # Stagger-assembles the 15 tiles, attaching 3D tilts and triggers
-        ├── CasesGrid.jsx     # Controls case cards, capturing boundary coords on expand click
-        └── BlogModal.jsx     # Renders parallax articles, stats blocks, and handles reverse morphs
+    ├── hooks/          # Custom React hooks
+    ├── utils/          # Utility functions
+    ├── assets/         # Static assets and media
+    └── components/     # Modular, isolated React components
+        ├── ui/         # Reusable UI elements like Cursor, Buttons
+        ├── layout/     # Layout components like Navigation, Footer
+        ├── home/       # Home page specific components like Bento Grids
+        ├── work/       # Case studies and project showcase grids
+        ├── about/      # About page components
+        └── modals/     # Parallax articles and modal overlays
 ```
 
 ---
 
-## 🚀 Setup & Launch on Windows
+## 🚀 Setup & Launch
 
 Follow these simple steps to run your React app locally:
 
-### 1. Download and Install Node.js
-If you haven't installed it yet:
-*   Press your **Windows Key**, type **PowerShell**.
-*   Right-click on **Windows PowerShell** and choose **Run as Administrator**.
-*   Paste the following command and press Enter:
-    ```powershell
-    choco install nodejs-lts -y
-    ```
-*   Close the Administrator shell and reopen your normal terminal in your workspace directory.
+### 1. Install Node.js
+If you haven't installed it yet, download and install Node.js from the official website:
+[Node.js Official Website](https://nodejs.org/)
+
+Verify your installation by opening your terminal and running:
+```bash
+node -v
+npm -v
+```
 
 ### 2. Install Project Dependencies
 Run this in your normal terminal to download all the React, GSAP, and Vite compilation libraries:
