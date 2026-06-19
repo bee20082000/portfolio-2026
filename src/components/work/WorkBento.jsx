@@ -21,12 +21,12 @@ const WORKS = [
   {
     id: 'thuyen_xua_food',
     name: 'THUYEN XUA FOOD',
-    cover: '/asset/images/Thuyen xua/TX-cover.jpg'
+    cover: '/asset/images/Thuyen-xua/TX-cover.jpg'
   },
   {
     id: 'tuongan',
     name: 'TUONG AN COOKING OIL',
-    cover: '/asset/images/Tuong an/KV-2023-lowres.jpg'
+    cover: '/asset/images/Tuong-an/KV-2023-lowres.jpg'
   },
   {
     id: 'panasonic_tho_dien',
@@ -36,22 +36,22 @@ const WORKS = [
   {
     id: 'chivas',
     name: 'CHIVAS TET CATALOG',
-    cover: '/asset/images/chivas/chivas cover.mp4'
+    cover: '/asset/images/chivas/chivas-cover.mp4'
   },
   {
     id: 'moe',
     name: 'Gori Coffee Branding',
-    cover: '/asset/images/Moe Cafe/cover.mp4'
+    cover: '/asset/images/Moe-Cafe/cover.mp4'
   },
   {
     id: 'axon_active',
     name: 'AXON ACTIVE NEW OFFICE',
-    cover: '/asset/images/axon active/TDC/cover.jpg'
+    cover: '/asset/images/axon-active/TDC/cover.jpg'
   },
   {
     id: 'nam_dinh_vu',
     name: 'NAM DINH VU CONCEPT',
-    cover: '/asset/images/Nam Dinh Vu/Cong/JPEG/Cong.jpg'
+    cover: '/asset/images/Nam-Dinh-Vu/Cong/JPEG/Cong.jpg'
   },
   {
     id: 'santen',

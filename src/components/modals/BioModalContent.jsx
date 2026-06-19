@@ -234,14 +234,14 @@ export default function BioModalContent() {
                   after graduating from university, I became a market researcher at Ipsos — an agency that can best be explained by spending lots of time trying to figure out the reason why millions of complete strangers make weird choices on a daily basis. I actually loved this job.
                 </div>
                 <div className="scatter-letter hero-essay-photo" data-depth="0.22" style={{ gridColumn: '8 / 11' }}>
-                  <img src="/asset/images/Moe Cafe/moe-2.jpg" alt="Creative Mockup 5" draggable="false" loading="lazy" decoding="async" />
+                  <img src="/asset/images/Moe-Cafe/moe-2.jpg" alt="Creative Mockup 5" draggable="false" loading="lazy" decoding="async" />
                 </div>
               </div>
 
               {/* Row 8: Consumer Motivation & Photo 6 */}
               <div className="essay-row" style={{ marginTop: '150px' }}>
                 <div className="scatter-letter hero-essay-photo" data-depth="0.20" style={{ gridColumn: '2 / 5' }}>
-                  <img src="/asset/images/Moe Cafe/moe.jpg" alt="Creative Mockup 6" draggable="false" loading="lazy" decoding="async" />
+                  <img src="/asset/images/Moe-Cafe/moe.jpg" alt="Creative Mockup 6" draggable="false" loading="lazy" decoding="async" />
                 </div>
                 <div className="scatter-letter block-justified" data-depth="0.06" style={{ gridColumn: '6 / 12' }}>
                   I was working on research projects for a range of brands, exploring consumer behavior, market trends, drivers of their choice and motivation, frustration, pain points, and the psychological background that influences their decision-making process.
@@ -258,7 +258,7 @@ export default function BioModalContent() {
               {/* Row 10: Creative Side Quests & Photo 7 */}
               <div className="essay-row" style={{ marginTop: '160px' }}>
                 <div className="scatter-letter hero-essay-photo" data-depth="0.22" style={{ gridColumn: '1 / 4' }}>
-                  <img src="/asset/images/Moe Cafe/photo-3.jpg" alt="Creative Mockup 7" draggable="false" loading="lazy" decoding="async" />
+                  <img src="/asset/images/Moe-Cafe/photo-3.jpg" alt="Creative Mockup 7" draggable="false" loading="lazy" decoding="async" />
                 </div>
                 <div className="scatter-letter block-justified" data-depth="0.10" style={{ gridColumn: '7 / 13' }}>
                   at a certain point in time, though, i discovered the mild inconvenience that i quite enjoy creative tasks. not only did i continue researching, i ended up accumulating different side quests: photography, filmmaking, design, content production, websites, campaign ideas, social media presence, and random creative experiments.
@@ -278,7 +278,7 @@ export default function BioModalContent() {
                   obviously, this led to my move into advertising. a field combining brainstorming, telling stories, solving problems, changing ideas, changing ideas again, surviving deadlines, and hearing the sentence:
                 </div>
                 <div className="scatter-letter hero-essay-photo" data-depth="0.24" style={{ gridColumn: '10 / 13' }}>
-                  <img src="/asset/images/Moe Cafe/photo-4.jpg" alt="Creative Mockup 8" draggable="false" loading="lazy" decoding="async" />
+                  <img src="/asset/images/Moe-Cafe/photo-4.jpg" alt="Creative Mockup 8" draggable="false" loading="lazy" decoding="async" />
                 </div>
               </div>
 
@@ -330,7 +330,7 @@ export default function BioModalContent() {
               {/* Row 19: Social Profile & Photo 10 */}
               <div className="essay-row" style={{ marginTop: '160px' }}>
                 <div className="scatter-letter hero-essay-photo" data-depth="0.24" style={{ gridColumn: '1 / 4' }}>
-                  <img src="/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-7.jpg" alt="Creative Mockup 10" draggable="false" loading="lazy" decoding="async" />
+                  <img src="/asset/images/axon-active/TDC/Lesonphoto-Axon-Active-2048px-7.jpg" alt="Creative Mockup 10" draggable="false" loading="lazy" decoding="async" />
                 </div>
                 <div className="scatter-letter block-justified" data-depth="0.12" style={{ gridColumn: '5 / 11' }}>
                   socially, i tend to be quite reserved at first. people usually think that i'm reserved and mysterious. it's partly true. there is just one problem. whenever something becomes interesting (branding, consumer behavior, internet culture, storytelling, human psychology, random observations, bad design of some restaurant, or, even worse, a specific topic nobody ever expected), something just clicks.

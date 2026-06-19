@@ -25,7 +25,7 @@ const data = {
   usePillMetadata: true,
 }
 
-const img = (name) => `/asset/images/Moe Cafe/${name}`;
+const img = (name) => `/asset/images/Moe-Cafe/${name}`;
 const imgStyle = { width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
 const cell = (span, extra = {}) => ({
   gridColumn: `span ${span}`,
@@ -46,7 +46,7 @@ export default function MoeModal() {
       {/* Old identity + KV video side by side */}
       <div style={cell(6)}>
         <video
-          src={img('gori kv - 12fps.mp4')}
+          src={img('gori-kv-12fps.mp4')}
           autoPlay muted loop playsInline
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
@@ -135,7 +135,7 @@ export default function MoeModal() {
 
       {/* Cover — full width */}
       <div style={cell(6)}>
-        <img src={img('moe cover.jpeg')} alt="Moe Packaging Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('moe-cover.jpeg')} alt="Moe Packaging Cover" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
 
@@ -165,7 +165,7 @@ export default function MoeModal() {
 
       {/* GIF cover — full width with overlay text */}
       <div style={{ ...cell(12), position: 'relative' }}>
-        <img src={img('moe cover.gif')} alt="Moe Animated Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('moe-cover.gif')} alt="Moe Animated Cover" loading="lazy" decoding="async" style={imgStyle} />
         <div style={{
           position: 'absolute',
           fontFamily: 'Dela Gothic One',
@@ -208,12 +208,12 @@ export default function MoeModal() {
         <img src={img('photo-4.jpg')} alt="Moe Packaging Photo 4" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(4)}>
-        <img src={img('photo 5.jpeg')} alt="Moe Packaging Photo 5" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-5.jpeg')} alt="Moe Packaging Photo 5" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
       {/* Photo 6 + new pack video */}
       <div style={cell(4)}>
-        <img src={img('photo 6.jpeg')} alt="Moe Packaging Photo 6" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-6.jpeg')} alt="Moe Packaging Photo 6" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
       {/* Moe-2 full width */}

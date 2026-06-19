@@ -51,7 +51,7 @@ export default function NakivoModal() {
         backgroundColor: '#1c1d22'
       }}>
         <video
-          src="/asset/images/nakivo/Sequence 01.mp4"
+          src="/asset/images/nakivo/Sequence-01.mp4"
           autoPlay
           loop
           muted

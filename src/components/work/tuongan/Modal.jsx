@@ -4,15 +4,15 @@ import { audioManager } from '../../../utils/audio';
 import WorkModalLayout from '../shared/WorkModalLayout';
 
 const scrollingImages = [
-  '/asset/images/Tuong an/21 context/2 Ha bang.jpg',
-  '/asset/images/Tuong an/21 context/21 Phung tai loc.jpg',
-  '/asset/images/Tuong an/21 context/3 Giang gia dinh.jpg',
-  '/asset/images/Tuong an/21 context/4 Tuyet tai loc.jpg',
-  '/asset/images/Tuong an/21 context/5 Hien su nghiep.jpg',
-  '/asset/images/Tuong an/21 context/6 Hien suc khoe.jpg',
-  '/asset/images/Tuong an/21 context/7 Phuong tai loc.jpg',
-  '/asset/images/Tuong an/21 context/8 rita gia dinh.jpg',
-  '/asset/images/Tuong an/21 context/9 Huyen su nghiep.jpg',
+  '/asset/images/Tuong-an/21-context/2-Ha-bang.jpg',
+  '/asset/images/Tuong-an/21-context/21-Phung-tai-loc.jpg',
+  '/asset/images/Tuong-an/21-context/3-Giang-gia-dinh.jpg',
+  '/asset/images/Tuong-an/21-context/4-Tuyet-tai-loc.jpg',
+  '/asset/images/Tuong-an/21-context/5-Hien-su-nghiep.jpg',
+  '/asset/images/Tuong-an/21-context/6-Hien-suc-khoe.jpg',
+  '/asset/images/Tuong-an/21-context/7-Phuong-tai-loc.jpg',
+  '/asset/images/Tuong-an/21-context/8-rita-gia-dinh.jpg',
+  '/asset/images/Tuong-an/21-context/9-Huyen-su-nghiep.jpg',
 ]
 
 const data = {
@@ -34,9 +34,9 @@ export default function TuonganModal() {
   const phoneImageRef = useRef(null);
 
   const phoneImages = [
-    '/asset/images/Tuong an/Phone/phone 1.png',
-    '/asset/images/Tuong an/Phone/phone 2.png',
-    '/asset/images/Tuong an/Phone/phone 3.png'
+    '/asset/images/Tuong-an/Phone/phone-1.png',
+    '/asset/images/Tuong-an/Phone/phone-2.png',
+    '/asset/images/Tuong-an/Phone/phone-3.png'
   ];
 
   // GSAP Hover Pipeline: Animates the container coordinates smoothly
@@ -86,7 +86,7 @@ export default function TuonganModal() {
         backgroundColor: '#1c1d22',
       }}>
         <img
-          src="/asset/images/Tuong an/KV-2023-lowres.jpg"
+          src="/asset/images/Tuong-an/KV-2023-lowres.jpg"
           alt="Main Hero Key Visual"
           loading="lazy"
           decoding="async"

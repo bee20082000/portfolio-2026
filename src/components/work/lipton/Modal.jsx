@@ -50,7 +50,7 @@ export default function LiptonModal() {
         <video src={img('summer/Lipton_post2_FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
       </div>
       <div style={cellStyle(6)}>
-        <video src={img('summer/Lipton Post 4 video FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
+        <video src={img('summer/Lipton-Post-4-video-FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
       </div>
 
     </WorkModalLayout>

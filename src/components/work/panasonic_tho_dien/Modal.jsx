@@ -9,21 +9,21 @@ const data = {
 }
 
 const COVERS = [
-  '/asset/images/Panasonic/pana cover.jpg',
+  '/asset/images/Panasonic/pana-cover.jpg',
   '/asset/images/Panasonic/pana-cover-2.jpg'
 ];
 
 const SOCIAL_POSTS = [
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 1.png', alt: 'Pana - AOC post 1' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 2.png', alt: 'Pana - AOC post 2' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 3.png', alt: 'Pana - AOC post 3' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 4.png', alt: 'Pana - AOC post 4' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 5.png', alt: 'Pana - AOC post 5' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 6.png', alt: 'Pana - AOC post 6' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - AOC post 7.png', alt: 'Pana - AOC post 7' },
-  { type: 'video', src: '/asset/images/Panasonic/Social/Pana - AOC post 8.mp4', alt: 'Pana - AOC post 8' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - Nam moi.png', alt: 'Pana - Nam moi' },
-  { type: 'image', src: '/asset/images/Panasonic/Social/Pana - dai ly.png', alt: 'Pana - Dai ly' }
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-1.png', alt: 'Pana - AOC post 1' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-2.png', alt: 'Pana - AOC post 2' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-3.png', alt: 'Pana - AOC post 3' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-4.png', alt: 'Pana - AOC post 4' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-5.png', alt: 'Pana - AOC post 5' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-6.png', alt: 'Pana - AOC post 6' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-AOC-post-7.png', alt: 'Pana - AOC post 7' },
+  { type: 'video', src: '/asset/images/Panasonic/Social/Pana-AOC-post-8.mp4', alt: 'Pana - AOC post 8' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-Nam-moi.png', alt: 'Pana - Nam moi' },
+  { type: 'image', src: '/asset/images/Panasonic/Social/Pana-dai-ly.png', alt: 'Pana - Dai ly' }
 ];
 
 export default function PanasonicThoDienModal() {

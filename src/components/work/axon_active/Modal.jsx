@@ -10,7 +10,7 @@ const data = {
   accent: '#0088ff',
 }
 
-const img = (name) => `/asset/images/axon active/TDC/${name}`;
+const img = (name) => `/asset/images/axon-active/TDC/${name}`;
 const imgStyle = { width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
 const cell = (span, extra = {}) => ({
   gridColumn: `span ${span}`,
@@ -57,7 +57,7 @@ export default function AxonActiveModal() {
 
       {/* Blueprint + train refs side by side */}
       <div style={cell(6)}>
-        <img src={img('blueprint train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('blueprint-train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
         <img src={img('glacier-express-3-652fe3cfc907a.avif')} alt="Glacier Express Reference" loading="lazy" decoding="async" style={imgStyle} />
@@ -99,7 +99,7 @@ export default function AxonActiveModal() {
         <img src={img('blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
-        <img src={img('hiking sign ref.jpg')} alt="Hiking Sign Reference" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('hiking-sign-ref.jpg')} alt="Hiking Sign Reference" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
       {/* → Actual result: the sign in the office */}
@@ -141,25 +141,25 @@ export default function AxonActiveModal() {
 
       {/* → Actual result: large open workspace */}
       <div style={cell(12)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-4.jpg')} alt="Office Open Space" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-4.jpg')} alt="Office Open Space" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-7.jpg')} alt="Office Collaboration Zone" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-7.jpg')} alt="Office Collaboration Zone" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-20.jpg')} alt="Office Interior Detail" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-20.jpg')} alt="Office Interior Detail" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-31.jpg')} alt="Workspace Zone" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-31.jpg')} alt="Workspace Zone" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-39.jpg')} alt="Workspace Detail" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-39.jpg')} alt="Workspace Detail" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-43.jpg')} alt="Office Finishing" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-43.jpg')} alt="Office Finishing" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
-        <img src={img('Lesonphoto.com-Axon Active-2048px-46.jpg')} alt="Completed Office" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Lesonphoto-Axon-Active-2048px-46.jpg')} alt="Completed Office" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
     </WorkModalLayout >

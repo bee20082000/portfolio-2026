@@ -10,7 +10,7 @@ const data = {
   accent: '#c82027',
 }
 
-const img = (name) => `/asset/images/Thuyen xua/${name}`;
+const img = (name) => `/asset/images/Thuyen-xua/${name}`;
 const imgStyle = { width: '100%', height: 'auto', display: 'block' };
 const cell = (span, extra = {}) => ({
   gridColumn: `span ${span}`,
