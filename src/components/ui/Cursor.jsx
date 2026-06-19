@@ -70,10 +70,9 @@ export default function Cursor() {
         vy *= 0.25
       }
 
-      // Apply coordinates using GPU-accelerated 3D Transforms!
-      // Subtracting the hotspot tip offset (-7.88px, -5.25px) directly here
-      setCurX(rx - 7.88)
-      setCurY(ry - 5.25)
+      // Apply coordinates offset so the visual tip (22.91%, 9.58%) of the 36x36px SVG is directly under the mouse
+      setCurX(rx - 8.25)
+      setCurY(ry - 3.45)
 
       lastMx = mx
       lastMy = my
@@ -104,30 +103,28 @@ export default function Cursor() {
       })
     }
 
-    const showSvgHover = (scale = 1.15, rotate = -10) => {
+    const showSvgHover = (scale = 1.15) => {
       gsap.to(svgRef.current, {
-        // ── ADJUSTMENT 1: Scale zoom reduced from 1.45 to 1.15 ──
         scale: scale,
-        rotate: rotate, // Slightly gentler rotation to match subtle scale
         opacity: 1,
         duration: 0.42,
         ease: 'back.out(1.7)',
-        transformOrigin: '18.75% 12.5%',
+        transformOrigin: '22.91% 9.58%',
         overwrite: 'auto'
       })
     }
 
     const resetSvg = () => {
       gsap.to(svgRef.current, {
-        scale: 1.0, rotate: 0, opacity: 1, duration: 0.38,
-        ease: 'back.out(1.7)', transformOrigin: '18.75% 12.5%', overwrite: 'auto'
+        scale: 1.0, opacity: 1, duration: 0.38,
+        ease: 'back.out(1.7)', transformOrigin: '22.91% 9.58%', overwrite: 'auto'
       })
     }
 
     const hideSvg = () => {
       gsap.to(svgRef.current, {
-        scale: 0, opacity: 0, rotate: -45, duration: 0.28,
-        ease: 'power2.out', transformOrigin: '18.75% 12.5%', overwrite: 'auto'
+        scale: 0, opacity: 0, duration: 0.28,
+        ease: 'power2.out', transformOrigin: '22.91% 9.58%', overwrite: 'auto'
       })
     }
 
@@ -207,7 +204,7 @@ export default function Cursor() {
         duration: 0.1,
         ease: 'power3.out',
         overwrite: 'auto',
-        transformOrigin: '18.75% 12.5%'
+        transformOrigin: '22.91% 9.58%'
       })
     }
     const onUp = () => {
@@ -216,7 +213,7 @@ export default function Cursor() {
         duration: 0.55,
         ease: 'back.out(4)',
         overwrite: 'auto',
-        transformOrigin: '18.75% 12.5%'
+        transformOrigin: '22.91% 9.58%'
       })
     }
     window.addEventListener('mousedown', onDown, { passive: true })
@@ -234,34 +231,43 @@ export default function Cursor() {
   }, [])
 
   return (
-    <div className={styles.cursor} ref={curRef} style={{ transformOrigin: "18.75% 12.5%" }}>
-      {/* Classic premium black cursor arrow SVG — crisp, high-contrast, with white border */}
-      <svg ref={svgRef} width="42" height="42" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transformOrigin: "18.75% 12.5%" }}>
+    <div className={styles.cursor} ref={curRef} style={{ transformOrigin: "22.91% 9.58%" }}>
+      {/* Custom SVG cursor — crisp, high-contrast, with white border */}
+      <svg
+        ref={svgRef}
+        width="36"
+        height="36"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ transformOrigin: "22.91% 9.58%" }}
+      >
         <path
-          d="M4.5 3V21L10.5 15H17.5L4.5 3Z"
+          d="M7.92098 2.29951C6.93571 1.5331 5.5 2.23523 5.5 3.48349V20.4923C5.5 21.9145 7.2945 22.5382 8.17661 21.4226L12.3676 16.1224C12.6806 15.7267 13.1574 15.4958 13.6619 15.4958H20.5143C21.9425 15.4958 22.5626 13.6887 21.4353 12.8119L7.92098 2.29951Z"
           fill="#000000"
           stroke="#FFFFFF"
           strokeWidth="1.5"
+          strokeLinecap="round"
           strokeLinejoin="round"
         />
       </svg>
 
-      {/* Modern hand pointer cursor SVG */}
+      {/* Modern hand pointer cursor SVG (kept for backward compatibility, hidden) */}
       <svg
         id="fi_16702775"
         enableBackground="new 0 0 100 100"
         ref={handSvgRef}
         width="40"
         height="40"
-        viewBox="0 0 100 100"
+        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
         style={{ display: 'none', transformOrigin: "28% 10%" }}
       >
         <path
-          d="m83.1344528 26.0754948c-2.1633835-4.3434639-7.5547714-6.1498184-11.8982315-3.986433-2.8542862 1.4216557-4.5945282 4.1470661-4.847023 7.0607681l-.1236191-.2481995c-2.1633835-4.3434639-7.5547829-6.1498127-11.898243-3.9864292-2.8542824 1.4216576-4.5945282 4.147068-4.8470192 7.0607681l-.1236229-.2482033c-2.1633835-4.3434601-7.5547714-6.1498127-11.8982391-3.9864254-2.8542747 1.4216537-4.5945206 4.1470585-4.8470154 7.0607605l-13.2893657-26.6812667c-1.050787-2.1096826-2.9084549-3.6625876-5.20119-4.5341415-2.2309198-.7474573-4.6491785-.6271737-6.7588644.4236152-4.3434601 2.1633844-6.1498127 7.5547752-3.9864261 11.8982401l24.5389736 49.2672865c.2472496.4964066.1844749.9923172-.1260014 1.301857-.3104877.3095322-.8068867.556778-1.3646164.3699112l-12.0841475-4.0487175c-4.090023-1.3703346-8.6189137.4207573-10.6706047 4.0757179-1.2433755 2.1681519-1.4335756 4.8959503-.6932745 7.3151627.7403033 2.4c-1.2433755 2.1681519-1.4335756 4.8959503-.6932745 7.3151627.7403033 2.4c7.0736313-3.5232315 12.2910385-9.5293884 14.7825699-16.9657898 2.4915085-7.4364014 1.945694-15.3734932-1.5775299-22.4471283z"
+          d="M17.5,12.55,10.65,9.7,7.1,13.25a1.2,1.2,0,0,1-1.7,0,1.2,1.2,0,0,1,0-1.7L9,8,6.15,5.15a1.2,1.2,0,0,1,0-1.7,1.2,1.2,0,0,1,1.7,0L10.7,6.3,13.55,3.45a1.2,1.2,0,0,1,1.7,0,1.2,1.2,0,0,1,0,1.7L12.4,8l3.4,3.4a1.2,1.2,0,0,1,0,1.7,1.2,1.2,0,0,1-1.7,0L10.7,9.7l-2.85,2.85a1.2,1.2,0,0,1-1.7,0"
           fill="#000000"
           stroke="#FFFFFF"
-          strokeWidth="4.5"
+          strokeWidth="1.5"
           strokeLinejoin="round"
         />
       </svg>
@@ -272,7 +278,7 @@ export default function Cursor() {
           position: 'absolute',
           top: 0,
           left: 0,
-          transform: 'translate(4.5px, 3px)', /* align with cursor tip */
+          transform: 'translate(24px, 16px)', /* align to the bottom-right of centered cursor tip */
           pointerEvents: 'none'
         }}
       >

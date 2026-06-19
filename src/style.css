@@ -24,6 +24,57 @@
   font-display: swap;
 }
 
+/* ── CUSTOM FONTS: INSTALL ───────────────── */
+
+@font-face {
+  font-family: 'Install';
+  src: url('./assets/fonts/Install-Thin-Trial.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Install';
+  src: url('./assets/fonts/Install-ExtraLight-Trial.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Install';
+  src: url('./assets/fonts/Install-Light-Trial.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Install';
+  src: url('./assets/fonts/Install-Regular-Trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Install';
+  src: url('./assets/fonts/Install-Semibold-Trial.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Install';
+  src: url('./assets/fonts/Install-Bold-Trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 /* ── CUSTOM FONTS: INSTALL ROUNDED ───────────────── */
 @font-face {
   font-family: 'Install Rounded';
@@ -32,6 +83,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Install Rounded';
   src: url('./assets/fonts/Install-Rounded-Regular.woff') format('woff');
@@ -39,6 +91,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Install Rounded';
   src: url('./assets/fonts/Install-Rounded-Regular.woff') format('woff');
@@ -46,6 +99,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Install Rounded';
   src: url('./assets/fonts/Install-Rounded-Semibold.woff') format('woff');
@@ -53,6 +107,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Install Rounded';
   src: url('./assets/fonts/Install-Rounded-Semibold.woff') format('woff');
@@ -60,6 +115,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Install Rounded';
   src: url('./assets/fonts/Install-Rounded-Semibold.woff') format('woff');
@@ -129,12 +185,12 @@
   --h3-size: 20px;
   --lbl-size: 14.5px;
   --button-radius: 99px;
-  --font-family: 'Install Rounded', sans-serif;
+  --font-family: 'Install Rounded';
 
   /* Consistent Spacing Tokens */
-  --letter-spacing-base: -0.02em;
-  --letter-spacing-heading: -0.02em;
-  --letter-spacing-badge: -0.02em;
+  --letter-spacing-base: -0.01em;
+  --letter-spacing-heading: -0.01em;
+  --letter-spacing-badge: -0.01em;
 }
 
 /* ── RESET ──────────────────────────────────── */
@@ -145,8 +201,8 @@
   margin: 0;
   padding: 0;
   font-family: var(--font-family);
-  font-weight: 700;
-  letter-spacing: var(--letter-spacing-base, 0.06em);
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 /* Unified Scrollbar Hiding */

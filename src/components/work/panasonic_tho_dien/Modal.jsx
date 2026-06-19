@@ -10,7 +10,7 @@ const data = {
 
 const COVERS = [
   '/asset/images/Panasonic/pana cover.jpg',
-  '/asset/images/Panasonic/pana cover 2.jpg'
+  '/asset/images/Panasonic/pana-cover-2.jpg'
 ];
 
 const SOCIAL_POSTS = [
@@ -59,7 +59,7 @@ export default function PanasonicThoDienModal() {
         <div
           key={post.src}
           style={{
-            gridColumn: 'span 6',
+            gridColumn: 'span 4',
             borderRadius: '8px',
             overflow: 'hidden',
             backgroundColor: '#1c1d22',

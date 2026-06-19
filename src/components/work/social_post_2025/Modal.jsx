@@ -13,11 +13,10 @@ const data = {
   strategy2: 'Crafted structured overlay layouts to balance visual depth with crisp informational readability.',
   solutionDesc: 'A premium review of dynamic aesthetic posts tailored for social feeds.',
   solution: 'The 2025 feed layout established a signature style, resulting in increased organic reach and strong visual engagement.',
-  images: [
-    '/asset/images/social_post_2025_cover.png',
-  ],
   accent: '#FF5C39',
 }
+
+const imgStyle = { width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
 
 export default function SocialPost2025Modal() {
   return (
@@ -27,14 +26,13 @@ export default function SocialPost2025Modal() {
         borderRadius: '8px',
         overflow: 'hidden',
         backgroundColor: '#1c1d22',
-        height: '100%'
+        height: '100%',
       }}>
         <img
-          src={data.images[0]}
+          src="/asset/images/social_post_2025_cover.png"
           alt="Social Post 2025 Cover"
-          loading="lazy"
-          decoding="async"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          loading="lazy" decoding="async"
+          style={imgStyle}
         />
       </div>
     </WorkModalLayout>

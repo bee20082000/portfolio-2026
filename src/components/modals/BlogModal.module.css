@@ -35,7 +35,8 @@
 
 /* Vertical Scrolling Body Container */
 .blog-body {
-  max-width: 90%; /* Expanded from 1080px to 90% of the screen */
+  max-width: 90%;
+  /* Expanded from 1080px to 90% of the screen */
   margin: 0 auto;
   padding: 60px 24px 0px;
   /* Clears the floating close button with optimized compact spacing */

@@ -36,7 +36,7 @@
   flex-basis: 0;
   flex-shrink: 0;
   /* Prevents blobs from collapsing completely during intense elastic overshoots */
-  background-color: #616161;
+  background-color: #0393FE;
   border-radius: 50%;
   will-change: flex-grow;
 }
@@ -45,13 +45,13 @@
 .loading-text-big {
   position: relative;
   z-index: 2;
-  font-size: 3rem;
+  font-size: 30px;
   font-weight: 400;
   color: #13131A;
   text-align: center;
   padding: 0 20px;
   pointer-events: none;
-  font-family: 'Maroni Condensed', var(--font-family);
+  font-family: 'Install Rounded';
   letter-spacing: 0em;
 }
 

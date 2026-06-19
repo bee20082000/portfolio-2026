@@ -1,12 +1,27 @@
 /* Radial gradient overlay removed as requested */
 
 /* ── Scrollbar hide ── */
-.tile-hero-scroll-container::-webkit-scrollbar { display: none !important; width: 0 !important; height: 0 !important; }
-.tile-hero-scroll-container { -ms-overflow-style: none; scrollbar-width: none; }
+.tile-hero-scroll-container::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.tile-hero-scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
 }
 
 /* ── Scroll indicator (mono) ── */
@@ -141,7 +156,8 @@
   grid-column: 4 / 7;
   display: flex;
   align-items: center;
-  padding-bottom: 30vh; /* Pushes text up away from hero text */
+  padding-bottom: 30vh;
+  /* Pushes text up away from hero text */
   box-sizing: border-box;
   pointer-events: none;
 }
@@ -187,26 +203,33 @@
   .hero-intro-grid {
     grid-template-columns: repeat(6, 1fr);
   }
+
   .hero-topbar {
     grid-template-columns: repeat(6, 1fr);
   }
+
   .hero-topbar-name {
     grid-column: 1 / 3;
   }
+
   .hero-topbar-about {
     grid-column: 3;
   }
+
   .hero-topbar-contact {
     grid-column: 5;
   }
+
   .hero-bio-container {
     grid-column: 1 / -1;
-    padding-left:  clamp(20px, 4vw, 48px);
+    padding-left: clamp(20px, 4vw, 48px);
     padding-right: clamp(20px, 4vw, 48px);
   }
+
   .hero-bio-text {
     font-size: 14px;
   }
+
   .hero-scroll-indicator {
     position: absolute;
     bottom: 80px;
@@ -226,7 +249,8 @@
   grid-template-columns: repeat(10, 1fr);
   column-gap: 2vw;
   background-color: transparent;
-  padding: 4vh clamp(20px, 4vw, 48px) 40px; /* 40px bottom padding for small gap below footer */
+  padding: 4vh clamp(20px, 4vw, 48px) 40px;
+  /* 40px bottom padding for small gap below footer */
   margin-top: 40vh;
   position: relative;
   box-sizing: border-box;
@@ -264,7 +288,7 @@
 
 .hero-card-linkedin {
   z-index: 13;
-  background-color: #218BE6;
+  background-color: #0393FE;
 }
 
 .hero-card-linkedin .hero-contact-title,
@@ -366,31 +390,46 @@
   text-transform: lowercase;
 }
 
-.contact-toast {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  transform: translate(-50%, 16px) scale(0.96);
-  font-size: 14px;
-  font-weight: 600;
-  color: #0A0A0A;
-  background-color: #C3FB50;
-  padding: 6px 24px;
-  border-radius: 30px;
-  pointer-events: none;
-  z-index: 9999;
-  white-space: nowrap;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(10, 10, 10, 0.15);
-  opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+/* ── Icon swap: copy ↔ tick ── */
+.hero-icon-swap {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.contact-toast.toast-active {
-  opacity: 1;
-  transform: translate(-50%, 0) scale(1);
+.hero-icon-swap .hero-copy-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition:
+    opacity 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+.hero-icon-swap .icon-visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.hero-icon-swap .icon-hidden {
+  opacity: 0;
+  transform: scale(0.5) rotate(-30deg);
+  pointer-events: none;
+}
+
+/* tick enters from slightly different angle for visual variety */
+.hero-icon-swap .hero-icon-tick.icon-visible {
+  transform: scale(1) rotate(0deg);
+}
+
+.hero-icon-swap .hero-icon-tick.icon-hidden {
+  transform: scale(0.5) rotate(30deg);
+}
+
 
 @media (max-width: 900px) {
   .hero-contact-section {
@@ -400,7 +439,7 @@
 }
 
 .hero-footer {
-  grid-column: 4 / -1;
+  grid-column: 1 / -1;
   margin-top: clamp(240px, 28vh, 360px);
   display: flex;
   flex-direction: column;

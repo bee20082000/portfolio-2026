@@ -62,33 +62,42 @@ export default function NakivoModal() {
             display: 'block'
           }}
         />
+        <div style={{
+          fontFamily: 'Install Rounded',
+          position: 'absolute',
+          top: '20px',
+          left: '40px',
+          right: '40px',
+          zIndex: 2,
+          fontSize: 'clamp(50px, 7.5vw, 70px)',
+          fontWeight: '300',
+          color: '#EFCF26',
+          textAlign: 'justify',
+          textAlignLast: 'justify',
+          pointerEvents: 'none',
+          lineHeight: '0.9',
+        }}>
+          Illustration by Truc Dang
+        </div>
+        <div style={{
+          fontFamily: 'Install Rounded',
+          position: 'absolute',
+          bottom: '20px',
+          left: '40px',
+          right: '40px',
+          zIndex: 2,
+          fontSize: 'clamp(50px, 7.5vw, 70px)',
+          fontWeight: '300',
+          color: '#EFCF26',
+          textAlign: 'justify',
+          textAlignLast: 'justify',
+          pointerEvents: 'none',
+          lineHeight: '0.9',
+        }}>
+          Layout by Huy Nguyen
+        </div>
       </div>
 
-      {/* Credit Section */}
-      <div style={{
-        gridColumn: 'span 12',
-        textAlign: 'center',
-        padding: '40px 0 20px 0',
-        fontSize: '15px',
-        color: '#86868b',
-      }}>
-        Illustrations by:{' '}
-        <a
-          href="https://www.linkedin.com/in/truc-dang-3052921b6/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            color: data.accent,
-            textDecoration: 'none',
-            fontWeight: 500,
-            transition: 'opacity 0.2s ease'
-          }}
-          onMouseEnter={(e) => e.target.style.opacity = '0.8'}
-          onMouseLeave={(e) => e.target.style.opacity = '1'}
-        >
-          Truc Dang
-        </a>
-      </div>
     </WorkModalLayout>
   )
 }

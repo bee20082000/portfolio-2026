@@ -5,66 +5,163 @@ const data = {
   category: 'Workspace & Architecture Design',
   client: 'Axon Active',
   timeline: '2025',
-  challenge: 'How do we shape a hybrid workplace that balances focus and collaboration in an agile environment? For Axon Active’s new office in Thu Duc City, the goal was to create a contemporary workspace that supports dynamic teamwork while maintaining clarity, calm, and flexibility.',
+  challenge: 'How do we shape a hybrid workplace that balances focus and collaboration in an agile environment? For Axon Active new office in Thu Duc City, the goal was to create a contemporary workspace that supports dynamic teamwork while maintaining clarity, calm, and flexibility.',
   strategy1: 'Inspired by Swiss workplace principles, the spatial approach focused on precision, adaptability, and human-centered flow. I supported the design of selected workplace experiences, helping shape collaborative zones, quiet focus areas, and flexible touchpoints that encourage seamless interaction. A restrained material palette, acoustic comfort, natural textures, and subtle biophilic elements created a calm yet efficient environment tailored to an IT-driven, agile culture.',
-
-  images: [
-    '/asset/images/axon active/TDC/cover.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-4.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-7.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-20.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-31.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-33.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-34.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-39.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-40.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-43.jpg',
-    '/asset/images/axon active/TDC/Lesonphoto.com-Axon Active-2048px-46.jpg',
-  ],
   accent: '#0088ff',
 }
+
+const img = (name) => `/asset/images/axon active/TDC/${name}`;
+const imgStyle = { width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
+const cell = (span, extra = {}) => ({
+  gridColumn: `span ${span}`,
+  borderRadius: '8px',
+  overflow: 'hidden',
+  height: '100%',
+  ...extra,
+});
 
 export default function AxonActiveModal() {
   return (
     <WorkModalLayout data={data}>
-      {/* Hero Visual (Cover) */}
-      <div style={{
-        gridColumn: 'span 12',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        backgroundColor: '#1c1d22',
-        height: '100%'
-      }}>
-        <img
-          src={data.images[0]}
-          alt="Axon Active Office Cover"
-          loading="lazy"
-          decoding="async"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
+
+      {/* ══════════════════════════════════════════════
+          HERO COVER
+      ══════════════════════════════════════════════ */}
+      <div style={cell(12)}>
+        <img src={img('cover.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
-      {/* Grid of All Other Photos */}
-      {data.images.slice(1).map((imgUrl, i) => (
-        <div
-          key={imgUrl}
-          style={{
-            gridColumn: 'span 12',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            backgroundColor: '#1c1d22',
-            height: '100%'
-          }}
-        >
-          <img
-            src={imgUrl}
-            alt={`Axon Active Office Design Detail ${i + 1}`}
-            loading="lazy"
-            decoding="async"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-        </div>
-      ))}
-    </WorkModalLayout>
+      {/* Row filler — completes the row so description lands on its own row below */}
+      <div style={{ gridColumn: 'span 6' }} />
+
+      {/* Wayfinding description — own row, starts at col 8, no bg, no border */}
+      <div style={{
+        gridColumn: '7 / -1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        textAlign: 'justify',
+        hyphens: 'auto',
+        padding: '0 4px',
+      }}>
+        <p className="work-modal-body-text">
+          Inspired by Switzerland's reputation for precision, efficiency, and connection to nature, the office was designed as a journey through iconic Swiss experiences. Rather than relying on corporate branding alone, the space incorporates cultural references, intuitive wayfinding, and immersive destinations that encourage exploration and interaction.
+        </p>
+      </div>
+
+
+      {/* ══════════════════════════════════════════════
+          SECTION 1 — SWISS TRAIN SPATIAL LANGUAGE
+          Blueprint / Ref → Actual Photos
+      ══════════════════════════════════════════════ */}
+
+      {/* Blueprint + train refs side by side */}
+      <div style={cell(6)}>
+        <img src={img('blueprint train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('glacier-express-3-652fe3cfc907a.avif')} alt="Glacier Express Reference" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+      {/* Train detail refs — interior textures */}
+      <div style={cell(6)}>
+        <img src={img('train-2.jpg')} alt="Train Interior Reference" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('train-3.jpg')} alt="Train Detail Reference" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+
+      {/* Row filler — completes the row so description lands on its own row below */}
+      <div style={{ gridColumn: 'span 6' }} />
+
+      {/* Wayfinding description — own row, starts at col 8, no bg, no border */}
+      <div style={{
+        gridColumn: '7 / -1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        padding: '0 4px',
+      }}>
+        <p className="work-modal-body-text">
+          Inspired by the Glacier Express, Switzerland’s iconic panoramic railway, we transformed the pantry into an immersive destination within the office.
+          <br /><br />
+          A custom-built train installation paired with hand-painted alpine landscapes recreates the experience of traveling through the Swiss Alps, turning everyday breaks into moments of exploration and discovery.        </p>
+      </div>
+
+      {/* ══════════════════════════════════════════════
+          SECTION 2 — WAYFINDING & SIGNAGE
+          Blueprint / Ref → Actual Photo
+      ══════════════════════════════════════════════ */}
+
+      {/* Blueprint plan + hiking sign reference */}
+      <div style={cell(12)}>
+        <img src={img('blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('hiking sign ref.jpg')} alt="Hiking Sign Reference" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+      {/* → Actual result: the sign in the office */}
+      <div style={cell(6)}>
+        <img src={img('hiking-sign.jpg')} alt="Hiking Sign in Office" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      {/* Row filler — completes the row so description lands on its own row below */}
+      <div style={{ gridColumn: 'span 6' }} />
+
+      {/* Wayfinding description — own row, starts at col 8, no bg, no border */}
+      <div style={{
+        gridColumn: '7 / -1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        textAlign: 'justify',
+        hyphens: 'auto',
+        padding: '0 4px',
+      }}>
+        <p className="work-modal-body-text">
+          Drawing inspiration from Swiss alpine trail markers, we developed a workplace wayfinding system rooted in clarity, consistency, and orientation.
+          <br /><br />
+          The signage transforms everyday navigation into a seamless experience, helping employees move effortlessly between focus, collaboration, and social spaces.        </p>
+      </div>
+
+
+
+      {/* ══════════════════════════════════════════════
+          SECTION 3 — WORKSPACE ZONES
+          Blueprint / Ref → Actual Photos
+      ══════════════════════════════════════════════ */}
+
+      {/* Blueprint plan for workspace zone */}
+      <div style={cell(12)}>
+        <img src={img('blueprint-2.jpg')} alt="Workspace Zone Blueprint" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+      {/* → Actual result: finished zones */}
+
+      {/* → Actual result: large open workspace */}
+      <div style={cell(12)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-4.jpg')} alt="Office Open Space" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-7.jpg')} alt="Office Collaboration Zone" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-20.jpg')} alt="Office Interior Detail" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(12)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-31.jpg')} alt="Workspace Zone" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(12)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-39.jpg')} alt="Workspace Detail" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-43.jpg')} alt="Office Finishing" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(6)}>
+        <img src={img('Lesonphoto.com-Axon Active-2048px-46.jpg')} alt="Completed Office" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+    </WorkModalLayout >
   )
 }

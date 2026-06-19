@@ -33,7 +33,7 @@ export default function NamDinhVuModal() {
       {data.images.map((src, index) => {
         // Index 9 (trambomtangap_topview.jpg, vertical) and Index 10 (Nhamaynuocthai2_topview.jpg, square-ish) span 6.
         // All other landscape renders span 12.
-        const span = (index === 9 || index === 10) ? 6 : 12;
+        const span = (index === 8 || index === 9) ? 6 : 12;
         return (
           <div
             key={index}

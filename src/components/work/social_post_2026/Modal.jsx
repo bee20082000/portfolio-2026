@@ -13,11 +13,10 @@ const data = {
   strategy2: 'Synthesized high-tech interfaces with readable, accessible content overlays.',
   solutionDesc: 'A visionary digital feed archetype optimized for maximum aesthetic impact.',
   solution: 'The 2026 series was highlighted as a top graphic inspiration showcase in design community galleries.',
-  images: [
-    '/asset/images/social_post_2026_cover.png',
-  ],
   accent: '#18D5FF',
 }
+
+const imgStyle = { width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
 
 export default function SocialPost2026Modal() {
   return (
@@ -27,14 +26,13 @@ export default function SocialPost2026Modal() {
         borderRadius: '8px',
         overflow: 'hidden',
         backgroundColor: '#1c1d22',
-        height: '100%'
+        height: '100%',
       }}>
         <img
-          src={data.images[0]}
+          src="/asset/images/social_post_2026_cover.png"
           alt="Social Post 2026 Cover"
-          loading="lazy"
-          decoding="async"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          loading="lazy" decoding="async"
+          style={imgStyle}
         />
       </div>
     </WorkModalLayout>

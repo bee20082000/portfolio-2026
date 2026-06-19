@@ -22,8 +22,8 @@ const data = {
   role: 'Creative Designer',
   services: 'Campaign Ideation & Visual Development',
   timeline: '2023',
-  description: 'A social-first campaign designed to reimagine “Cát Tường An Khang” as a youth-friendly cultural movement through interactive content, digital storytelling, and community engagement.',
-  context: 'Young audiences rarely engage with traditional festive messaging unless it feels social, participatory, or worth sharing. As part of the creative team at DDB, I contributed through creative ideation, visual design, and execution, helping explore ways to make the campaign feel more native to online communities — turning a traditional New Year blessing into something younger audiences would actively join, remix, and talk about.'
+  challenge: 'A social-first campaign designed to reimagine “Cát Tường An Khang” as a youth-friendly cultural movement through interactive content, digital storytelling, and community engagement.',
+  strategy1: 'Young audiences rarely engage with traditional festive messaging unless it feels social, participatory, or worth sharing. As part of the creative team at DDB, I contributed through creative ideation, visual design, and execution, helping explore ways to make the campaign feel more native to online communities — turning a traditional New Year blessing into something younger audiences would actively join, remix, and talk about.'
 }
 
 export default function TuonganModal() {

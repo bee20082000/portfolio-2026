@@ -40,7 +40,7 @@ const WORKS = [
   },
   {
     id: 'moe',
-    name: 'MOE CAFE AND GIFT SHOP',
+    name: 'Gori Coffee Branding',
     cover: '/asset/images/Moe Cafe/cover.mp4'
   },
   {
@@ -58,16 +58,7 @@ const WORKS = [
     name: 'SANTEN SOCIAL CAMPAIGN',
     cover: '/asset/images/santen/cover.jpg'
   },
-  {
-    id: 'social_post_2025',
-    name: 'SOCIAL POST 2025',
-    cover: '/asset/images/social_post_2025_cover.png'
-  },
-  {
-    id: 'social_post_2026',
-    name: 'SOCIAL POST 2026',
-    cover: '/asset/images/social_post_2026_cover.png'
-  },
+
   {
     id: 'nakivo',
     name: 'NAKIVO CALENDAR',

@@ -18,10 +18,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
   const entranceAnimated = useRef(false);
   const baselineHelperRef = useRef(null);
 
-  const [toast, setToast] = useState('');
-  const [toastVisible, setToastVisible] = useState(false);
+  const [copiedType, setCopiedType] = useState(null);
   const timeoutRef = useRef(null);
-  const hideTimeoutRef = useRef(null);
 
   const animClick = (el) => {
     gsap.timeline()
@@ -36,19 +34,15 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       audioManager.play('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3', 0.4).catch(() => { });
     } catch (err) { }
     navigator.clipboard.writeText(text).then(() => {
-      setToast(`${type} copied`);
-      setToastVisible(true);
+      setCopiedType(type);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = setTimeout(() => setToastVisible(false), 1400);
-      timeoutRef.current = setTimeout(() => setToast(''), 1800);
+      timeoutRef.current = setTimeout(() => setCopiedType(null), 2000);
     }).catch(() => { });
   };
 
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
     };
   }, []);
 
@@ -391,7 +385,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
             <div className="hero-bio-container">
               <div className="hero-bio-text">
                 a designer. I've worked on many projects, <br />
-                mainly making brands less confusing, <br />
+                mainly making brands more memorable, <br />
                 campaigns less forgettable and <br />
                 digital things people click on willingly.
               </div>
@@ -420,18 +414,31 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                         className="hero-circle-icon-wrapper"
                         onClick={(e) => handleCopy('huy.nguyen20800@gmail.com', 'email', e)}
                       >
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="hero-copy-svg"
-                        >
-                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                        </svg>
+                        <div className="hero-icon-swap">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`hero-copy-svg hero-icon-copy ${copiedType === 'email' ? 'icon-hidden' : 'icon-visible'}`}
+                          >
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                          </svg>
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`hero-copy-svg hero-icon-tick ${copiedType === 'email' ? 'icon-visible' : 'icon-hidden'}`}
+                          >
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
                       </div>
 
                       <div className="hero-text-block">
@@ -446,18 +453,31 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                         className="hero-circle-icon-wrapper"
                         onClick={(e) => handleCopy('0793736688', 'phone', e)}
                       >
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="hero-copy-svg"
-                        >
-                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                        </svg>
+                        <div className="hero-icon-swap">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`hero-copy-svg hero-icon-copy ${copiedType === 'phone' ? 'icon-hidden' : 'icon-visible'}`}
+                          >
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                          </svg>
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`hero-copy-svg hero-icon-tick ${copiedType === 'phone' ? 'icon-visible' : 'icon-hidden'}`}
+                          >
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
                       </div>
 
                       <div className="hero-text-block">
@@ -480,9 +500,6 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                       rel="noopener noreferrer"
                       className="hero-circle-icon-wrapper"
                       onClick={(e) => {
-                        try {
-                          audioManager.play('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3', 0.4).catch(() => { });
-                        } catch (err) { }
                         animClick(e.currentTarget);
                       }}
                     >
@@ -513,16 +530,16 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
             {/* End Note Footer */}
             <div className="hero-footer">
               <div>
-                Fonts : Install &amp; Maroni by <a href="https://www.arthurcalame.com/" target="_blank" rel="noopener noreferrer">Arthur Calame</a>. Website made with Google Antigravity.
+                Fonts : Install &amp; Maroni by <a href="https://www.arthurcalame.com/" target="_blank" rel="noopener noreferrer">Arthur Calame</a>.
+                <br></br>
+                Website made with Google Antigravity.
               </div>
             </div>
           </div>
 
         </div>
       </div>
-      <div className={`contact-toast ${toastVisible ? 'toast-active' : ''}`}>
-        {toast && `✓ ${toast}`}
-      </div>
+
     </>
   );
 });
