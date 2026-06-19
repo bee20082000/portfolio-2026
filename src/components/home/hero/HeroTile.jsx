@@ -295,6 +295,10 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
   const localLenisRef = useSmoothScroll({
     wrapperRef: tileRef,
     contentRef: scrollRef,
+    options: {
+      syncTouch: true,
+      touchMultiplier: 1.5,
+    },
     onScroll: () => {
       ScrollTrigger.update();
     }

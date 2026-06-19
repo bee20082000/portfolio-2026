@@ -50,7 +50,7 @@ export default function useSmoothScroll({
       smoothWheel:        true,
       wheelMultiplier:    1.1, // Slightly higher multiplier for responsive feed
       touchMultiplier:    1.5, // Responsive inertia match for mobile
-      syncTouch:          false, // Keep native responsiveness on mobile screens
+      syncTouch:          true,  // Enable touch scroll on tablets
     };
 
     if (!options.duration && !options.easing && !('lerp' in options)) {
