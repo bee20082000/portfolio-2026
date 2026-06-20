@@ -1,291 +1,386 @@
-import { forwardRef, useState, useEffect, useRef, memo } from 'react';
+import { forwardRef, useEffect, useRef, useState, useCallback, memo } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import ProfileTile from './ProfileTile';
-import ExpTile from './ExpTile';
-import EduTile from './EduTile';
-import ContactTile from './ContactTile';
 import './AboutBento.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
-// ── CARD PALETTE ──────────────────────────────────────────────────────────────
+// ─── Card Data ───────────────────────────────────────────────────────────────
 const CARDS = [
-  { id: 'about-sec-profile', index: '01', label: 'profile', bg: '#0A0A0A', fg: '#FFFFFF', accent: '#C3FB50' },
-  { id: 'about-sec-experience', index: '02', label: 'experience', bg: '#C3FB50', fg: '#0A0A0A', accent: '#0A0A0A' },
-  { id: 'about-sec-education', index: '03', label: 'education', bg: '#A8D8FF', fg: '#0A0A0A', accent: '#0A0A0A' },
+  { id: 0, rotation: -3 },
+  { id: 1, rotation: 2.5 },
+  { id: 2, rotation: -1.5 },
 ];
 
-const SECTIONS = CARDS.map(c => ({ id: c.id, label: c.label }));
+// Rotation & depth offsets for each stack slot (0 = top, 1 = one behind, 2 = furthest behind)
+const SLOT_OFFSETS = [
+  { extraRotation: 0, yOffset: 0, scale: 1.00, zIndex: 10 },
+  { extraRotation: 3.5, yOffset: 10, scale: 0.97, zIndex: 9 },
+  { extraRotation: -4.5, yOffset: 18, scale: 0.94, zIndex: 8 },
+];
 
-// ── SLIDE-UP CARD CONTAINER ──────────────────────────────────────────────────
-function SlideCard({ card, children }) {
-  const cardRef = useRef(null);
-  const contentRef = useRef(null);
-
-  return (
-    <section
-      ref={cardRef}
-      id={card.id}
-      className="about-card-sec"
-    >
-      <div
-        ref={contentRef}
-        className="about-card-content"
-        style={{
-          backgroundColor: card.bg,
-          color: card.fg,
-        }}
-      >
-        {/* Top Header Row */}
-        <div className="swiss-grid card-header-row">
-          <div className="col-span-2">
-            <span className="card-index">
-              {card.index}
-            </span>
-          </div>
-          <div className="col-span-10">
-            <span className="card-label">
-              {card.label}
-            </span>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="card-main-content">
-          {children}
-        </div>
-      </div>
-    </section>
-  );
+function getSlotForCard(cardIndex, activeIndex) {
+  const dist = (cardIndex - activeIndex + CARDS.length) % CARDS.length;
+  const slot = SLOT_OFFSETS[dist];
+  return {
+    x: 0,
+    y: slot.yOffset,
+    rotation: CARDS[cardIndex].rotation + slot.extraRotation,
+    scale: slot.scale,
+    zIndex: slot.zIndex,
+  };
 }
 
-// ── ROOT ABOUT BENTO PAGE ──────────────────────────────────────────────────────
-const AboutBento = memo(forwardRef(({ className, style, id, onSelect, activeTab }, ref) => {
-  const bentoRef = useRef(null);
-  const triggerRef = useRef(null);
-  // Track whether we've actually entered the about tab at least once,
-  // so the "leaving" cleanup doesn't fire incorrectly on initial mount.
-  const hasInitRef = useRef(false);
-  const [activeSection, setActiveSection] = useState('profile');
+// ─── Component ────────────────────────────────────────────────────────────────
+const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) => {
+  const containerRef = useRef(null);
+  const cardRefs = useRef([]);
+  const navRef = useRef(null);
+  const pillRef = useRef(null);
+  const counterRef = useRef(null);
 
+  const [activeCard, setActiveCard] = useState(0);
+  const activeCardRef = useRef(0);
+  const isAnimatingRef = useRef(false);
+
+  const setContainerRef = (el) => {
+    containerRef.current = el;
+    if (ref) { typeof ref === 'function' ? ref(el) : (ref.current = el); }
+  };
+
+  // ── Snap all cards to their current stack slot (instant) ──────────────────
+  const snapDeck = useCallback((activeIdx) => {
+    CARDS.forEach((_, i) => {
+      const el = cardRefs.current[i];
+      if (el) gsap.set(el, getSlotForCard(i, activeIdx));
+    });
+  }, []);
+
+  // ── Entrance animation ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (!bentoRef.current) return;
-
-    const root = bentoRef.current;
-
-    // ── CLEANUP: leaving about tab ────────────────────────────────────────────
     if (activeTab !== 'about') {
-      // Only run cleanup if we actually entered the about tab before.
-      // Skipping on initial mount avoids calling lenis before it is ready.
-      if (!hasInitRef.current) return;
       window.lenis?.start?.();
-      if (triggerRef.current) { triggerRef.current.kill(); triggerRef.current = null; }
-      setActiveSection('profile');
       return;
     }
 
-    // Mark that we've entered the about tab at least once.
-    hasInitRef.current = true;
-
-    // ── ENTERING about tab ───────────────────────────────────────────────────
     window.lenis?.scrollTo?.(0, { immediate: true });
     window.lenis?.stop?.();
     window.scrollTo(0, 0);
 
-    let tl;
-    let refreshTimer;
+    // Reset to card 0
+    activeCardRef.current = 0;
+    setActiveCard(0);
 
-    const timer = setTimeout(() => {
-      const sections = root.querySelectorAll('.about-card-sec');
-      const nav      = root.querySelector('.about-nav-pill');
-      if (sections.length < 3) return;
+    const nav = navRef.current;
+    const pill = pillRef.current;
+    const counter = counterRef.current;
 
-      gsap.killTweensOf(sections);
-      if (triggerRef.current) { triggerRef.current.kill(); triggerRef.current = null; }
+    // Kill any leftover tweens
+    cardRefs.current.forEach(el => el && gsap.killTweensOf(el));
+    gsap.killTweensOf([nav, pill, counter].filter(Boolean));
 
-      // ── STEP 1: Set initial DOM states for all cards ──────────────────────
-      gsap.set(sections[0], { x: 0, scale: 1, opacity: 0 });
-      gsap.set([sections[1], sections[2]], { x: '100vw', scale: 1, opacity: 1 });
+    // Position cards: start above viewport, in their final rotation/scale
+    CARDS.forEach((_, i) => {
+      const el = cardRefs.current[i];
+      if (!el) return;
+      const slot = getSlotForCard(i, 0);
+      gsap.set(el, {
+        ...slot,
+        y: '-130%',
+        rotation: slot.rotation - 15,
+        opacity: 1,
+      });
+    });
+    gsap.set([nav, pill, counter].filter(Boolean), { y: '20vh', opacity: 1 });
 
-      // ── STEP 2: Build the scroll timeline (paused, complete) ─────────────
-      tl = gsap.timeline({ paused: true });
+    const tl = gsap.timeline();
 
-      // Phase 1 (tl 0→1): card 1 sweeps in; card 0 nudges left
-      tl.to(sections[1], { x: 0,       ease: 'none', duration: 1 }, 0);
-      tl.to(sections[0], { x: '-8vw',  ease: 'none', duration: 1 }, 0);
+    // Stagger cards in from above (back of deck lands first so top card lands on top)
+    const landOrder = [CARDS.length - 1, CARDS.length - 2, 0]; // back, middle, front
+    landOrder.forEach((cardIdx, step) => {
+      const el = cardRefs.current[cardIdx];
+      if (!el) return;
+      const slot = getSlotForCard(cardIdx, 0);
+      tl.to(el, {
+        y: slot.y,
+        rotation: slot.rotation,
+        duration: 0.65,
+        ease: 'back.out(1.1)',
+      }, step * 0.08);
+    });
 
-      // Phase 2 (tl 1→2): card 2 sweeps in; stack shifts
-      tl.to(sections[2], { x: 0,       ease: 'none', duration: 1 }, 1);
-      tl.to(sections[1], { x: '-8vw',  ease: 'none', duration: 1 }, 1);
-      tl.to(sections[0], { x: '-14vw', ease: 'none', duration: 1 }, 1);
+    // Slide in UI chrome from bottom off-screen
+    tl.to([nav, pill, counter].filter(Boolean), {
+      y: 0,
+      duration: 0.45,
+      stagger: 0.05,
+      ease: 'power3.out',
+    }, 0.2);
 
-      // Determine target scroll section
-      const nextSec = window.nextAboutSection;
-      window.nextAboutSection = null;
-      const targetIndex = nextSec ? CARDS.findIndex(c => c.label === nextSec) : 0;
-      const initialProgress = targetIndex !== -1 ? targetIndex / (CARDS.length - 1) : 0;
-
-      // seek to the correct initial progress position
-      tl.progress(initialProgress);
-
-      if (initialProgress > 0) {
-        // Direct fade in all cards when deep-linking to an internal card, bypassing swoosh
-        gsap.set(sections, { opacity: 0 });
-        gsap.to(sections, {
-          opacity: 1,
-          duration: 0.5,
-          ease: 'power2.out',
-          onComplete() {
-            const scrollTarget = root.offsetTop + targetIndex * window.innerHeight;
-            window.lenis?.scrollTo?.(scrollTarget, { immediate: true });
-            window.scrollTo(0, scrollTarget);
-            window.lenis?.start?.();
-
-            let isInit = true;
-            const st = ScrollTrigger.create({
-              trigger: root,
-              start: 'top top',
-              end: 'bottom bottom',
-              onUpdate(self) {
-                const targetProgress = isInit ? initialProgress : self.progress;
-                gsap.to(tl, { progress: targetProgress, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
-                const time  = targetProgress * 2;
-                const index = time < 0.5 ? 0 : time < 1.5 ? 1 : 2;
-                setActiveSection(CARDS[index].label);
-              },
-            });
-
-            setTimeout(() => {
-              isInit = false;
-            }, 200);
-
-            triggerRef.current = st;
-
-            refreshTimer = setTimeout(() => {
-              window.lenis?.resize?.();
-              ScrollTrigger.refresh();
-            }, 50);
-          }
-        });
-      } else {
-        // Entrance swoosh — shift card 0 back to scale 0.95 for entrance
-        gsap.set(sections[0], { x: 0, scale: 0.95, opacity: 0 });
-
-        // ── STEP 3: Entrance — only card 0 animates ───────────────────────────
-        gsap.to(sections[0], {
-          scale: 1, opacity: 1,
-          duration: 0.8,
-          delay: 0.1,
-          ease: 'power3.out',
-          onComplete() {
-            // Force scroll position to 0 and re-enable scroll right before creating ScrollTrigger
-            window.lenis?.scrollTo?.(0, { immediate: true });
-            window.lenis?.start?.();
-            window.scrollTo(0, 0);
-
-            // ── STEP 4: Attach ScrollTrigger to the complete, pre-positioned timeline
-            let isInit = true;
-            const st = ScrollTrigger.create({
-              trigger: root,
-              start: 'top top',
-              end: 'bottom bottom',
-              onUpdate(self) {
-                const targetProgress = isInit ? 0 : self.progress;
-                gsap.to(tl, { progress: targetProgress, duration: 0.2, ease: 'power2.out', overwrite: 'auto' });
-                const time  = targetProgress * 2;
-                const index = time < 0.5 ? 0 : time < 1.5 ? 1 : 2;
-                setActiveSection(CARDS[index].label);
-              },
-            });
-
-            // Keep isInit = true for 200ms to ignore any queued browser scroll events from the entrance transition
-            setTimeout(() => {
-              isInit = false;
-            }, 200);
-
-            triggerRef.current = st;
-
-            refreshTimer = setTimeout(() => {
-              window.lenis?.resize?.();
-              ScrollTrigger.refresh();
-            }, 50);
-          },
-        });
+    // ── Key events ──────────────────────────────────────────────────────────
+    const handleKey = (e) => {
+      if (e.key === 'Escape') { 
+        e.preventDefault(); 
+        triggerExit(); 
+        window.dispatchEvent(new CustomEvent('switchTab', { detail: 'home' }));
       }
-
-      // Nav items slide down into view, slightly after card 0 lands
-      if (nav) {
-        const navItems = nav.querySelectorAll('.about-nav-item');
-        // Kill any lingering tweens so the 2nd-visit entrance starts clean
-        gsap.killTweensOf(navItems);
-        gsap.killTweensOf(nav);
-        gsap.fromTo(navItems,
-          { y: -14, opacity: 0 },
-          {
-            y: 0,
-            opacity: (i, el) => el.classList.contains('active') ? 1 : 0.2,
-            duration: 0.4, delay: 0.3, stagger: 0.05,
-            ease: 'power3.out',
-            clearProps: 'opacity,transform'
-          }
-        );
-      }
-    }, 50);
+      if (e.key === 'ArrowRight') { navigateCard(1); }
+      if (e.key === 'ArrowLeft') { navigateCard(-1); }
+    };
+    window.addEventListener('keydown', handleKey);
 
     return () => {
-      clearTimeout(timer);
-      clearTimeout(refreshTimer);
+      window.removeEventListener('keydown', handleKey);
       window.lenis?.start?.();
-      if (tl) {
-        gsap.killTweensOf(tl);
-        tl.kill();
-      }
-      if (triggerRef.current) { triggerRef.current.kill(); triggerRef.current = null; }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
-  const setRefs = (el) => {
-    bentoRef.current = el;
-    if (ref) { typeof ref === 'function' ? ref(el) : (ref.current = el); }
-  };
+
+
+  // ── Navigate cards ────────────────────────────────────────────────────────
+  const navigateCard = useCallback((direction) => {
+    const curIdx = activeCardRef.current;
+    const nextIdx = (curIdx + direction + CARDS.length) % CARDS.length;
+
+    activeCardRef.current = nextIdx;
+    setActiveCard(nextIdx);
+
+    const isForward = direction > 0;
+    const currentActive = nextIdx;
+
+    if (isForward) {
+      // ── FORWARD: Top card flings right, then slips under the deck. Others slide up.
+      const curEl = cardRefs.current[curIdx];
+      if (curEl) {
+        const flyX = '140vw';
+        const flyRot = 24;
+        const targetSlot = getSlotForCard(curIdx, currentActive);
+        
+        const tl = gsap.timeline({ overwrite: true });
+        
+        // 1. Lightning-fast fling out
+        tl.to(curEl, {
+          x: flyX,
+          rotation: CARDS[curIdx].rotation + flyRot,
+          scale: 0.92,
+          duration: 0.15,
+          ease: 'power2.in',
+        });
+        
+        // 2. Instantly snap below deck & update zIndex so it goes behind
+        tl.set(curEl, {
+          x: 0,
+          y: targetSlot.y + 60,
+          scale: targetSlot.scale - 0.05,
+          rotation: targetSlot.rotation,
+          zIndex: targetSlot.zIndex
+        });
+        
+        // 3. Slide up seamlessly into the bottom slot
+        tl.to(curEl, {
+          y: targetSlot.y,
+          scale: targetSlot.scale,
+          duration: 0.3,
+          ease: 'power3.out',
+        });
+      }
+
+      CARDS.forEach((_, i) => {
+        if (i === curIdx) return;
+        const el = cardRefs.current[i];
+        if (!el) return;
+        const slot = getSlotForCard(i, currentActive);
+        gsap.to(el, {
+          x: 0,
+          y: slot.y,
+          rotation: slot.rotation,
+          scale: slot.scale,
+          zIndex: slot.zIndex,
+          duration: 0.45,
+          ease: 'expo.out',
+          delay: 0.02,
+          overwrite: true,
+        });
+      });
+    } else {
+      // ── BACKWARD: Bottom card (nextIdx) flies IN from left. Others slide down.
+      const nextEl = cardRefs.current[nextIdx];
+      if (nextEl) {
+        const flyX = '-140vw';
+        const flyRot = -24;
+        const targetSlot = getSlotForCard(nextIdx, currentActive); // The new Top slot
+        
+        const tl = gsap.timeline({ overwrite: true });
+        
+        // 1. Instantly move the bottom card off-screen left and bring to front
+        tl.set(nextEl, {
+          x: flyX,
+          y: targetSlot.y,
+          scale: 0.92,
+          rotation: CARDS[nextIdx].rotation + flyRot,
+          zIndex: targetSlot.zIndex
+        });
+        
+        // 2. Fly it in
+        tl.to(nextEl, {
+          x: 0,
+          rotation: targetSlot.rotation,
+          scale: targetSlot.scale,
+          duration: 0.45,
+          ease: 'expo.out',
+        });
+      }
+
+      CARDS.forEach((_, i) => {
+        if (i === nextIdx) return;
+        const el = cardRefs.current[i];
+        if (!el) return;
+        const slot = getSlotForCard(i, currentActive);
+        gsap.to(el, {
+          x: 0,
+          y: slot.y,
+          rotation: slot.rotation,
+          scale: slot.scale,
+          zIndex: slot.zIndex,
+          duration: 0.45,
+          ease: 'expo.out',
+          overwrite: true,
+        });
+      });
+    }
+  }, []);
+
+  // ── Exit sweep (about → anywhere) ────────────────────────────────────────
+  const triggerExit = useCallback((onDone) => {
+    const nav = navRef.current;
+    const pill = pillRef.current;
+    const counter = counterRef.current;
+
+    const tl = gsap.timeline({ onComplete: onDone });
+
+    tl.to([nav, pill, counter].filter(Boolean), {
+      y: '20vh',
+      duration: 0.3, ease: 'power3.in',
+    }, 0);
+
+    CARDS.forEach((_, i) => {
+      const el = cardRefs.current[i];
+      if (!el) return;
+      tl.to(el, {
+        y: '-130%',
+        rotation: getSlotForCard(i, activeCardRef.current).rotation + 15,
+        scale: 0.82,
+        duration: 0.4,
+        ease: 'power3.in',
+      }, i * 0.04);
+    });
+  }, []);
+
+
 
   return (
     <div
       id={id}
-      ref={setRefs}
+      ref={setContainerRef}
       className={`about-page-root ${className || ''}`}
       style={style}
     >
-
-
-      {/* ── 01 PROFILE ─────────────────────────────────────────────────── */}
-      <SlideCard card={CARDS[0]}>
-        <ProfileTile />
-      </SlideCard>
-
-      {/* ── 02 EXPERIENCE ──────────────────────────────────────────────── */}
-      <SlideCard card={CARDS[1]}>
-        <ExpTile />
-      </SlideCard>
-
-      {/* ── 03 EDUCATION ───────────────────────────────────────────────── */}
-      <SlideCard card={CARDS[2]}>
-        <EduTile />
-      </SlideCard>
-
-      <div className="about-home-wrapper">
-        <a
-          href="#home"
-          className="global-home-pill"
-          onClick={(e) => {
-            e.preventDefault();
-            window.dispatchEvent(new CustomEvent('switchTab', { detail: 'home' }));
-          }}
+      {/* Card Deck Wrapper — this is what gets centered in the flex root */}
+      <div className="about-deck">
+        {/* Card 1 */}
+        <div
+          className={`about-postcard ${activeCard === 0 ? 'is-top' : ''}`}
+          ref={(el) => { cardRefs.current[0] = el; }}
         >
-          home
-        </a>
+          <img
+            src="/asset/images/Bio/pouring-card.jpg"
+            alt=""
+            className="about-video-bg"
+          />
+          <div className="about-grid-content">
+            <div
+              className="about-bio-panel"
+              style={{ gridColumn: '8 / 13', justifyContent: 'flex-start' }}
+            >
+              <p className="about-bio-text">
+                I was born and raised in Vietnam — a country where coffee is great, traffic is wild, and your relatives apparently need to know your salary, love life and future profession before they even ask how are you. Maybe that explains why I became interested in people in the first place: how they think, what they perceive, how they make decisions, and why certain things just feel emotionally right or painfully wrong.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2 */}
+        <div
+          className={`about-postcard ${activeCard === 1 ? 'is-top' : ''}`}
+          ref={(el) => { cardRefs.current[1] = el; }}
+        >
+          <img
+            src="/asset/images/Bio/pouring-card.jpg"
+            alt=""
+            className="about-video-bg"
+          />
+          <div className="about-grid-content">
+            <div
+              className="about-bio-panel"
+              style={{ gridColumn: '1 / 7', justifyContent: 'flex-end' }}
+            >
+              <p className="about-bio-text">
+                I make things feel right. Not just look good — feel intentional. I care about the micro-moment where someone taps a button and thinks: "yes, exactly." That one millisecond is worth obsessing over.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div
+          className={`about-postcard ${activeCard === 2 ? 'is-top' : ''}`}
+          ref={(el) => { cardRefs.current[2] = el; }}
+        >
+          <img
+            src="/asset/images/Bio/pouring-card.jpg"
+            alt=""
+            className="about-video-bg"
+          />
+          <div className="about-grid-content">
+            <div
+              className="about-bio-panel"
+              style={{ gridColumn: '2 / 8', justifyContent: 'flex-start' }}
+            >
+              <p className="about-bio-text">
+                Let's work together. I'm currently open to new collaborations, weird ideas and honest conversations. Drop me a message — I promise I won't reply with a calendar link.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Controls Container */}
+      <div className="about-controls-container">
+        {/* Card Counter */}
+        <div className="about-card-counter" ref={counterRef}>
+          <span className="about-counter-current">{activeCard + 1}</span>
+          <span className="about-counter-sep"> / </span>
+          <span className="about-counter-total">{CARDS.length}</span>
+        </div>
+
+        {/* Navigation */}
+        <div className="about-nav-arrows" ref={navRef}>
+          <button className="about-arrow-btn" onClick={() => navigateCard(-1)} aria-label="Previous card">←</button>
+          <div className="about-nav-dots">
+            {CARDS.map((_, i) => (
+              <button
+                key={i}
+                className={`about-nav-dot${i === activeCard ? ' active' : ''}`}
+                onClick={() => { if (i !== activeCardRef.current) navigateCard(i > activeCardRef.current ? 1 : -1); }}
+                aria-label={`Go to card ${i + 1}`}
+              />
+            ))}
+          </div>
+          <button className="about-arrow-btn" onClick={() => navigateCard(1)} aria-label="Next card">→</button>
+        </div>
+
+        {/* ESC Indicator */}
+        <div className="about-esc-indicator" ref={pillRef}>
+          press ESC to back to homepage
+        </div>
       </div>
     </div>
   );

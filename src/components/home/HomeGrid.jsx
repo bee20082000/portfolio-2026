@@ -1,6 +1,9 @@
 import { useRef, useEffect, memo } from 'react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+
+gsap.registerPlugin(ScrollTrigger)
 import styles from './HomeGrid.module.css'
 
 import HomeBento from './HomeBento'
@@ -36,10 +39,9 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
     if (!bentoHome || !bentoAbout || !bentoWork) return
 
     const homeTiles = bentoHome.querySelectorAll('.tile')
-    const aboutTiles = bentoAbout.querySelectorAll('.about-card-sec')
     const workTiles = bentoWork.querySelectorAll('.tile')
     const workHeader = bentoWork.querySelector('.work-header')
-    const allTiles = [...homeTiles, ...aboutTiles, ...workTiles]
+    const allTiles = [...homeTiles, ...workTiles]
 
     if (!hasRevealedRef.current) {
       hasRevealedRef.current = true
@@ -53,16 +55,21 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         overflow: (activeTab === 'home' || activeTab === 'about') ? 'visible' : 'hidden',
         visibility: (activeTab === 'home' || activeTab === 'about') ? 'visible' : 'hidden',
         pointerEvents: activeTab === 'home' ? 'auto' : 'none',
-        opacity: activeTab === 'about' ? 0.35 : 1,
-        scale: activeTab === 'about' ? 0.95 : 1,
-        filter: activeTab === 'about' ? 'blur(8px)' : 'blur(0px)',
+        opacity: 1,
+        scale: 1,
+        filter: 'blur(0px)',
       })
       gsap.set(bentoAbout, {
-        height: activeTab === 'about' ? '300vh' : 0,
-        overflow: activeTab === 'about' ? 'visible' : 'hidden',
-        visibility: activeTab === 'about' ? 'visible' : 'hidden',
-        pointerEvents: activeTab === 'about' ? 'auto' : 'none'
+        height: (activeTab === 'about') ? '100vh' : 0,
+        overflow: (activeTab === 'about') ? 'visible' : 'hidden',
+        visibility: (activeTab === 'about') ? 'visible' : 'hidden',
+        pointerEvents: (activeTab === 'about') ? 'auto' : 'none',
+        opacity: 1,
       })
+      // Blur home grid when about is initially active
+      if (activeTab === 'about') {
+        gsap.set(bentoHome, { filter: 'blur(10px)', opacity: 0.25, scale: 1.02 })
+      }
       gsap.set(bentoWork, {
         height: activeTab === 'work' ? 'auto' : 0,
         overflow: activeTab === 'work' ? 'visible' : 'hidden',
@@ -72,15 +79,15 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
 
       if (activeTab === 'home') {
         gsap.set(homeTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
-        gsap.set([...aboutTiles, ...workTiles], { opacity: 0 })
+        gsap.set(workTiles, { opacity: 0 })
         if (workHeader) gsap.set(workHeader, { opacity: 0, y: 15 })
       } else if (activeTab === 'about') {
-        gsap.set(aboutTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
+        // Home stays fully visible behind the postcard
         gsap.set(homeTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
         gsap.set(workTiles, { opacity: 0 })
         if (workHeader) gsap.set(workHeader, { opacity: 0, y: 15 })
       } else {
-        gsap.set([...homeTiles, ...aboutTiles], { opacity: 0 })
+        gsap.set(homeTiles, { opacity: 0 })
         gsap.set(workTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
         if (workHeader) gsap.set(workHeader, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
       }
@@ -142,9 +149,9 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
     prevTabRef.current = activeTab
 
     const homeTiles = bentoHome.querySelectorAll('.tile')
-    const aboutTiles = bentoAbout.querySelectorAll('.about-card-sec')
     const workTiles = bentoWork.querySelectorAll('.tile')
     const workHeader = bentoWork.querySelector('.work-header')
+    const aboutTiles = bentoAbout.querySelectorAll('.about-postcard')
 
     const getGridAndTiles = (tab) => {
       if (tab === 'home') return { grid: bentoHome, tiles: homeTiles }
@@ -158,7 +165,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
     // Kill any in-progress tweens to prevent overlapping animations on rapid clicks
     const elementsToKill = [
       bentoHome, bentoAbout, bentoWork,
-      ...homeTiles, ...aboutTiles, ...workTiles
+      ...homeTiles, ...workTiles
     ]
     if (workHeader) elementsToKill.push(workHeader)
     gsap.killTweensOf(elementsToKill)
@@ -167,7 +174,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
     if (prevTab === 'home') {
       gsap.set(source.grid, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
     } else if (prevTab === 'about') {
-      gsap.set(source.grid, { visibility: 'visible', height: '300vh', overflow: 'visible', pointerEvents: 'none' })
+      gsap.set(source.grid, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
     } else {
       gsap.set(source.grid, { visibility: 'visible', height: 'auto', overflow: 'visible', pointerEvents: 'none' })
     }
@@ -180,7 +187,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         gsap.set(dest.grid, { pointerEvents: 'none' })
       }
     } else if (activeTab === 'about') {
-      gsap.set(dest.grid, { visibility: 'visible', pointerEvents: 'none', height: '300vh', overflow: 'visible', opacity: 0 })
+      gsap.set(dest.grid, { visibility: 'visible', pointerEvents: 'none', height: '100vh', overflow: 'visible', opacity: 1 })
     } else {
       // Prevent FOUC: Set grid opacity to 0 instantly, then reveal it right before tile animation
       gsap.set(dest.grid, { visibility: 'visible', pointerEvents: 'none', height: 'auto', overflow: 'visible', opacity: 0 })
@@ -202,12 +209,13 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
       }
     })
 
-    // ── STEP 1: Snappy Fade Out ──────────────────────────────────────────
+    // ── STEP 1: Fade Out / Blur ────────────────────────────────────────────────
     if (prevTab === 'home') {
       if (activeTab === 'about') {
+        // Home stays visible but blurred/faded under the postcard overlay
         tl.to(bentoHome, {
-          opacity: 0.35, scale: 0.95, filter: 'blur(12px)',
-          duration: 0.5, ease: 'power2.out', overwrite: 'auto'
+          opacity: 0.25, scale: 1.02, filter: 'blur(10px)',
+          duration: 0.55, ease: 'power2.out', overwrite: 'auto'
         }, 0)
       } else {
         tl.to(bentoHome, {
@@ -216,37 +224,13 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         }, 0)
       }
     } else if (prevTab === 'about') {
-      const sections = bentoAbout.querySelectorAll('.about-card-sec')
-      const nav = bentoAbout.querySelector('.about-nav-pill')
-      const homePill = bentoAbout.querySelector('.about-home-wrapper')
-
-      // Fade and scale down all about page cards
-      tl.to(sections, {
-        scale: 0.92,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.04,
-        ease: 'power3.out',
-        overwrite: 'auto'
-      }, 0)
-
-      if (nav) {
-        tl.to(nav, {
-          y: -20,
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power2.in',
-          overwrite: 'auto'
-        }, 0)
-      }
-
-      if (homePill) {
-        tl.to(homePill, {
-          y: 20,
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power2.in',
-          overwrite: 'auto'
+      // AboutBento.triggerExit() already animates the cards out.
+      // HomeGrid only hides the about container at hideTime.
+      // If going back to home, also restore home from blur:
+      if (activeTab === 'home') {
+        tl.to(bentoHome, {
+          opacity: 1, scale: 1, filter: 'blur(0px)',
+          duration: 0.5, ease: 'power2.out', overwrite: 'auto'
         }, 0)
       }
     } else {
@@ -264,10 +248,13 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
       }
     }
 
-    // ── STEP 2: Hide Outgoing Grid Synchronously & Reset Scroll ───────────
-    const hideTime = prevTab === 'about' ? 0.6 : 0.15
-    
-    if (!(prevTab === 'home' && activeTab === 'about')) {
+    // ── STEP 2: Hide Outgoing Grid & Reset Scroll ──────────────────────────
+    // home→about: keep home grid visible (postcard sits on top), about grid appears
+    const hideTime = prevTab === 'about' ? 0.55 : 0.15
+
+    if (prevTab === 'home' && activeTab === 'about') {
+      // Don't hide home — it stays visible under the flying postcard
+    } else {
       tl.set(source.grid, {
         visibility: 'hidden', pointerEvents: 'none', height: 0, overflow: 'hidden',
         clearProps: 'scale,opacity,transform,filter'
@@ -276,19 +263,12 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         tl.set(source.tiles, { clearProps: 'transform,opacity' }, hideTime)
       }
     }
-    
+
     if (prevTab === 'about' && activeTab === 'work') {
       tl.set(bentoHome, {
         visibility: 'hidden', pointerEvents: 'none', height: 0, overflow: 'hidden',
         clearProps: 'scale,opacity,transform,filter'
       }, hideTime)
-    }
-
-    if (prevTab === 'about') {
-      const aboutNav = bentoAbout.querySelector('.about-nav-pill')
-      const aboutHomePill = bentoAbout.querySelector('.about-home-wrapper')
-      if (aboutNav) tl.set(aboutNav, { clearProps: 'transform,opacity' }, hideTime)
-      if (aboutHomePill) tl.set(aboutHomePill, { clearProps: 'transform,opacity' }, hideTime)
     }
 
     tl.call(() => {
@@ -304,38 +284,33 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
       }
     }, null, hideTime)
 
-    // ── STEP 3: Snappy Fade In & Card Appear ──────────────────────────────
+    // ── STEP 3: Fade In Destination ────────────────────────────────────────────
     if (activeTab === 'home') {
-      gsap.set(bentoHome, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
-      tl.to(bentoHome, {
-        scale: 1, opacity: 1, filter: 'blur(0px)',
-        duration: 0.5, ease: 'power2.out', overwrite: 'auto'
-      }, 0.15)
-    } else {
-      tl.set(dest.grid, { opacity: 1 }, 0.15) // Un-hide the grid container before stagger
+      // Home already visible behind about, GSAP unblur is already in STEP 1
+      gsap.set(bentoHome, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'auto' })
+    } else if (activeTab === 'about') {
+      // About bento becomes visible; AboutBento's entrance GSAP handles card fly-in
+      tl.set(dest.grid, { opacity: 1, visibility: 'visible' }, 0)
 
-      if (activeTab === 'about' && prevTab === 'work') {
+      if (prevTab === 'work') {
+        // Restore + blur home behind the postcard overlay
         gsap.set(bentoHome, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
-        tl.to(bentoHome, {
-          opacity: 0.35, scale: 0.95, filter: 'blur(12px)',
-          duration: 0.5, ease: 'power2.out', overwrite: 'auto'
-        }, 0.15)
+        tl.to(bentoHome, { opacity: 0.25, scale: 1.02, filter: 'blur(10px)', duration: 0.5, ease: 'power2.out', overwrite: 'auto' }, 0.15)
       }
-
-      if (activeTab === 'work') {
-        tl.to(dest.tiles, {
+    } else if (activeTab === 'work') {
+      tl.set(dest.grid, { opacity: 1 }, 0.15)
+      tl.to(dest.tiles, {
+        opacity: 1, y: 0,
+        duration: 0.7,
+        stagger: { grid: 'auto', from: 'start', amount: 0.15 },
+        ease: 'power3.out', overwrite: 'auto', clearProps: 'transform,opacity'
+      }, 0.15)
+      if (workHeader) {
+        tl.to(workHeader, {
           opacity: 1, y: 0,
-          duration: 0.7,
-          stagger: { grid: 'auto', from: 'start', amount: 0.15 },
-          ease: 'power3.out', overwrite: 'auto', clearProps: 'transform,opacity'
+          duration: 0.6, ease: 'power3.out', overwrite: 'auto',
+          clearProps: 'transform,opacity'
         }, 0.15)
-        if (workHeader) {
-          tl.to(workHeader, {
-            opacity: 1, y: 0,
-            duration: 0.6, ease: 'power3.out', overwrite: 'auto',
-            clearProps: 'transform,opacity'
-          }, 0.15)
-        }
       }
     }
 
@@ -374,11 +349,17 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         onSelect={onSelect}
         activeTab={activeTab}
         style={{
-          gridArea: '1 / 1',
-          marginTop: '0px',
-          visibility: 'hidden',
-          contentVisibility: activeTab === 'about' ? 'visible' : 'auto',
-          containIntrinsicSize: '0 300vh',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          maxWidth: '100%',
+          zIndex: 20,
+          margin: 0,
+          padding: 0,
+          /* visibility intentionally OMITTED — CSS sets initial hidden state,
+             GSAP overrides it. Avoid React inline style collision. */
         }}
       />
       <WorkBento

@@ -1,125 +1,238 @@
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
 .about-page-root,
 .about-page-root * {
-  font-family: var(--font-family) !important;
   box-sizing: border-box;
-  text-transform: lowercase !important;
 }
 
+/*
+  IMPORTANT: `visibility: hidden` here is the initial CSS default.
+  GSAP overrides it via inline style (higher specificity) when switching tabs.
+  DO NOT set visibility in the React JSX inline style — that would fight GSAP
+  on every re-render.
+*/
 .about-page-root {
+  visibility: hidden;
+
+  /* Position + size is set by HomeGrid inline style (position: fixed overlay) */
   background: transparent;
-  width: 100%;
-  height: 300vh;
+  overflow: hidden;
+
+  /* Center the deck */
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  /* Transparent root should not block pointer events by itself */
+  pointer-events: none;
+}
+
+/* ─── Card Deck Wrapper ──────────────────────────────────────────────────── */
+.about-deck {
   position: relative;
-  display: block !important;
-  overflow-x: hidden;
+  width: 60vw;
+  max-width: 60vw;
+  max-height: 60vh;
+  /* Capped at 60vh to guarantee plenty of space for bottom controls */
+  aspect-ratio: 1414 / 1060;
+  /* Allow cards to overflow during entrance/exit animations */
+  overflow: visible;
+  pointer-events: none;
 }
 
-.about-card-sec {
-  position: fixed; /* Fixed in place, ScrollTrigger handles translations */
-  top: 12vh;
-  left: 10vw; /* Center of the screen on desktop */
-  width: 80vw;
-  height: 76vh;
-  transition: none;
-  /* Hidden before GSAP takes ownership — prevents flash of wrong card */
-  opacity: 0;
-  transform: translateX(100vw);
+/* ─── Individual Postcard ────────────────────────────────────────────────── */
+.about-postcard {
+  position: absolute;
+  inset: 0;
+  /* fills the deck wrapper */
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #0A0A0A;
+  cursor: none;
+  will-change: transform;
+
+  /* 3-D for cursor tilt */
+  transform-style: preserve-3d;
+
+  /* Re-enable pointer events on each card */
+  pointer-events: auto;
 }
 
-/* Statically define z-indexes for stacked cards to simplify animation logic */
-#about-sec-profile {
-  z-index: 10;
-}
-#about-sec-experience {
-  z-index: 11;
-}
-#about-sec-education {
-  z-index: 12;
+/* Only top card responds to interactions */
+.about-postcard:not(.is-top) {
+  pointer-events: none;
 }
 
-.about-card-content {
+/* ─── Video Background ───────────────────────────────────────────────────── */
+.about-video-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 8px;
-  padding: 6vw;
-  display: flex;
-  flex-direction: column;
-  will-change: transform;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* ── CARD INTERNAL WRAPPERS ── */
-.card-header-row {
-  margin-bottom: 12vw;
-}
-
-.card-index {
-  font-family: var(--font-family);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.card-label {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.card-main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-/* ── SWISS GRID SYSTEM ── */
-.swiss-grid {
+/* ─── 12-column Grid Overlay ─────────────────────────────────────────────── */
+.about-grid-content {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  column-gap: 2vw;
+  column-gap: 20px;
   width: 100%;
+  height: 100%;
+  padding: 48px;
 }
 
-.col-span-1 { grid-column: span 1; }
-.col-span-2 { grid-column: span 2; }
-.col-span-3 { grid-column: span 3; }
-.col-span-4 { grid-column: span 4; }
-.col-span-5 { grid-column: span 5; }
-.col-span-6 { grid-column: span 6; }
-.col-span-7 { grid-column: span 7; }
-.col-span-8 { grid-column: span 8; }
-.col-span-9 { grid-column: span 9; }
-.col-span-10 { grid-column: span 10; }
-.col-span-11 { grid-column: span 11; }
-.col-span-12 { grid-column: span 12; }
-
-.flex-end {
+/* ─── Bio Panel ──────────────────────────────────────────────────────────── */
+.about-bio-panel {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  padding-top: 20px;
 }
 
-/* NAV PILL */
-
-
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
+.about-bio-text {
+  font-family: 'Belmonte Ballpoint' !important;
+  font-size: clamp(27px, 1.7vw, 42px);
+  line-height: 1.15em;
+  color: #ff48b0 !important;
+  font-weight: 400;
+  letter-spacing: 0em;
+  margin: 0;
+  text-transform: none !important;
 }
 
-/* ── RESPONSIVE COLLAPSE ── */
-@media (max-width: 900px) {
-  .swiss-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    row-gap: 24px !important;
-    column-gap: 0 !important;
-  }
-  .hide-mobile { display: none !important; }
-}
 
-/* Home pill wrapper */
-.about-home-wrapper {
-  position: fixed;
-  bottom: 3vh;
+/* ─── Controls Container ─────────────────────────────────────────────────── */
+.about-controls-container {
+  position: absolute;
+  bottom: 4vh;
+  /* Pinned exactly to the bottom of the page viewport */
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  /* Spacing between: Number -> Button -> Instruction */
+  width: max-content;
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* ─── Card Counter ───────────────────────────────────────────────────────── */
+.about-card-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.about-counter-current {
+  font-family: 'Pardon 4x4' !important;
+  font-size: 30px;
+  color: #ff48b0;
+  line-height: 1;
+}
+
+.about-counter-sep,
+.about-counter-total {
+  font-family: 'Pardon 4x4' !important;
+  font-size: 16px;
+  color: rgba(255, 72, 176, 0.4);
+  line-height: 1;
+}
+
+/* ─── Navigation Arrows ──────────────────────────────────────────────────── */
+.about-nav-arrows {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  pointer-events: auto;
+  will-change: transform, opacity;
+}
+
+.about-arrow-btn {
+  background: none;
+  border: 1.5px solid rgba(255, 72, 176, 0.3);
+  color: #ff48b0;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  line-height: 1;
+  pointer-events: auto;
+}
+
+.about-arrow-btn:hover {
+  border-color: #ff48b0;
+  background: rgba(255, 72, 176, 0.1);
+  transform: scale(1.1);
+}
+
+.about-arrow-btn:active {
+  transform: scale(0.9);
+}
+
+.about-nav-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.about-nav-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 72, 176, 0.3);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, transform 0.2s ease;
+  pointer-events: auto;
+}
+
+.about-nav-dot.active {
+  background: #ff48b0;
+  transform: scale(1.4);
+}
+
+.about-nav-dot:hover:not(.active) {
+  background: rgba(255, 72, 176, 0.6);
+}
+
+/* ─── ESC Indicator ──────────────────────────────────────────────────────── */
+.about-esc-indicator {
+  pointer-events: none;
+  will-change: transform, opacity;
+
+  font-family: 'Pardon 4x4' !important;
+  font-size: 30px;
+  color: rgba(255, 72, 176);
+  /* Slightly dimmed pink */
+  white-space: nowrap;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .about-grid-content {
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+  }
+
+  .about-bio-panel {
+    grid-column: 1 / -1 !important;
+  }
+
+  .about-bio-text {
+    font-size: 14px;
+    line-height: 1.4;
+  }
 }
