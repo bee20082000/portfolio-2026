@@ -42,7 +42,7 @@
 }
 
 .work-list-item {
-  font-family: 'Maroni Condensed', var(--font-family);
+  font-family: 'Maroni Condensed';
   font-weight: 400;
   font-size: clamp(40px, 7.2vw, 102px);
   line-height: 0.8;

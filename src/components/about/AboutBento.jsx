@@ -116,9 +116,9 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
 
     // ── Key events ──────────────────────────────────────────────────────────
     const handleKey = (e) => {
-      if (e.key === 'Escape') { 
-        e.preventDefault(); 
-        triggerExit(); 
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        triggerExit();
         window.dispatchEvent(new CustomEvent('switchTab', { detail: 'home' }));
       }
       if (e.key === 'ArrowRight') { navigateCard(1); }
@@ -136,117 +136,79 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
 
 
   // ── Navigate cards ────────────────────────────────────────────────────────
+  const navigateTo = useCallback((targetIdx, direction) => {
+    const curIdx = activeCardRef.current;
+    if (curIdx === targetIdx) return;
+
+    let flingDir = direction;
+    if (flingDir === undefined) {
+      flingDir = targetIdx > curIdx ? 1 : -1;
+    }
+
+    activeCardRef.current = targetIdx;
+    setActiveCard(targetIdx);
+
+    const currentActive = targetIdx;
+    const curEl = cardRefs.current[curIdx];
+
+    const tl = gsap.timeline({ overwrite: true });
+
+    if (curEl) {
+      const flyX = flingDir > 0 ? '120vw' : '-120vw';
+      const flyRot = CARDS[curIdx].rotation + (flingDir > 0 ? 25 : -25);
+      const targetSlot = getSlotForCard(curIdx, currentActive);
+
+      // 1. Snappy fling out
+      tl.to(curEl, {
+        x: flyX,
+        rotation: flyRot,
+        scale: 0.9,
+        duration: 0.2,
+        ease: 'power2.in',
+      }, 0);
+
+      // 2. Instantly move behind the stack
+      tl.set(curEl, {
+        x: 0,
+        y: targetSlot.y + 40,
+        scale: targetSlot.scale - 0.05,
+        rotation: targetSlot.rotation,
+        zIndex: targetSlot.zIndex
+      });
+
+      // 3. Slide up into its new slot
+      tl.to(curEl, {
+        y: targetSlot.y,
+        scale: targetSlot.scale,
+        duration: 0.35,
+        ease: 'back.out(1.2)',
+      }, 0.25);
+    }
+
+    // Move the other cards into their new positions
+    CARDS.forEach((_, i) => {
+      if (i === curIdx) return;
+      const el = cardRefs.current[i];
+      if (!el) return;
+      const slot = getSlotForCard(i, currentActive);
+      
+      tl.to(el, {
+        x: 0,
+        y: slot.y,
+        rotation: slot.rotation,
+        scale: slot.scale,
+        zIndex: slot.zIndex,
+        duration: 0.4,
+        ease: 'back.out(1.2)',
+      }, 0.1);
+    });
+  }, []);
+
   const navigateCard = useCallback((direction) => {
     const curIdx = activeCardRef.current;
     const nextIdx = (curIdx + direction + CARDS.length) % CARDS.length;
-
-    activeCardRef.current = nextIdx;
-    setActiveCard(nextIdx);
-
-    const isForward = direction > 0;
-    const currentActive = nextIdx;
-
-    if (isForward) {
-      // ── FORWARD: Top card flings right, then slips under the deck. Others slide up.
-      const curEl = cardRefs.current[curIdx];
-      if (curEl) {
-        const flyX = '140vw';
-        const flyRot = 24;
-        const targetSlot = getSlotForCard(curIdx, currentActive);
-        
-        const tl = gsap.timeline({ overwrite: true });
-        
-        // 1. Lightning-fast fling out
-        tl.to(curEl, {
-          x: flyX,
-          rotation: CARDS[curIdx].rotation + flyRot,
-          scale: 0.92,
-          duration: 0.15,
-          ease: 'power2.in',
-        });
-        
-        // 2. Instantly snap below deck & update zIndex so it goes behind
-        tl.set(curEl, {
-          x: 0,
-          y: targetSlot.y + 60,
-          scale: targetSlot.scale - 0.05,
-          rotation: targetSlot.rotation,
-          zIndex: targetSlot.zIndex
-        });
-        
-        // 3. Slide up seamlessly into the bottom slot
-        tl.to(curEl, {
-          y: targetSlot.y,
-          scale: targetSlot.scale,
-          duration: 0.3,
-          ease: 'power3.out',
-        });
-      }
-
-      CARDS.forEach((_, i) => {
-        if (i === curIdx) return;
-        const el = cardRefs.current[i];
-        if (!el) return;
-        const slot = getSlotForCard(i, currentActive);
-        gsap.to(el, {
-          x: 0,
-          y: slot.y,
-          rotation: slot.rotation,
-          scale: slot.scale,
-          zIndex: slot.zIndex,
-          duration: 0.45,
-          ease: 'expo.out',
-          delay: 0.02,
-          overwrite: true,
-        });
-      });
-    } else {
-      // ── BACKWARD: Bottom card (nextIdx) flies IN from left. Others slide down.
-      const nextEl = cardRefs.current[nextIdx];
-      if (nextEl) {
-        const flyX = '-140vw';
-        const flyRot = -24;
-        const targetSlot = getSlotForCard(nextIdx, currentActive); // The new Top slot
-        
-        const tl = gsap.timeline({ overwrite: true });
-        
-        // 1. Instantly move the bottom card off-screen left and bring to front
-        tl.set(nextEl, {
-          x: flyX,
-          y: targetSlot.y,
-          scale: 0.92,
-          rotation: CARDS[nextIdx].rotation + flyRot,
-          zIndex: targetSlot.zIndex
-        });
-        
-        // 2. Fly it in
-        tl.to(nextEl, {
-          x: 0,
-          rotation: targetSlot.rotation,
-          scale: targetSlot.scale,
-          duration: 0.45,
-          ease: 'expo.out',
-        });
-      }
-
-      CARDS.forEach((_, i) => {
-        if (i === nextIdx) return;
-        const el = cardRefs.current[i];
-        if (!el) return;
-        const slot = getSlotForCard(i, currentActive);
-        gsap.to(el, {
-          x: 0,
-          y: slot.y,
-          rotation: slot.rotation,
-          scale: slot.scale,
-          zIndex: slot.zIndex,
-          duration: 0.45,
-          ease: 'expo.out',
-          overwrite: true,
-        });
-      });
-    }
-  }, []);
+    navigateTo(nextIdx, direction);
+  }, [navigateTo]);
 
   // ── Exit sweep (about → anywhere) ────────────────────────────────────────
   const triggerExit = useCallback((onDone) => {
@@ -300,7 +262,18 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
               className="about-bio-panel"
               style={{ gridColumn: '8 / 13', justifyContent: 'flex-start' }}
             >
-              <p className="about-bio-text">
+              <p
+                className="about-bio-text"
+                style={{
+                  fontFamily: "'Pardon 4x4'",
+                  fontSize: 'clamp(27px, 1.7vw, 42px)',
+                  lineHeight: '1.15em',
+                  color: '#ff48b0',
+                  fontWeight: 400,
+                  letterSpacing: '0em',
+                  textTransform: 'none'
+                }}
+              >
                 I was born and raised in Vietnam — a country where coffee is great, traffic is wild, and your relatives apparently need to know your salary, love life and future profession before they even ask how are you. Maybe that explains why I became interested in people in the first place: how they think, what they perceive, how they make decisions, and why certain things just feel emotionally right or painfully wrong.
               </p>
             </div>
@@ -313,16 +286,27 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[1] = el; }}
         >
           <img
-            src="/asset/images/Bio/pouring-card.jpg"
+            src="/asset/images/Bio/working-card.jpg"
             alt=""
             className="about-video-bg"
           />
           <div className="about-grid-content">
             <div
               className="about-bio-panel"
-              style={{ gridColumn: '1 / 7', justifyContent: 'flex-end' }}
+              style={{ gridColumn: '8 / -1', justifyContent: 'flex-end' }}
             >
-              <p className="about-bio-text">
+              <p
+                className="about-bio-text"
+                style={{
+                  fontFamily: "'Pardon 4x4'",
+                  fontSize: 'clamp(27px, 1.7vw, 42px)',
+                  lineHeight: '1.15em',
+                  color: '#3255a4',
+                  fontWeight: 400,
+                  letterSpacing: '0em',
+                  textTransform: 'none'
+                }}
+              >
                 I make things feel right. Not just look good — feel intentional. I care about the micro-moment where someone taps a button and thinks: "yes, exactly." That one millisecond is worth obsessing over.
               </p>
             </div>
@@ -344,7 +328,18 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
               className="about-bio-panel"
               style={{ gridColumn: '2 / 8', justifyContent: 'flex-start' }}
             >
-              <p className="about-bio-text">
+              <p
+                className="about-bio-text"
+                style={{
+                  fontFamily: "'Pardon 4x4'",
+                  fontSize: 'clamp(27px, 1.7vw, 42px)',
+                  lineHeight: '1.15em',
+                  color: '#ff48b0',
+                  fontWeight: 400,
+                  letterSpacing: '0em',
+                  textTransform: 'none'
+                }}
+              >
                 Let's work together. I'm currently open to new collaborations, weird ideas and honest conversations. Drop me a message — I promise I won't reply with a calendar link.
               </p>
             </div>
@@ -363,18 +358,18 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
 
         {/* Navigation */}
         <div className="about-nav-arrows" ref={navRef}>
-          <button className="about-arrow-btn" onClick={() => navigateCard(-1)} aria-label="Previous card">←</button>
+          <button className="about-arrow-btn" onClick={() => navigateCard(-1)} aria-label="Previous card">&lt;</button>
           <div className="about-nav-dots">
             {CARDS.map((_, i) => (
               <button
                 key={i}
                 className={`about-nav-dot${i === activeCard ? ' active' : ''}`}
-                onClick={() => { if (i !== activeCardRef.current) navigateCard(i > activeCardRef.current ? 1 : -1); }}
+                onClick={() => navigateTo(i)}
                 aria-label={`Go to card ${i + 1}`}
               />
             ))}
           </div>
-          <button className="about-arrow-btn" onClick={() => navigateCard(1)} aria-label="Next card">→</button>
+          <button className="about-arrow-btn" onClick={() => navigateCard(1)} aria-label="Next card">&gt;</button>
         </div>
 
         {/* ESC Indicator */}

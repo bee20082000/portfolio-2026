@@ -69,7 +69,7 @@
 }
 
 .hero-name-placeholder {
-  font-family: 'Maroni Condensed', var(--font-family);
+  font-family: 'Pardon 4x4';
   font-size: 24px;
   font-weight: 400;
   letter-spacing: 0em;
@@ -111,7 +111,7 @@
   white-space: nowrap;
   visibility: hidden;
   pointer-events: none;
-  font-family: 'Maroni Condensed', var(--font-family);
+  font-family: 'Pardon 4x4';
   font-weight: 400;
   letter-spacing: 0em;
   line-height: 0.8;
@@ -173,7 +173,8 @@
 }
 
 .hero-name-text {
-  font-family: 'Maroni Condensed', var(--font-family);
+  font-family: 'Pardon 4x4';
+  text-transform: uppercase;
   font-weight: 400;
   font-size: 16vw;
   line-height: 0.8;
@@ -326,9 +327,10 @@
 }
 
 .hero-contact-title {
-  font-family: 'Maroni Condensed', var(--font-family);
+  font-family: 'Pardon 4x4';
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 400;
+  font-feature-settings: "ss01" 1, "ss02" 0, "ss03" 0 !important;
   letter-spacing: 0em;
   color: inherit;
   margin: 0 0 12px 0;
