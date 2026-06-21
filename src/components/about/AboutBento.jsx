@@ -12,8 +12,8 @@ const CARDS = [
 // Rotation & depth offsets for each stack slot (0 = top, 1 = one behind, 2 = furthest behind)
 const SLOT_OFFSETS = [
   { extraRotation: 0, yOffset: 0, scale: 1.00, zIndex: 10 },
-  { extraRotation: 3.5, yOffset: 10, scale: 0.97, zIndex: 9 },
-  { extraRotation: -4.5, yOffset: 18, scale: 0.94, zIndex: 8 },
+  { extraRotation: 0, yOffset: 10, scale: 0.97, zIndex: 9 },
+  { extraRotation: 0, yOffset: 18, scale: 0.94, zIndex: 8 },
 ];
 
 function getSlotForCard(cardIndex, activeIndex) {
@@ -84,7 +84,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
       gsap.set(el, {
         ...slot,
         y: '-130%',
-        rotation: slot.rotation - 15,
+        rotation: slot.rotation,
         opacity: 1,
       });
     });
@@ -100,9 +100,8 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
       const slot = getSlotForCard(cardIdx, 0);
       tl.to(el, {
         y: slot.y,
-        rotation: slot.rotation,
         duration: 0.65,
-        ease: 'back.out(1.1)',
+        ease: 'power3.out',
       }, step * 0.08);
     });
 
@@ -118,7 +117,6 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
     const handleKey = (e) => {
       if (e.key === 'Escape') {
         e.preventDefault();
-        triggerExit();
         window.dispatchEvent(new CustomEvent('switchTab', { detail: 'home' }));
       }
       if (e.key === 'ArrowRight') { navigateCard(1); }
@@ -142,7 +140,8 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
 
     let flingDir = direction;
     if (flingDir === undefined) {
-      flingDir = targetIdx > curIdx ? 1 : -1;
+      const diff = (targetIdx - curIdx + CARDS.length) % CARDS.length;
+      flingDir = diff === 1 ? 1 : -1;
     }
 
     activeCardRef.current = targetIdx;
@@ -150,58 +149,116 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
 
     const currentActive = targetIdx;
     const curEl = cardRefs.current[curIdx];
+    const targetEl = cardRefs.current[targetIdx];
 
     const tl = gsap.timeline({ overwrite: true });
 
-    if (curEl) {
-      const flyX = flingDir > 0 ? '120vw' : '-120vw';
-      const flyRot = CARDS[curIdx].rotation + (flingDir > 0 ? 25 : -25);
-      const targetSlot = getSlotForCard(curIdx, currentActive);
+    const isForward = flingDir > 0;
 
-      // 1. Snappy fling out
-      tl.to(curEl, {
-        x: flyX,
-        rotation: flyRot,
-        scale: 0.9,
-        duration: 0.2,
-        ease: 'power2.in',
-      }, 0);
-
-      // 2. Instantly move behind the stack
-      tl.set(curEl, {
-        x: 0,
-        y: targetSlot.y + 40,
-        scale: targetSlot.scale - 0.05,
-        rotation: targetSlot.rotation,
-        zIndex: targetSlot.zIndex
+    if (isForward) {
+      // ─── FORWARD NAVIGATION (Fling top card OUT) ───────────────────────────
+      // Set target z-indices instantly at start to prevent mid-tween flashing/crossing
+      CARDS.forEach((_, i) => {
+        if (i === curIdx) return;
+        const el = cardRefs.current[i];
+        if (!el) return;
+        const slot = getSlotForCard(i, currentActive);
+        tl.set(el, { zIndex: slot.zIndex }, 0);
       });
 
-      // 3. Slide up into its new slot
-      tl.to(curEl, {
-        y: targetSlot.y,
-        scale: targetSlot.scale,
-        duration: 0.35,
-        ease: 'back.out(1.2)',
-      }, 0.25);
-    }
+      if (curEl) {
+        const flyX = '120vw';
+        const targetSlot = getSlotForCard(curIdx, currentActive);
 
-    // Move the other cards into their new positions
-    CARDS.forEach((_, i) => {
-      if (i === curIdx) return;
-      const el = cardRefs.current[i];
-      if (!el) return;
-      const slot = getSlotForCard(i, currentActive);
-      
-      tl.to(el, {
-        x: 0,
-        y: slot.y,
-        rotation: slot.rotation,
-        scale: slot.scale,
-        zIndex: slot.zIndex,
-        duration: 0.4,
-        ease: 'back.out(1.2)',
-      }, 0.1);
-    });
+        // Keep flinging card on top (zIndex: 12) during fling animation
+        tl.set(curEl, { zIndex: 12 }, 0);
+
+        // 1. Snappy fling out
+        tl.to(curEl, {
+          x: flyX,
+          scale: 0.9,
+          duration: 0.2,
+          ease: 'power2.in',
+        }, 0);
+
+        // 2. Instantly move behind the stack
+        tl.set(curEl, {
+          x: 0,
+          y: targetSlot.y + 40,
+          scale: targetSlot.scale - 0.05,
+          zIndex: targetSlot.zIndex
+        }, 0.2);
+
+        // 3. Slide up into its new slot
+        tl.to(curEl, {
+          y: targetSlot.y,
+          scale: targetSlot.scale,
+          duration: 0.35,
+          ease: 'power3.out',
+        }, 0.25);
+      }
+
+      // Move the other cards into their new positions
+      CARDS.forEach((_, i) => {
+        if (i === curIdx) return;
+        const el = cardRefs.current[i];
+        if (!el) return;
+        const slot = getSlotForCard(i, currentActive);
+
+        tl.to(el, {
+          x: 0,
+          y: slot.y,
+          scale: slot.scale,
+          duration: 0.4,
+          ease: 'power3.out',
+        }, 0.1);
+      });
+
+    } else {
+      // ─── BACKWARD NAVIGATION (Fly new card IN from the side) ───────────────
+      const targetSlot = getSlotForCard(targetIdx, currentActive);
+
+      // 1. Position targetEl off-screen instantly at start
+      if (targetEl) {
+        const startX = '120vw';
+        tl.set(targetEl, {
+          x: startX,
+          y: targetSlot.y,
+          scale: 0.9,
+          zIndex: 12 // Keep it on top of everything during fly-in
+        }, 0);
+
+        // Fly in to top slot
+        tl.to(targetEl, {
+          x: 0,
+          scale: targetSlot.scale,
+          duration: 0.35,
+          ease: 'power3.out',
+        }, 0);
+
+        // Snap targetEl zIndex to its slot value once it lands
+        tl.set(targetEl, { zIndex: targetSlot.zIndex }, 0.35);
+      }
+
+      // Move other cards down into their slots
+      CARDS.forEach((_, i) => {
+        if (i === targetIdx) return;
+        const el = cardRefs.current[i];
+        if (!el) return;
+        const slot = getSlotForCard(i, currentActive);
+
+        // Set target zIndex immediately at start
+        tl.set(el, { zIndex: slot.zIndex }, 0);
+
+        tl.to(el, {
+          x: 0,
+          y: slot.y,
+          scale: slot.scale,
+          duration: 0.4,
+          ease: 'power3.out',
+        }, 0);
+      });
+    }
   }, []);
 
   const navigateCard = useCallback((direction) => {
@@ -216,26 +273,35 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
     const pill = pillRef.current;
     const counter = counterRef.current;
 
-    const tl = gsap.timeline({ onComplete: onDone });
+    const tl = gsap.timeline({ onComplete: onDone, overwrite: true });
 
     tl.to([nav, pill, counter].filter(Boolean), {
-      y: '20vh',
-      duration: 0.3, ease: 'power3.in',
+      y: '10vh',
+      opacity: 0,
+      duration: 0.25,
+      ease: 'power2.in',
     }, 0);
 
     CARDS.forEach((_, i) => {
       const el = cardRefs.current[i];
       if (!el) return;
       tl.to(el, {
-        y: '-130%',
-        rotation: getSlotForCard(i, activeCardRef.current).rotation + 15,
-        scale: 0.82,
-        duration: 0.4,
-        ease: 'power3.in',
-      }, i * 0.04);
+        y: '120vh',
+        scale: 0.8,
+        duration: 0.3,
+        ease: 'power2.in',
+      }, i * 0.05);
     });
   }, []);
 
+  // ── Tab Exit Watcher ───────────────────────────────────────────────────────
+  const prevTabRef = useRef(activeTab);
+  useEffect(() => {
+    if (prevTabRef.current === 'about' && activeTab !== 'about') {
+      triggerExit();
+    }
+    prevTabRef.current = activeTab;
+  }, [activeTab, triggerExit]);
 
 
   return (
@@ -253,28 +319,29 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[0] = el; }}
         >
           <img
-            src="/asset/images/Bio/pouring-card.jpg"
+            src="/asset/images/Bio/intro-card.jpg"
             alt=""
             className="about-video-bg"
           />
           <div className="about-grid-content">
             <div
               className="about-bio-panel"
-              style={{ gridColumn: '8 / 13', justifyContent: 'flex-start' }}
+              style={{ gridColumn: '1 / -1', justifyContent: 'flex-start' }}
             >
               <p
                 className="about-bio-text"
                 style={{
                   fontFamily: "'Pardon 4x4'",
-                  fontSize: 'clamp(27px, 1.7vw, 42px)',
-                  lineHeight: '1.15em',
+                  paddingBottom: '5%',
+                  paddingLeft: '5%',
+                  fontSize: 'clamp(100px, 5vw, 130px)',
+                  lineHeight: '1.1em',
                   color: '#ff48b0',
                   fontWeight: 400,
                   letterSpacing: '0em',
-                  textTransform: 'none'
+                  textTransform: 'uppercase'
                 }}
               >
-                I was born and raised in Vietnam — a country where coffee is great, traffic is wild, and your relatives apparently need to know your salary, love life and future profession before they even ask how are you. Maybe that explains why I became interested in people in the first place: how they think, what they perceive, how they make decisions, and why certain things just feel emotionally right or painfully wrong.
               </p>
             </div>
           </div>
@@ -293,14 +360,15 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           <div className="about-grid-content">
             <div
               className="about-bio-panel"
-              style={{ gridColumn: '8 / -1', justifyContent: 'flex-end' }}
+              style={{ gridColumn: '1 / -1', justifyContent: 'flex-start' }}
             >
               <p
                 className="about-bio-text"
                 style={{
                   fontFamily: "'Pardon 4x4'",
                   fontSize: 'clamp(27px, 1.7vw, 42px)',
-                  lineHeight: '1.15em',
+                  padding: '3%',
+                  lineHeight: '1.1em',
                   color: '#3255a4',
                   fontWeight: 400,
                   letterSpacing: '0em',
@@ -319,7 +387,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[2] = el; }}
         >
           <img
-            src="/asset/images/Bio/pouring-card.jpg"
+            src="/asset/images/Bio/falling-card.jpg"
             alt=""
             className="about-video-bg"
           />
@@ -377,7 +445,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           press ESC to back to homepage
         </div>
       </div>
-    </div>
+    </div >
   );
 }));
 

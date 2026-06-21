@@ -231,7 +231,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         tl.to(bentoHome, {
           opacity: 1, scale: 1, filter: 'blur(0px)',
           duration: 0.5, ease: 'power2.out', overwrite: 'auto'
-        }, 0)
+        }, 0.3) // Delayed to avoid stuttering during AboutBento card drop
       }
     } else {
       tl.to(source.tiles, {

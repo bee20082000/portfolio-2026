@@ -10,68 +10,68 @@ gsap.registerPlugin(ScrollTrigger);
 const WORKS = [
   {
     id: 'lipton_tet_2024',
-    name: 'LIPTON TET',
+    name: 'Lipton Tet',
     cover: '/asset/images/Lipton/tet/Create_an_ultra-realistic,_premium_editorial_202605241507.jpg'
   },
   {
     id: 'lipton',
-    name: 'LIPTON SUMMER',
+    name: 'Lipton Summer',
     cover: '/asset/images/Lipton/summer/Lipton_logo_in_tropical_scene_202605232158.mp4'
   },
   {
     id: 'thuyen_xua_food',
-    name: 'THUYEN XUA FOOD',
+    name: 'Thuyen Xua Food',
     cover: '/asset/images/Thuyen-xua/TX-cover.jpg'
   },
   {
     id: 'tuongan',
-    name: 'TUONG AN COOKING OIL',
+    name: 'Tuong An Cooking Oil',
     cover: '/asset/images/Tuong-an/KV-2023-lowres.jpg'
   },
   {
     id: 'panasonic_tho_dien',
-    name: 'PANASONIC ELECTRI"CITY"',
+    name: 'Panasonic ElectRI"CITY"',
     cover: '/asset/images/Panasonic/cover.mp4'
   },
   {
     id: 'chivas',
-    name: 'CHIVAS TET CATALOG',
+    name: 'Chivas Tet Catalog',
     cover: '/asset/images/chivas/chivas-cover.mp4'
   },
   {
     id: 'moe',
-    name: 'Gori Coffee Branding',
+    name: 'Gori Coffee',
     cover: '/asset/images/Moe-Cafe/cover.mp4'
   },
   {
     id: 'axon_active',
-    name: 'AXON ACTIVE NEW OFFICE',
+    name: 'Axon Active New Office',
     cover: '/asset/images/axon-active/TDC/cover.jpg'
   },
   {
     id: 'nam_dinh_vu',
-    name: 'NAM DINH VU CONCEPT',
+    name: 'Nam Dinh Vu Concept',
     cover: '/asset/images/Nam-Dinh-Vu/Cong/JPEG/Cong.jpg'
   },
   {
     id: 'santen',
-    name: 'SANTEN SOCIAL CAMPAIGN',
+    name: 'Santen Social',
     cover: '/asset/images/santen/cover.jpg'
   },
 
   {
     id: 'nakivo',
-    name: 'NAKIVO CALENDAR',
+    name: 'Nakivo Calendar',
     cover: '/asset/images/nakivo/cover.mp4'
   },
   {
     id: 'suzuki_social',
-    name: 'SUZUKI SOCIAL PROJECT',
+    name: 'Suzuki Social',
     cover: '/asset/images/suzuki/web/cover.mp4'
   },
   {
     id: 'icoffee',
-    name: 'ICOFFEE CAMPAIGN',
+    name: 'ICoffee',
     cover: '/asset/images/icoffee/cover.mp4'
   }
 ];

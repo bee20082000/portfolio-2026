@@ -86,7 +86,6 @@
   color: #FFFFFF;
   text-decoration: none;
   letter-spacing: -0.02em !important;
-  text-transform: lowercase;
   cursor: pointer;
   transition: color 0.2s ease;
   pointer-events: auto;
@@ -200,7 +199,7 @@
 }
 
 /* ── Mobile breakpoint ── */
-@media (max-width: 900px) {
+@media (max-width: 0px) {
   .hero-intro-grid {
     grid-template-columns: repeat(6, 1fr);
   }
@@ -433,7 +432,7 @@
 }
 
 
-@media (max-width: 900px) {
+@media (max-width: 0px) {
   .hero-contact-section {
     padding: 4vh clamp(20px, 4vw, 48px) 40px;
     margin-top: 4vh;
@@ -467,7 +466,7 @@
   opacity: 0.75;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 0px) {
   .hero-footer {
     grid-column: 1 / -1;
     margin-top: 200px;

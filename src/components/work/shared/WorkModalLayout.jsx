@@ -151,7 +151,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
           grid-column: 7 / -1;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 0px) {
           .work-modal-grid {
             grid-template-columns: 1fr !important;
             gap: 8px 0 !important;

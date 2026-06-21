@@ -660,13 +660,13 @@ h4,
 }
 
 /* ── VIEWPORT ADAPTATION MEDIA QUERIES ───────── */
-@media (max-width: 1024px) {
+@media (max-width: 0px) {
   .page {
     padding: 0 20px 20px 20px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 0px) {
   .page-wrapper {
     height: auto !important;
     min-height: 100vh;

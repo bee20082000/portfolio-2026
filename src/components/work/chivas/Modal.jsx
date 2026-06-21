@@ -54,10 +54,10 @@ export default function ChivasModal() {
       {/* ══════════════════════════════════════════════
           SECTION 3 — Festive Packaging & Final Spreads
       ══════════════════════════════════════════════ */}
-      <div style={cell(6)}>
+      <div style={cell(12)}>
         <img src={img('5.jpg')} alt="Chivas Tet Catalog — Festive Packaging" loading="lazy" decoding="async" style={imgStyle} />
       </div>
-      <div style={cell(6)}>
+      <div style={cell(12)}>
         <img src={img('6.jpg')} alt="Chivas Tet Catalog — Final Spread" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 

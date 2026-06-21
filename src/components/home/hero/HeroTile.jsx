@@ -363,7 +363,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                   window.dispatchEvent(new CustomEvent('switchTab', { detail: 'about' }));
                 }}
               >
-                about
+                About
               </a>
             </div>
             <div className="hero-topbar-item hero-topbar-contact">
@@ -377,7 +377,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                   }
                 }}
               >
-                contact
+                Contact
               </a>
             </div>
           </div>
@@ -388,10 +388,10 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
             {/* Bio — row 2, columns 4–8 */}
             <div className="hero-bio-container">
               <div className="hero-bio-text">
-                a designer. I've worked on many projects, <br />
-                mainly making brands more memorable, <br />
-                campaigns less forgettable and <br />
-                digital things people click on willingly.
+                I'm a creative designer. <br />
+                I've worked on many projects, <br />
+                mainly making brands more memorable <br />
+                and campaigns less forgettable.
               </div>
             </div>
 

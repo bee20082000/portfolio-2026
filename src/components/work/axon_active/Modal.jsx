@@ -30,6 +30,14 @@ export default function AxonActiveModal() {
       <div style={cell(12)}>
         <img src={img('cover.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
       </div>
+      <div style={cell(12)}>
+        <img src={img('blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+      {/* Blueprint plan for workspace zone */}
+      <div style={cell(12)}>
+        <img src={img('blueprint-2.jpg')} alt="Workspace Zone Blueprint" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
 
       {/* Row filler — completes the row so description lands on its own row below */}
       <div style={{ gridColumn: 'span 6' }} />
@@ -41,11 +49,10 @@ export default function AxonActiveModal() {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         textAlign: 'justify',
-        hyphens: 'auto',
         padding: '0 4px',
       }}>
         <p className="work-modal-body-text">
-          Inspired by Switzerland's reputation for precision, efficiency, and connection to nature, the office was designed as a journey through iconic Swiss experiences. Rather than relying on corporate branding alone, the space incorporates cultural references, intuitive wayfinding, and immersive destinations that encourage exploration and interaction.
+          Rather than relying on traditional corporate branding, we brought Swiss culture into the workplace through experiential spaces, intuitive wayfinding, and memorable destinations. At the same time, the layout supports agile software teams with flexible collaboration areas, quick meeting spots and focused work zones that adapt to different ways of working.
         </p>
       </div>
 
@@ -95,9 +102,7 @@ export default function AxonActiveModal() {
       ══════════════════════════════════════════════ */}
 
       {/* Blueprint plan + hiking sign reference */}
-      <div style={cell(12)}>
-        <img src={img('blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} />
-      </div>
+
       <div style={cell(6)}>
         <img src={img('hiking-sign-ref.jpg')} alt="Hiking Sign Reference" loading="lazy" decoding="async" style={imgStyle} />
       </div>
@@ -116,7 +121,6 @@ export default function AxonActiveModal() {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         textAlign: 'justify',
-        hyphens: 'auto',
         padding: '0 4px',
       }}>
         <p className="work-modal-body-text">
@@ -125,17 +129,10 @@ export default function AxonActiveModal() {
           The signage transforms everyday navigation into a seamless experience, helping employees move effortlessly between focus, collaboration, and social spaces.        </p>
       </div>
 
-
-
       {/* ══════════════════════════════════════════════
           SECTION 3 — WORKSPACE ZONES
           Blueprint / Ref → Actual Photos
       ══════════════════════════════════════════════ */}
-
-      {/* Blueprint plan for workspace zone */}
-      <div style={cell(12)}>
-        <img src={img('blueprint-2.jpg')} alt="Workspace Zone Blueprint" loading="lazy" decoding="async" style={imgStyle} />
-      </div>
 
       {/* → Actual result: finished zones */}
 

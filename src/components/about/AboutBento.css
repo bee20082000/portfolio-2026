@@ -31,9 +31,9 @@
 /* ─── Card Deck Wrapper ──────────────────────────────────────────────────── */
 .about-deck {
   position: relative;
-  width: 60vw;
-  max-width: 60vw;
-  max-height: 60vh;
+  width: 50vw;
+  max-width: 50vw;
+  max-height: 100%;
   /* Capped at 60vh to guarantee plenty of space for bottom controls */
   aspect-ratio: 1414 / 1060;
   /* Allow cards to overflow during entrance/exit animations */
@@ -84,14 +84,14 @@
   column-gap: 20px;
   width: 100%;
   height: 100%;
-  padding: 48px;
+  padding: 0;
 }
 
 /* ─── Bio Panel ──────────────────────────────────────────────────────────── */
 .about-bio-panel {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 0;
 }
 
 .about-bio-text {
@@ -209,10 +209,10 @@
 }
 
 /* ─── Responsive ─────────────────────────────────────────────────────────── */
-@media (max-width: 900px) {
+@media (max-width: 0px) {
   .about-grid-content {
     grid-template-columns: 1fr;
-    padding: 28px 20px;
+    padding: 0;
   }
 
   .about-bio-panel {

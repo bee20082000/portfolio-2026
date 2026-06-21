@@ -47,7 +47,6 @@
   font-size: clamp(40px, 7.2vw, 102px);
   line-height: 0.8;
   letter-spacing: 0em;
-  text-transform: uppercase;
   color: #EBEBEB;
   background: none;
   border: none;
@@ -111,7 +110,7 @@
 }
 
 /* Mobile responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 0px) {
   .work-wrapper {
     grid-template-columns: repeat(6, 1fr);
   }
