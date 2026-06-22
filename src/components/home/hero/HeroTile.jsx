@@ -216,8 +216,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
         baselineOffset = (baselineOffsetInBASE / BASE) * optimalPx;
       }
 
-      // Scale factor to hit 24px size
-      const smallScale = 24 / optimalPx;
+      // Scale factor to hit 36px size
+      const smallScale = 36 / optimalPx;
 
       // How far down to push the text so its BASELINE aligns with viewport bottom minus padding
       const bottomPad = sidePad;
@@ -332,7 +332,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           "--text": "#FFFFFF", "--text2": "#FFFFFF", "--text3": "#FFFFFF",
           "--tile-radius": "0px",
           borderRadius: "0px",
-          overflowY: 'hidden',
+          overflowY: 'auto',
           willChange: 'transform'
         }}
       >
@@ -342,16 +342,25 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           <div className="hero-topbar">
             <div className="hero-topbar-item hero-topbar-name">
               <div ref={namePlaceholderRef} className="hero-name-placeholder" style={{ visibility: 'hidden' }}>Hi, I am Huy</div>
-              <div
+              <a
+                href="#top"
                 ref={h1Ref}
                 className="hero-name-text"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (localLenisRef.current) {
+                    localLenisRef.current.scrollTo(0, { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+                  } else if (tileRef.current) {
+                    tileRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
               >
                 {"Hi, I am Huy".split('').map((char, i) => (
                   <span key={i} className="hero-char">
                     {char === ' ' ? '\u00A0' : char}
                   </span>
                 ))}
-              </div>
+              </a>
             </div>
             <div className="hero-topbar-item hero-topbar-about">
               <a
@@ -364,6 +373,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                 }}
               >
                 About
+                <svg className="doodle-circle" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                </svg>
               </a>
             </div>
             <div className="hero-topbar-item hero-topbar-contact">
@@ -378,6 +390,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                 }}
               >
                 Contact
+                <svg className="doodle-circle" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                </svg>
               </a>
             </div>
           </div>
@@ -486,7 +501,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
                       <div className="hero-text-block">
                         <span className="hero-contact-label">Call me at</span>
-                        <span className="hero-contact-value">0793736688</span>
+                        <span className="hero-contact-value">079 373 6688</span>
                       </div>
                     </div>
                   </div>

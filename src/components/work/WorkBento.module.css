@@ -5,7 +5,7 @@
   max-width: 90%;
   margin: 48px auto 24px auto;
   font-family: var(--font-family);
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-size: clamp(0.875rem, 1.6vw, 1.125rem);
   font-weight: 700;
   color: #8E8E93;
   text-transform: lowercase;
@@ -44,7 +44,7 @@
 .work-list-item {
   font-family: 'Maroni Condensed';
   font-weight: 400;
-  font-size: clamp(40px, 7.2vw, 102px);
+  font-size: clamp(2.5rem, 7.2vw, 6.375rem);
   line-height: 0.8;
   letter-spacing: 0em;
   color: #EBEBEB;
@@ -57,8 +57,10 @@
   outline: none;
   transform-origin: left center;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-    color 0.3s ease;
-  will-change: transform, color;
+    color 0.3s ease,
+    opacity 0.3s ease,
+    filter 0.3s ease;
+  will-change: transform, color, opacity, filter;
   position: relative;
   z-index: 10;
 }
@@ -67,6 +69,11 @@
 .work-list-container .work-list-item.hovered {
   color: #FFFFFF;
   transform: translateX(20px);
+}
+
+/* Blur and fade out siblings when any item is hovered */
+.work-list-container:has(.work-list-item.hovered) .work-list-item:not(.hovered) {
+  opacity: 0.25;
 }
 
 /* Background cover preview styles */
@@ -122,7 +129,7 @@
   }
 
   .work-list-item {
-    font-size: clamp(32px, 8.5vw, 62px);
+    font-size: clamp(2rem, 8.5vw, 3.875rem);
     line-height: 0.82;
     padding: 0.08em 0;
   }

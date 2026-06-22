@@ -304,12 +304,21 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
   }, [activeTab, triggerExit]);
 
 
+  const handleBackdropClick = useCallback((e) => {
+    const clickedPostcard = e.target.closest('.about-postcard');
+    const clickedControls = e.target.closest('.about-controls-container');
+    if (!clickedPostcard && !clickedControls) {
+      window.dispatchEvent(new CustomEvent('switchTab', { detail: 'home' }));
+    }
+  }, []);
+
   return (
     <div
       id={id}
       ref={setContainerRef}
       className={`about-page-root ${className || ''}`}
       style={style}
+      onClick={handleBackdropClick}
     >
       {/* Card Deck Wrapper — this is what gets centered in the flex root */}
       <div className="about-deck">

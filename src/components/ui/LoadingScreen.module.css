@@ -55,7 +55,7 @@
   letter-spacing: 0em;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48em) {
   .loading-text-big {
     font-size: 1.8rem;
   }

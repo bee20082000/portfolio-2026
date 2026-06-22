@@ -5,7 +5,7 @@ const data = {
   category: 'Branding Asset',
   client: 'Thuyen Xua Foods',
   timeline: '2024',
-  challenge: 'Thuyền Xưa Food sought to elevate its premium spice collection through a gift box experience that celebrates heritage, craftsmanship, and authentic Vietnamese flavors.',
+  challenge: 'Thuyen Xua Foods sought to elevate its premium spice collection through a gift box experience that celebrates heritage, craftsmanship, and authentic Vietnamese flavors.',
   strategy1: 'We designed a refined packaging direction that blends traditional warmth with a premium aesthetic. Through thoughtful composition, tactile details, and a restrained visual language, the gift box was crafted to feel both authentic and elevated — transforming local culinary heritage into a contemporary gifting experience.',
   accent: '#c82027',
 }

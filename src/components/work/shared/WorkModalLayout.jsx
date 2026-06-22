@@ -21,7 +21,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
     color,
     padding: '8px 12px',
     borderRadius: '99px',
-    fontSize: '16px',
+    fontSize: '1rem',
     fontWeight: '400',
     lineHeight: '1.1em',
     letterSpacing: '0em',
@@ -36,7 +36,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
     color: '#000000',
     padding: '8px 12px',
     borderRadius: '99px',
-    fontSize: '16px',
+    fontSize: '1rem',
     fontWeight: '400',
     lineHeight: '1.1em',
     letterSpacing: '0em',
@@ -44,7 +44,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
   });
 
   const bodyTextStyle = {
-    fontSize: '16px',
+    fontSize: '1rem',
     color: '#ffffffff',
     margin: 0,
     fontWeight: '400',
@@ -115,7 +115,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
       <style>{`
         .work-modal-grid {
           width: 100%;
-          max-width: 1400px;
+          max-width: 87.5rem;
           display: grid;
           grid-template-columns: repeat(12, 1fr);
           grid-auto-flow: row dense;
@@ -183,7 +183,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
         /* ── Unified body text used inside the bento grid ── */
         .work-modal-body-text {
           color: rgba(255, 255, 255, 1);
-          font-size: 16px;
+          font-size: 1rem;
           line-height: 1.2;
           margin: 20px 0;
           font-weight: 400;
@@ -198,7 +198,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
         className="modal-animate-el work-modal-header"
         style={{
           width: '100%',
-          maxWidth: '1400px',
+          maxWidth: '87.5rem',
           marginBottom: '50px',
         }}
       >
@@ -213,7 +213,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
             width: '100%',
             textAlign: 'left',
             fontFamily: "'Maroni Condensed'",
-            fontSize: 'clamp(100px, 10vw, 140px)',
+            fontSize: 'clamp(6.25rem, 10vw, 8.75rem)',
             fontWeight: '400',
             lineHeight: '0.9',
             letterSpacing: '0em',

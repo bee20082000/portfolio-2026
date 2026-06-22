@@ -30,7 +30,7 @@
   line-height: 1;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 47.9375em) {
   .overlay {
     display: flex;
   }

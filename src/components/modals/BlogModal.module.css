@@ -58,7 +58,7 @@
 }
 
 :global(.blog-slide-num) {
-  font-size: 80px;
+  font-size: 5rem;
   color: rgba(255, 255, 255, 0.02);
   position: absolute;
   top: -40px;

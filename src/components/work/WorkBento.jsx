@@ -11,7 +11,7 @@ const WORKS = [
   {
     id: 'lipton_tet_2024',
     name: 'Lipton Tet',
-    cover: '/asset/images/Lipton/tet/Create_an_ultra-realistic,_premium_editorial_202605241507.jpg'
+    cover: '/asset/images/Lipton/tet/Mockup.jpg'
   },
   {
     id: 'lipton',
@@ -71,7 +71,7 @@ const WORKS = [
   },
   {
     id: 'icoffee',
-    name: 'ICoffee',
+    name: 'GLCF & iCoffee',
     cover: '/asset/images/icoffee/cover.mp4'
   }
 ];

@@ -201,7 +201,7 @@ export default function TuonganModal() {
           top: '12%',
           left: '50%',
           transform: isPhoneHovered ? 'translate(-50%, -4px)' : 'translate(-50%, 0)',
-          fontSize: '13px',
+          fontSize: '0.8125rem',
           fontWeight: 500,
           color: '#ffffffff',
           letterSpacing: '0.06em',
@@ -239,7 +239,7 @@ export default function TuonganModal() {
         alignItems: 'center',
         justifyContent: 'center',
         color: '#5f6368',
-        fontSize: '13px',
+        fontSize: '0.8125rem',
         border: '1px dashed #2d2e33'
       }}>
         + Long Secondary Showcase Block (Content Box B)

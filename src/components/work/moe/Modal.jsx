@@ -53,7 +53,7 @@ export default function MoeModal() {
       </div>
       {/* Row filler + description */}
       <div style={{
-        gridColumn: '1 / 5',
+        gridColumn: '1 / 6',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -173,7 +173,7 @@ export default function MoeModal() {
           left: '40px',
           right: '40px',
           zIndex: 2,
-          fontSize: 'clamp(30px, 7.5vw, 55px)',
+          fontSize: 'clamp(40px, 5vw, 105px)',
           fontWeight: '300',
           color: '#EFCF26',
           textAlign: 'justify',
@@ -190,7 +190,7 @@ export default function MoeModal() {
           left: '40px',
           right: '40px',
           zIndex: 2,
-          fontSize: 'clamp(30px, 7.5vw, 55px)',
+          fontSize: 'clamp(50px, 9vw, 125px)',
           fontWeight: '300',
           color: '#EFCF26',
           textAlign: 'justify',

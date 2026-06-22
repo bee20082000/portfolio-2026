@@ -17,7 +17,7 @@
   color: var(--text);
 
   font-weight: 600;
-  font-size: 13px;
+  font-size: 0.8125rem;
   cursor: pointer;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -33,7 +33,7 @@
   width: 0;
   opacity: 0;
   margin-right: 0;
-  font-size: 12px;
+  font-size: 0.75rem;
   overflow: hidden;
   line-height: 1;
   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),

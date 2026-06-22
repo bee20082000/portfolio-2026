@@ -33,9 +33,27 @@ export default function LiptonTet2024Modal() {
     <WorkModalLayout data={data}>
 
       {/* Hero cover photo */}
+
       <div style={cellStyle(12)}>
         <img
-          src={img('Create_an_ultra-realistic,_premium_editorial_202605241507.jpg')}
+          src={img('Scene-13.jpg')}
+          alt="Lipton Tet Cover"
+          loading="lazy" decoding="async"
+          style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
+        />
+      </div>
+      <div style={cellStyle(12)}>
+        <img
+          src={img('Scene-14.jpg')}
+          alt="Lipton Tet Cover"
+          loading="lazy" decoding="async"
+          style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
+        />
+      </div>
+
+      <div style={cellStyle(12)}>
+        <img
+          src={img('Mockup.jpg')}
           alt="Lipton Tet Cover"
           loading="lazy" decoding="async"
           style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
@@ -43,13 +61,7 @@ export default function LiptonTet2024Modal() {
       </div>
 
       {/* Motion clips side by side */}
-      <div style={cellStyle(6)}>
-        <video
-          src={img('Lipton-AOC-vid-2.mp4')}
-          autoPlay loop muted playsInline
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-      </div>
+      <div style={{ gridColumn: 'span 6' }} />
       <div style={cellStyle(6)}>
         <video
           src={img('Lipton-AOC-vid-3.mp4')}
@@ -58,6 +70,6 @@ export default function LiptonTet2024Modal() {
         />
       </div>
 
-    </WorkModalLayout>
+    </WorkModalLayout >
   )
 }

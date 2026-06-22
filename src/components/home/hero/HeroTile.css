@@ -70,7 +70,7 @@
 
 .hero-name-placeholder {
   font-family: 'Pardon 4x4';
-  font-size: 24px;
+  font-size: 2.25rem;
   font-weight: 400;
   letter-spacing: 0em;
   line-height: 0.8;
@@ -80,19 +80,49 @@
 }
 
 .hero-topbar-link {
+  position: relative;
+  display: inline-block;
   font-family: var(--font-family) !important;
   font-weight: 400 !important;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #FFFFFF;
   text-decoration: none;
   letter-spacing: -0.02em !important;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   pointer-events: auto;
+}
+
+.doodle-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160%;
+  height: 220%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.doodle-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .hero-topbar-link:hover {
   color: #FFFFFF;
+  opacity: 1;
+  transform: scale(1.12) rotate(-2deg);
+}
+
+.hero-topbar-link:hover .doodle-circle {
+  opacity: 0.85;
+}
+
+.hero-topbar-link:hover .doodle-path {
+  stroke-dashoffset: 0;
 }
 
 /* ── Work section ── */
@@ -138,7 +168,7 @@
   padding-bottom: clamp(50px, 8vh, 100px);
   box-sizing: border-box;
   color: #FFFFFF;
-  font-size: 13px;
+  font-size: 0.8125rem;
   text-transform: lowercase;
   display: flex;
   align-items: center;
@@ -163,7 +193,7 @@
 
 .hero-bio-text {
   font-family: var(--font-family);
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.45;
   color: #FFFFFF;
   font-weight: 400;
@@ -186,8 +216,15 @@
   position: absolute;
   top: 0;
   left: 0;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
   will-change: transform, opacity;
+}
+
+.hero-name-text:hover {
+  opacity: 0.7 !important;
 }
 
 .hero-char {
@@ -227,7 +264,7 @@
   }
 
   .hero-bio-text {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .hero-scroll-indicator {
@@ -327,7 +364,7 @@
 
 .hero-contact-title {
   font-family: 'Pardon 4x4';
-  font-size: clamp(24px, 3vw, 36px);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   font-weight: 400;
   font-feature-settings: "ss01" 1, "ss02" 0, "ss03" 0 !important;
   letter-spacing: 0em;
@@ -375,7 +412,7 @@
 }
 
 .hero-contact-label {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 400;
   color: inherit;
   opacity: 0.65;
@@ -384,7 +421,7 @@
 }
 
 .hero-contact-value {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: inherit;
   line-height: 1.2;
@@ -446,7 +483,7 @@
   flex-direction: column;
   gap: 6px;
   font-family: var(--font-family);
-  font-size: clamp(12px, 1.3vw, 14px);
+  font-size: clamp(0.75rem, 1.3vw, 0.875rem);
   color: #8E8E93;
   text-transform: none;
   line-height: 1.4;
