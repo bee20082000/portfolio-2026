@@ -90,8 +90,59 @@ export default function ICoffeeModal() {
       <div style={cell(8)}>
         <img src={img('Icoffee_Drip_2025_FA-1.jpg')} alt="iCoffee Campaign render 1" loading="lazy" decoding="async" style={imgStyle} />
       </div>
-      <div style={cell(4)}>
-        <video src={img('coffee-pouring.mp4')} autoPlay loop muted playsInline style={imgStyle} />
+
+      {/* Video Sequence */}
+      <div style={{
+        gridColumn: 'span 4',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        backgroundColor: '#1c1d22'
+      }}>
+        <video
+          src={img('coffee-pouring.mp4')}
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block'
+          }}
+        />
+        <div style={{
+          fontFamily: 'Install',
+          position: 'absolute',
+          top: '20px',
+          left: '10px',
+          right: '10px',
+          zIndex: 2,
+          fontSize: 'clamp(30px, 4vw, 60px)',
+          fontWeight: '800',
+          color: '#174546',
+          textAlign: 'justify',
+          textAlignLast: 'justify',
+          pointerEvents: 'none',
+          lineHeight: '0.9',
+        }}>
+          DRINK COFFEE
+        </div>
+        <div style={{
+          fontFamily: 'Install',
+          position: 'absolute',
+          bottom: '20px',
+          left: '10px',
+          right: '10px',
+          zIndex: 2,
+          fontSize: 'clamp(30px, 4vw, 60px)',
+          fontWeight: '800',
+          color: '#174546',
+          textAlign: 'justify',
+          textAlignLast: 'justify',
+          pointerEvents: 'none',
+          lineHeight: '0.9',
+        }}>
+          LOVE COFFEE        </div>
       </div>
       <div style={cell(12)}>
         <img src={img('1.jpg')} alt="iCoffee Campaign render 1" loading="lazy" decoding="async" style={imgStyle} />

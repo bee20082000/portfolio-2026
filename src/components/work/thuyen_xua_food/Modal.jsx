@@ -25,7 +25,7 @@ export default function ThuyenXuaFoodModal() {
 
       {/* Hero — man holding gift box */}
       <div style={cell(12)}>
-        <img src={img('Man_holding_Thuyen_Xua_gift_202605240057.jpeg')} alt="Thuyen Xua Product" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('mockup-1.jpg')} alt="Thuyen Xua Product" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
       {/* Two detail shots side by side */}

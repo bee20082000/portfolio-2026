@@ -25,17 +25,17 @@ const COMPONENTS = {
 
 export default function BlogModal({ activeCase, onClose }) {
   const [localCase, setLocalCase] = useState(null)
-  const modalRef     = useRef(null)
+  const modalRef = useRef(null)
   const containerRef = useRef(null)
-  const scrollRef    = useRef(null)
-  const closeRef     = useRef(null)
+  const scrollRef = useRef(null)
+  const closeRef = useRef(null)
 
   // These refs give handleClose synchronous access to cleanup resources
   // without needing to wait for React's useEffect cleanup to run.
   const lenisHandlerRef = useRef(null)  // the active Lenis 'scroll' listener
-  const savedScrollRef  = useRef(0)     // background page scroll position at modal open
-  const spacerRef       = useRef(null)  // the document-height spacer element
-  const roRef           = useRef(null)  // ResizeObserver instance
+  const savedScrollRef = useRef(0)     // background page scroll position at modal open
+  const spacerRef = useRef(null)  // the document-height spacer element
+  const roRef = useRef(null)  // ResizeObserver instance
 
   // Sync activeCase → localCase on open
   useEffect(() => {
@@ -129,25 +129,25 @@ export default function BlogModal({ activeCase, onClose }) {
   useGSAP(() => {
     if (localCase && containerRef.current) {
       const tl = gsap.timeline()
-      // 1. Fade in the overlay background
+      // 1. Fade in the overlay background faster for seamless feel
       tl.fromTo(containerRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.45, ease: 'power2.out' }
+        { opacity: 1, duration: 0.25, ease: 'power2.out' }
       )
-      // 2. Slide the content body up
+      // 2. Slide the content body up snappily
       if (scrollRef.current) {
         tl.fromTo(scrollRef.current,
           { y: 80, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out' },
-          '-=0.35'
+          { y: 0, opacity: 1, duration: 0.5, ease: 'power4.out' },
+          '-=0.15'
         )
       }
-      // 3. Bounce close button in
+      // 3. Bounce close button in fast
       if (closeRef.current) {
         tl.fromTo(closeRef.current,
           { y: 60, opacity: 0, pointerEvents: 'none' },
-          { y: 0, opacity: 1, pointerEvents: 'auto', duration: 0.6, ease: 'back.out(1.5)' },
-          '-=0.55'
+          { y: 0, opacity: 1, pointerEvents: 'auto', duration: 0.4, ease: 'back.out(1.5)' },
+          '-=0.35'
         )
       }
     }
@@ -181,37 +181,37 @@ export default function BlogModal({ activeCase, onClose }) {
       onComplete: () => { setLocalCase(null); onClose() }
     })
 
-    // ── STEP 1: Close button exits first (it triggered the action, it leaves first) ──
+    // ── STEP 1: Close button playfully pops out ──
     if (closeRef.current) {
       tl.to(closeRef.current, {
-        y: 24,
+        y: -20,
         opacity: 0,
-        scale: 0.9,
+        scale: 0.8,
         pointerEvents: 'none',
-        duration: 0.28,
-        ease: 'power3.in',
+        duration: 0.3,
+        ease: 'back.in(1.5)',
       }, 0)
     }
 
-    // ── STEP 2: Content body slides down and fades ──
+    // ── STEP 2: Content body playfully scales down and drops out ──
     if (scrollRef.current) {
       tl.fromTo(scrollRef.current,
-        { y: -modalScrollY },
+        { y: -modalScrollY, scale: 1 },
         {
-          y: -modalScrollY + 60,
+          y: -modalScrollY + 80,
+          scale: 0.96,
           opacity: 0,
-          duration: 0.42,
-          ease: 'power3.in',
-        }, 0.06)
+          duration: 0.4,
+          ease: 'back.in(1.2)',
+        }, 0.05)
     }
 
-    // ── STEP 3: Overlay background dissolves last ──
-    // The "room" disappears after the content has already left
+    // ── STEP 3: Overlay background dissolves quickly ──
     tl.to(containerRef.current, {
       opacity: 0,
-      duration: 0.35,
+      duration: 0.25,
       ease: 'power2.out',
-    }, 0.28)
+    }, 0.35)
   }
 
   // Close on Escape
@@ -220,7 +220,7 @@ export default function BlogModal({ activeCase, onClose }) {
     const handler = (e) => { if (e.key === 'Escape') handleClose() }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localCase])
 
   if (!localCase) return null

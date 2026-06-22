@@ -362,32 +362,11 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[1] = el; }}
         >
           <img
-            src="/asset/images/Bio/working-card.jpg"
+            src="/asset/images/Bio/exp-card.jpg"
             alt=""
             className="about-video-bg"
           />
-          <div className="about-grid-content">
-            <div
-              className="about-bio-panel"
-              style={{ gridColumn: '1 / -1', justifyContent: 'flex-start' }}
-            >
-              <p
-                className="about-bio-text"
-                style={{
-                  fontFamily: "'Pardon 4x4'",
-                  fontSize: 'clamp(27px, 1.7vw, 42px)',
-                  padding: '3%',
-                  lineHeight: '1.1em',
-                  color: '#3255a4',
-                  fontWeight: 400,
-                  letterSpacing: '0em',
-                  textTransform: 'none'
-                }}
-              >
-                I make things feel right. Not just look good — feel intentional. I care about the micro-moment where someone taps a button and thinks: "yes, exactly." That one millisecond is worth obsessing over.
-              </p>
-            </div>
-          </div>
+
         </div>
 
         {/* Card 3 */}
@@ -396,31 +375,11 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[2] = el; }}
         >
           <img
-            src="/asset/images/Bio/falling-card.jpg"
+            src="/asset/images/Bio/working-card.jpg"
             alt=""
             className="about-video-bg"
           />
-          <div className="about-grid-content">
-            <div
-              className="about-bio-panel"
-              style={{ gridColumn: '2 / 8', justifyContent: 'flex-start' }}
-            >
-              <p
-                className="about-bio-text"
-                style={{
-                  fontFamily: "'Pardon 4x4'",
-                  fontSize: 'clamp(27px, 1.7vw, 42px)',
-                  lineHeight: '1.15em',
-                  color: '#ff48b0',
-                  fontWeight: 400,
-                  letterSpacing: '0em',
-                  textTransform: 'none'
-                }}
-              >
-                Let's work together. I'm currently open to new collaborations, weird ideas and honest conversations. Drop me a message — I promise I won't reply with a calendar link.
-              </p>
-            </div>
-          </div>
+
         </div>
       </div>
 

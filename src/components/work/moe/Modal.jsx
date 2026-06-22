@@ -198,7 +198,9 @@ export default function MoeModal() {
           pointerEvents: 'none',
           lineHeight: '0.9',
         }}>
-          MOEカフェ＆ギフトショップ
+          MOEカフェ＆
+          <br />
+          ギフトショップ
         </div>
       </div>
 

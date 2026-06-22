@@ -68,7 +68,13 @@
 /* Hover state: Clean, responsive translation (No scale, no bounce, no text shadow) */
 .work-list-container .work-list-item.hovered {
   color: #FFFFFF;
-  transform: translateX(20px);
+}
+
+/* Click animation state */
+.work-list-container .work-list-item:active {
+  transform: scale(0.96) !important;
+  opacity: 0.8;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.15s ease;
 }
 
 /* Blur and fade out siblings when any item is hovered */

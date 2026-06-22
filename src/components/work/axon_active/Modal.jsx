@@ -64,10 +64,11 @@ export default function AxonActiveModal() {
 
       {/* Blueprint + train refs side by side */}
       <div style={cell(6)}>
-        <img src={img('blueprint-train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} />
-      </div>
-      <div style={cell(6)}>
         <img src={img('glacier-express-3-652fe3cfc907a.avif')} alt="Glacier Express Reference" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+
+      <div style={cell(6)}>
+        <img src={img('blueprint-train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
       {/* Train detail refs — interior textures */}
@@ -91,9 +92,9 @@ export default function AxonActiveModal() {
         padding: '0 4px',
       }}>
         <p className="work-modal-body-text">
-          Inspired by the Glacier Express, Switzerland’s iconic panoramic railway, we transformed the pantry into an immersive destination within the office.
+          Drawing from the Glacier Express, Switzerland's most iconic rail journey, the pantry was designed as a miniature escape within the workplace.
           <br /><br />
-          A custom-built train installation paired with hand-painted alpine landscapes recreates the experience of traveling through the Swiss Alps, turning everyday breaks into moments of exploration and discovery.        </p>
+          A train-inspired installation and panoramic alpine painting recreate the feeling of traveling through the Swiss Alps, while the expansive scenery visually extends the space, making the compact pantry feel more open, inviting, and memorable.        </p>
       </div>
 
       {/* ══════════════════════════════════════════════

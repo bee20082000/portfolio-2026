@@ -22,9 +22,19 @@ const data = {
   role: 'Creative Designer',
   services: 'Campaign Ideation & Visual Development',
   timeline: '2023',
-  challenge: 'A social-first campaign designed to reimagine “Cát Tường An Khang” as a youth-friendly cultural movement through interactive content, digital storytelling, and community engagement.',
+  challenge: 'A social-first campaign designed to reimagine “Cat Tuong An Khang” as a youth-friendly cultural movement through interactive content, digital storytelling, and community engagement.',
   strategy1: 'Young audiences rarely engage with traditional festive messaging unless it feels social, participatory, or worth sharing. As part of the creative team at DDB, I contributed through creative ideation, visual design, and execution, helping explore ways to make the campaign feel more native to online communities — turning a traditional New Year blessing into something younger audiences would actively join, remix, and talk about.'
 }
+
+const img = (name) => `/asset/images/Tuong-an/${name}`;
+const imgStyle = { width: '100%', height: 'auto', objectFit: 'cover', display: 'block' };
+const cell = (span, extra = {}) => ({
+  gridColumn: `span ${span}`,
+  borderRadius: '8px',
+  overflow: 'hidden',
+  height: '100%',
+  ...extra,
+});
 
 export default function TuonganModal() {
   // States and refs for the integrated interactive phone layout
@@ -79,38 +89,25 @@ export default function TuonganModal() {
   return (
     <WorkModalLayout data={data}>
       {/* Hero Visual */}
-      <div style={{
-        gridColumn: 'span 12',
-        borderRadius: '24px',
-        overflow: 'hidden',
-        backgroundColor: '#1c1d22',
-      }}>
+      <div style={cell(12)}>
         <img
-          src="/asset/images/Tuong-an/KV-2023-lowres.jpg"
+          src={img('Billboard.jpg')}
           alt="Main Hero Key Visual"
           loading="lazy"
           decoding="async"
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-            objectFit: 'cover'
-          }}
+          style={imgStyle}
         />
       </div>
 
       {/* Bento 1: Carousel Gallery */}
-      <div style={{
-        gridColumn: 'span 8',
-        height: '260px',
+      <div style={cell(8, {
+        height: '540px',
         backgroundColor: '#1c1d22',
-        borderRadius: '24px',
-        overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         position: 'relative'
-      }}>
+      })}>
         <div style={{ overflow: 'hidden', width: '100%', display: 'flex' }}>
           <div style={{
             display: 'flex',
@@ -127,7 +124,7 @@ export default function TuonganModal() {
                 alt="Social Media Asset Thumbnail"
                 loading="lazy"
                 decoding="async"
-                style={{ height: '180px', width: 'auto', objectFit: 'cover', borderRadius: '14px', flexShrink: 0 }}
+                style={{ height: '350px', width: 'auto', objectFit: 'cover', borderRadius: '14px', flexShrink: 0 }}
               />
             ))}
           </div>
@@ -146,7 +143,7 @@ export default function TuonganModal() {
                 alt="Social Media Asset Thumbnail"
                 loading="lazy"
                 decoding="async"
-                style={{ height: '180px', width: 'auto', objectFit: 'cover', borderRadius: '14px', flexShrink: 0 }}
+                style={{ height: '350px', width: 'auto', objectFit: 'cover', borderRadius: '14px', flexShrink: 0 }}
               />
             ))}
           </div>
@@ -157,18 +154,15 @@ export default function TuonganModal() {
       <div
         onMouseEnter={() => setIsPhoneHovered(true)}
         onMouseLeave={() => setIsPhoneHovered(false)}
-        style={{
-          gridColumn: 'span 4',
+        style={cell(4, {
           gridRow: 'span 2', // Allows the phone to take up 2 rows in the grid
           height: '540px', // Roughly 260px * 2 + 20px gap
           backgroundColor: '#1c1d22',
-          borderRadius: '24px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'relative',
-          overflow: 'hidden'
-        }}
+          position: 'relative'
+        })}
       >
         <div
           ref={phoneContainerRef}
@@ -229,21 +223,6 @@ export default function TuonganModal() {
         </div>
       </div>
 
-      {/* Bento 3: Dynamic Content Slot B */}
-      <div style={{
-        gridColumn: 'span 8',
-        height: '260px',
-        backgroundColor: '#1c1d22',
-        borderRadius: '24px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#5f6368',
-        fontSize: '0.8125rem',
-        border: '1px dashed #2d2e33'
-      }}>
-        + Long Secondary Showcase Block (Content Box B)
-      </div>
     </WorkModalLayout>
   );
 }

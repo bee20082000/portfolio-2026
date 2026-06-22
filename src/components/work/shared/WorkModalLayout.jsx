@@ -57,21 +57,35 @@ export default function WorkModalLayout({ data, customPills, children }) {
   const contextText = data.challenge;
   const approachText = data.strategy1;
 
-  // GSAP animation triggers automatically when this content mounts (fixing lazy loading popping)
+  // GSAP animation triggers automatically when this content mounts
   useGSAP(() => {
     const tl = gsap.timeline();
 
-    // 1. Fluid, layered slide-up for left-hand project details
-    tl.fromTo('.modal-animate-el',
-      { y: 35, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out' }
+    // 1. Title slides up quickly and snappily
+    tl.fromTo('.work-modal-title',
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: 'power4.out' }
     );
 
-    // 3. High-end staggered slide-in for the bento grid cells (no scale to prevent video clipping lag)
+    // 2. Pills pop in fast
+    tl.fromTo('.work-modal-pills > div',
+      { scale: 0.8, opacity: 0, y: 10 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'back.out(1.5)' },
+      "-=0.4"
+    );
+
+    // 3. Text content slides up snappily
+    tl.fromTo(['.work-modal-challenge', '.work-modal-approach'],
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: 'power4.out' },
+      "-=0.4"
+    );
+
+    // 4. Bento items slide in tightly after text
     tl.fromTo('.modal-bento-item',
-      { y: 45, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.06, ease: 'power3.out', force3D: false },
-      0.3
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, stagger: 0.04, ease: 'power4.out', force3D: true },
+      "-=0.35"
     );
   }, { scope: containerRef });
 

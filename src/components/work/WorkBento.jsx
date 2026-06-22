@@ -21,12 +21,12 @@ const WORKS = [
   {
     id: 'thuyen_xua_food',
     name: 'Thuyen Xua Food',
-    cover: '/asset/images/Thuyen-xua/TX-cover.jpg'
+    cover: '/asset/images/Thuyen-xua/cover-1.jpg'
   },
   {
     id: 'tuongan',
     name: 'Tuong An Cooking Oil',
-    cover: '/asset/images/Tuong-an/KV-2023-lowres.jpg'
+    cover: '/asset/images/Tuong-an/KV-2023-lowres-2.jpg'
   },
   {
     id: 'panasonic_tho_dien',

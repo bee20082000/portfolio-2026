@@ -27,16 +27,16 @@ export default function LiptonModal() {
 
       {/* Hero — summer KV video */}
       <div style={cellStyle(12)}>
-        <video
-          src={img('summer/Lipton_logo_in_tropical_scene_202605232158.mp4')}
-          autoPlay loop muted playsInline
-          title="Lipton — Summer Campaign showcase video"
-          style={videoStyle}
+        <img
+          src={img('summer/KV.jpeg')}
+          title="Lipton - KV"
+          loading="lazy" decoding="async"
+          style={imgStyle}
         />
       </div>
 
       {/* Vespa lifestyle photo */}
-      <div style={cellStyle(12)}>
+      <div style={cellStyle(4)}>
         <img
           src={img('Man_laughing_with_friends_Vespa_202605231759.jpeg')}
           alt="Lipton Summer Campaign Vespa Scene"
@@ -46,10 +46,10 @@ export default function LiptonModal() {
       </div>
 
       {/* Social post videos side by side */}
-      <div style={cellStyle(6)}>
+      <div style={cellStyle(4)}>
         <video src={img('summer/Lipton_post2_FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
       </div>
-      <div style={cellStyle(6)}>
+      <div style={cellStyle(4)}>
         <video src={img('summer/Lipton-Post-4-video-FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
       </div>
 
