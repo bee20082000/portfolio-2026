@@ -147,7 +147,7 @@ export default function App() {
           onDone={()   => setScreenUnmounted(true)}
         />
       )}
-      {loaded && <Cursor />}
+      {loaded && <Cursor key="cursor-v2" />}
 
       <div
         className={`${styles['page-wrapper']} ${loaded ? styles['page-visible'] : styles['page-hidden']}`}

@@ -19,7 +19,7 @@
 /* ── CUSTOM FONTS: OTT MOORE-BLACK ───────────────── */
 @font-face {
   font-family: 'OTT Moore-Black';
-  src: url('./assets/fonts/OTT Moore-Black.otf') format('opentype');
+  src: url('./assets/fonts/OTT-Moore-Black.otf') format('opentype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;

@@ -375,7 +375,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[2] = el; }}
         >
           <img
-            src="/asset/images/Bio/working-card.jpg"
+            src="/asset/images/Bio/final-card.jpg"
             alt=""
             className="about-video-bg"
           />

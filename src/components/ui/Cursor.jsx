@@ -98,7 +98,7 @@ export default function Cursor() {
 
     const hidePill = () => {
       gsap.to(pillRef.current, {
-        scale: 0, opacity: 0, duration: 0.22, ease: 'power2.out', overwrite: 'auto',
+        scale: 0.6, opacity: 0, y: 10, duration: 0.28, ease: 'back.in(1.2)', overwrite: 'auto',
         onComplete: () => { gsap.set(pillRef.current, { display: 'none' }) }
       })
     }
@@ -157,9 +157,10 @@ export default function Cursor() {
     }
 
     const handleMouseOver = (e) => {
-      const isHeroBackground = e.target.closest('.tile-hero') && !e.target.closest('.bio-link')
+      const isWorkList = e.target.closest('.work-list-item')
+      const isHeroBackground = e.target.closest('.tile-hero') && !e.target.closest('.bio-link') && !isWorkList
       const isCase = e.target.closest('.tile-case')
-      const el = !isHeroBackground && e.target.closest('.tile, a, button, [role="button"], .clickable, .view-more-badge, .unified-close-btn, .spotify-btn')
+      const el = !isHeroBackground && !isWorkList && e.target.closest('.tile, a, button, [role="button"], .clickable, .view-more-badge, .unified-close-btn, .spotify-btn')
 
       if (isHeroBackground) {
         if (hoveredEl !== 'hero-bg') {
@@ -175,6 +176,14 @@ export default function Cursor() {
           hideHand()
           hideSvg()
           showPill('View Work →', '#ffffffff', '#000000ff')
+        }
+      } else if (isWorkList) {
+        if (hoveredEl !== 'worklist') {
+          hoveredEl = 'worklist'
+          hideHand()
+          gsap.set(svgRef.current, { display: 'block' })
+          showSvgHover() // Keep the cursor visible and enlarge it
+          showPill('view', '#ffffffff', '#000000ff') // Show the pill aligned as a tooltip
         }
       } else if (el) {
         if (hoveredEl !== el) {
@@ -276,9 +285,9 @@ export default function Cursor() {
       <div
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          transform: 'translate(24px, 16px)', /* align to the bottom-right of centered cursor tip */
+          top: '3.45px',  /* Exact Y coordinate of the cursor tip */
+          left: '8.25px', /* Exact X coordinate of the cursor tip */
+          transform: 'translate(16px, 0px)', /* place perfectly next to the bottom-right of the cursor */
           pointerEvents: 'none'
         }}
       >

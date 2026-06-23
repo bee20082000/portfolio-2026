@@ -140,7 +140,7 @@ export default function MoeModal() {
 
 
       {/* Photo 3 — full width */}
-      <div style={cell(12)}>
+      <div style={cell(6)}>
         <img src={img('photo-3.jpg')} alt="Moe Packaging Photo 3" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
@@ -149,22 +149,27 @@ export default function MoeModal() {
         <img src={img('photo-1.jpg')} alt="Moe Packaging Photo 1" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 
-      {/* Row filler + description */}
-      <div style={{ gridColumn: 'span 6' }} />
-      <div style={{
-        gridColumn: '7 / -1',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        padding: '0 4px',
-      }}>
-        <p className="work-modal-body-text">
-          MOE COFFEE AND GIFT SHOP
-        </p>
-      </div>
 
+      {/* 2nd project */}
+      <div style={{
+        gridColumn: '1 / -1',
+        display: 'block',
+        padding: '32px 4px 16px 4px',
+      }}>
+        <h1 className="work-modal-title" style={{
+          fontFamily: "'Maroni Condensed'",
+          fontSize: 'clamp(4rem, 6vw, 8rem)',
+          fontWeight: '400',
+          lineHeight: '0.9',
+          letterSpacing: '0em',
+          color: '#ffffff',
+          textTransform: 'uppercase',
+        }}>
+          MOE COFFEE AND GIFT SHOP
+        </h1>
+      </div>
       {/* GIF cover — full width with overlay text */}
-      <div style={{ ...cell(12), position: 'relative' }}>
+      <div style={{ ...cell(8), position: 'relative' }}>
         <img src={img('moe-cover.gif')} alt="Moe Animated Cover" loading="lazy" decoding="async" style={imgStyle} />
         <div style={{
           position: 'absolute',
@@ -173,7 +178,7 @@ export default function MoeModal() {
           left: '40px',
           right: '40px',
           zIndex: 2,
-          fontSize: 'clamp(40px, 5vw, 105px)',
+          fontSize: 'clamp(20px, 3vw, 80px)',
           fontWeight: '300',
           color: '#EFCF26',
           textAlign: 'justify',
@@ -190,7 +195,7 @@ export default function MoeModal() {
           left: '40px',
           right: '40px',
           zIndex: 2,
-          fontSize: 'clamp(50px, 9vw, 125px)',
+          fontSize: 'clamp(20px, 3vw, 80px)',
           fontWeight: '300',
           color: '#EFCF26',
           textAlign: 'justify',
@@ -209,12 +214,10 @@ export default function MoeModal() {
       <div style={cell(4)}>
         <img src={img('photo-4.jpg')} alt="Moe Packaging Photo 4" loading="lazy" decoding="async" style={imgStyle} />
       </div>
-      <div style={cell(4)}>
+      <div style={cell(6)}>
         <img src={img('photo-5.jpeg')} alt="Moe Packaging Photo 5" loading="lazy" decoding="async" style={imgStyle} />
       </div>
-
-      {/* Photo 6 + new pack video */}
-      <div style={cell(4)}>
+      <div style={cell(6)}>
         <img src={img('photo-6.jpeg')} alt="Moe Packaging Photo 6" loading="lazy" decoding="async" style={imgStyle} />
       </div>
 

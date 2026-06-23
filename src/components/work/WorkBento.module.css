@@ -45,12 +45,12 @@
   font-family: 'Maroni Condensed';
   font-weight: 400;
   font-size: clamp(2.5rem, 7.2vw, 6.375rem);
-  line-height: 0.8;
+  line-height: 0.75;
   letter-spacing: 0em;
   color: #EBEBEB;
   background: none;
   border: none;
-  padding: 0.04em 0;
+  padding: 0;
   text-align: left;
   cursor: pointer;
   width: auto;
@@ -71,7 +71,8 @@
 }
 
 /* Click animation state */
-.work-list-container .work-list-item:active {
+.work-list-container .work-list-item:active,
+.work-list-container .work-list-item.clicked {
   transform: scale(0.96) !important;
   opacity: 0.8;
   transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.15s ease;
@@ -136,8 +137,8 @@
 
   .work-list-item {
     font-size: clamp(2rem, 8.5vw, 3.875rem);
-    line-height: 0.82;
-    padding: 0.08em 0;
+    line-height: 0.75;
+    padding: 0;
   }
 
   .work-list-container .work-list-item.hovered {

@@ -9,29 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const WORKS = [
   {
-    id: 'lipton_tet_2024',
-    name: 'Lipton Tet',
-    cover: '/asset/images/Lipton/tet/Mockup.jpg'
-  },
-  {
-    id: 'lipton',
-    name: 'Lipton Summer',
-    cover: '/asset/images/Lipton/summer/Lipton_logo_in_tropical_scene_202605232158.mp4'
-  },
-  {
-    id: 'thuyen_xua_food',
-    name: 'Thuyen Xua Food',
-    cover: '/asset/images/Thuyen-xua/cover-1.jpg'
-  },
-  {
-    id: 'tuongan',
-    name: 'Tuong An Cooking Oil',
-    cover: '/asset/images/Tuong-an/KV-2023-lowres-2.jpg'
-  },
-  {
-    id: 'panasonic_tho_dien',
-    name: 'Panasonic ElectRI"CITY"',
-    cover: '/asset/images/Panasonic/cover.mp4'
+    id: 'moe',
+    name: 'Gori Coffee',
+    cover: '/asset/images/Moe-Cafe/cover.mp4'
   },
   {
     id: 'chivas',
@@ -39,30 +19,14 @@ const WORKS = [
     cover: '/asset/images/chivas/chivas-cover.mp4'
   },
   {
-    id: 'moe',
-    name: 'Gori Coffee',
-    cover: '/asset/images/Moe-Cafe/cover.mp4'
-  },
-  {
     id: 'axon_active',
     name: 'Axon Active New Office',
     cover: '/asset/images/axon-active/TDC/cover.jpg'
   },
   {
-    id: 'nam_dinh_vu',
-    name: 'Nam Dinh Vu Concept',
-    cover: '/asset/images/Nam-Dinh-Vu/Cong/JPEG/Cong.jpg'
-  },
-  {
-    id: 'santen',
-    name: 'Santen Social',
-    cover: '/asset/images/santen/cover.jpg'
-  },
-
-  {
-    id: 'nakivo',
-    name: 'Nakivo Calendar',
-    cover: '/asset/images/nakivo/cover.mp4'
+    id: 'icoffee',
+    name: 'GLCF & iCoffee',
+    cover: '/asset/images/icoffee/cover.mp4'
   },
   {
     id: 'suzuki_social',
@@ -70,9 +34,44 @@ const WORKS = [
     cover: '/asset/images/suzuki/web/cover.mp4'
   },
   {
-    id: 'icoffee',
-    name: 'GLCF & iCoffee',
-    cover: '/asset/images/icoffee/cover.mp4'
+    id: 'panasonic_tho_dien',
+    name: 'Panasonic ElectRI"CITY"',
+    cover: '/asset/images/Panasonic/cover.mp4'
+  },
+  {
+    id: 'lipton_tet_2024',
+    name: 'Lipton Tet',
+    cover: '/asset/images/Lipton/tet/Mockup.jpg'
+  },
+  {
+    id: 'thuyen_xua_food',
+    name: 'Thuyen Xua Food',
+    cover: '/asset/images/Thuyen-xua/cover-1.jpg'
+  },
+  {
+    id: 'nakivo',
+    name: 'Nakivo Calendar',
+    cover: '/asset/images/nakivo/cover.mp4'
+  },
+  {
+    id: 'nam_dinh_vu',
+    name: 'Nam Dinh Vu Concept',
+    cover: '/asset/images/Nam-Dinh-Vu/Cong/JPEG/Cong.jpg'
+  },
+  {
+    id: 'lipton',
+    name: 'Lipton Summer',
+    cover: '/asset/images/Lipton/summer/Lipton_logo_in_tropical_scene_202605232158.mp4'
+  },
+  {
+    id: 'tuongan',
+    name: 'Tuong An Cooking Oil',
+    cover: '/asset/images/Tuong-an/tuong-an-cover.jpg'
+  },
+  {
+    id: 'santen',
+    name: 'Santen Social',
+    cover: '/asset/images/santen/cover.jpg'
   }
 ];
 
@@ -125,6 +124,7 @@ CoverPreviewItem.displayName = 'CoverPreviewItem';
 
 const WorkBento = memo(forwardRef(({ onSelect, className, style, id, scroller }, ref) => {
   const [hoveredCover, setHoveredCover] = useState(null);
+  const [clickedId, setClickedId] = useState(null);
   const [shouldRenderPool, setShouldRenderPool] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -271,13 +271,18 @@ const WorkBento = memo(forwardRef(({ onSelect, className, style, id, scroller },
       }
     });
 
+    const handleModalClose = () => {
+      resetSkew();
+      setClickedId(null);
+    };
+
     // When modal closes, immediately reset skew before the scroll jump
     // fires and before ScrollTrigger processes the velocity spike
-    window.addEventListener('modalScrollClose', resetSkew);
+    window.addEventListener('modalScrollClose', handleModalClose);
 
     return () => {
       trigger.kill();
-      window.removeEventListener('modalScrollClose', resetSkew);
+      window.removeEventListener('modalScrollClose', handleModalClose);
     };
   }, { dependencies: [scroller], scope: ref });
 
@@ -303,14 +308,15 @@ const WorkBento = memo(forwardRef(({ onSelect, className, style, id, scroller },
         document.body
       )}
 
-      <div className={styles['work-list-container']}>
+      <div className={styles['work-list-container']} data-work-list="true">
         {WORKS.map((work) => (
           <div key={work.id} className={styles['work-list-item-wrap']}>
             <button
-              className={`${styles['work-list-item']} ${hoveredCover === work.cover ? styles['hovered'] : ''}`}
+              className={`work-list-item ${styles['work-list-item']} ${hoveredCover === work.cover ? styles['hovered'] : ''} ${clickedId === work.id ? styles['clicked'] : ''}`}
               data-cover={work.cover}
               onClick={() => {
                 handleMouseLeave();
+                setClickedId(work.id);
                 onSelect(work.id);
               }}
               onMouseEnter={() => handleMouseEnter(work.cover)}
@@ -329,6 +335,7 @@ const WorkBento = memo(forwardRef(({ onSelect, className, style, id, scroller },
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   handleMouseLeave();
+                  setClickedId(work.id);
                   onSelect(work.id);
                 }
               }}
