@@ -23,7 +23,6 @@ const cell = (span, extra = {}) => ({
   borderRadius: '8px',
   overflow: 'hidden',
   height: '100%',
-  backgroundColor: '#1c1d22',
   ...extra,
 });
 
@@ -40,6 +39,9 @@ export default function ICoffeeModal() {
       </div>
       <div style={cell(12)}>
         <img src={img('Scene-1.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+      </div>
+      <div style={cell(12)}>
+        <img src={img('cafe-glcf.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(6)}>
         <img src={img('Scene-2.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />

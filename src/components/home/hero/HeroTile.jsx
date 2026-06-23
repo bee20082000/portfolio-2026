@@ -23,8 +23,18 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
   const animClick = (el) => {
     gsap.timeline()
-      .to(el, { scale: 0.96, duration: 0.07, ease: 'power2.out' })
-      .to(el, { scale: 1, duration: 0.15, ease: 'back.out(2)' });
+      .to(el, { scale: 0.85, duration: 0.05, ease: 'power2.out' })
+      .to(el, { scale: 1, duration: 0.25, ease: 'back.out(3)', clearProps: 'transform' });
+  };
+
+  const animNameClick = (el) => {
+    // The name text is actively being transformed by ScrollTrigger.
+    // We cannot use clearProps: 'transform' here, or it will lose its Y position!
+    // We also need to bounce relative to its current scale (since it shrinks when scrolled).
+    const currentScale = gsap.getProperty(el, "scale") || 1;
+    gsap.timeline()
+      .to(el, { scale: currentScale * 0.85, duration: 0.05, ease: 'power2.out', overwrite: "auto" })
+      .to(el, { scale: currentScale, duration: 0.25, ease: 'back.out(3)' });
   };
 
   const handleCopy = (text, type, e) => {
@@ -368,13 +378,14 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                 className="hero-topbar-link"
                 onClick={(e) => {
                   e.preventDefault();
+                  animClick(e.currentTarget);
                   window.nextAboutSection = 'profile';
                   window.dispatchEvent(new CustomEvent('switchTab', { detail: 'about' }));
                 }}
               >
                 About
                 <svg className="doodle-circle" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" />
                 </svg>
               </a>
             </div>
@@ -384,6 +395,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                 className="hero-topbar-link"
                 onClick={(e) => {
                   e.preventDefault();
+                  animClick(e.currentTarget);
                   if (localLenisRef.current) {
                     localLenisRef.current.scrollTo('#contact-section', { duration: 1.5, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
                   }
@@ -391,7 +403,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               >
                 Contact
                 <svg className="doodle-circle" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" />
                 </svg>
               </a>
             </div>

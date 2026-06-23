@@ -68,7 +68,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
       })
       // Blur home grid when about is initially active
       if (activeTab === 'about') {
-        gsap.set(bentoHome, { filter: 'blur(10px)', opacity: 0.25, scale: 1.02 })
+        gsap.set(bentoHome, { filter: 'blur(10px)', opacity: 0.25, scale: 1 })
       }
       gsap.set(bentoWork, {
         height: activeTab === 'work' ? 'auto' : 0,
@@ -214,12 +214,12 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
       if (activeTab === 'about') {
         // Home stays visible but blurred/faded under the postcard overlay
         tl.to(bentoHome, {
-          opacity: 0.25, scale: 1.02, filter: 'blur(10px)',
+          opacity: 0.25, scale: 1, filter: 'blur(10px)',
           duration: 0.55, ease: 'power2.out', overwrite: 'auto'
         }, 0)
       } else {
         tl.to(bentoHome, {
-          opacity: 0, scale: 0.98,
+          opacity: 0, scale: 1,
           duration: 0.2, ease: 'power2.in', overwrite: 'auto'
         }, 0)
       }
@@ -295,7 +295,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
       if (prevTab === 'work') {
         // Restore + blur home behind the postcard overlay
         gsap.set(bentoHome, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
-        tl.to(bentoHome, { opacity: 0.25, scale: 1.02, filter: 'blur(10px)', duration: 0.5, ease: 'power2.out', overwrite: 'auto' }, 0.15)
+        tl.to(bentoHome, { opacity: 0.25, scale: 1, filter: 'blur(10px)', duration: 0.5, ease: 'power2.out', overwrite: 'auto' }, 0.15)
       }
     } else if (activeTab === 'work') {
       tl.set(dest.grid, { opacity: 1 }, 0.15)

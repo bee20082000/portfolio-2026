@@ -2,7 +2,7 @@ import WorkModalLayout from '../shared/WorkModalLayout';
 
 const data = {
   title: 'Lipton summer',
-  category: 'Packaging',
+  category: 'Branding Asset',
   client: 'Lipton Việt Nam',
   timeline: '2023',
   challenge: 'How do we centralize control of 20+ smart home appliances without overwhelming the user? The market was saturated with complex, technical dashboards. The client needed an interface that felt human, warm, and accessible to everyone from kids to seniors.',

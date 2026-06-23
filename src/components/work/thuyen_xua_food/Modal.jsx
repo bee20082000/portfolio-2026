@@ -1,4 +1,9 @@
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import WorkModalLayout from '../shared/WorkModalLayout';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const data = {
   title: 'Tet Gift Box',
@@ -20,6 +25,47 @@ const cell = (span, extra = {}) => ({
 });
 
 export default function ThuyenXuaFoodModal() {
+  const polaroidRef = useRef(null);
+
+  useEffect(() => {
+    const el = polaroidRef.current;
+    if (!el) return;
+
+    let rafId;
+    let isActive = true;
+
+    // A robust, native parallax loop that relies only on physical screen coordinates.
+    // It is 100% immune to GSAP's resize/refresh glitching during modal exit animations!
+    const updateParallax = () => {
+      if (!isActive) return;
+
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // Calculate how far into the viewport the element is.
+      // 0 = entering from bottom, 1 = reaching the center
+      let progress = (vh - rect.top) / (vh / 2);
+
+      // Clamp between 0 and 1 so it stops moving once it reaches the center
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Map progress to translate Y and Rotation
+      const y = 150 - (200 * progress);
+      const rotate = -2 + (5 * progress);
+
+      el.style.transform = `translateY(${y}px) rotate(${rotate}deg)`;
+
+      rafId = requestAnimationFrame(updateParallax);
+    };
+
+    rafId = requestAnimationFrame(updateParallax);
+
+    return () => {
+      isActive = false;
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   return (
     <WorkModalLayout data={data}>
 
@@ -29,11 +75,52 @@ export default function ThuyenXuaFoodModal() {
       </div>
 
       {/* Two detail shots side by side */}
-      <div style={cell(6)}>
-        <img src={img('Thuyen_Xua_gift_box_on_202605240109.jpeg')} alt="Thuyen Xua Photoshoot" loading="lazy" decoding="async" style={imgStyle} />
+      <div style={cell(12)}>
+        <img src={img('social.jpg')} alt="Thuyen Xua Photoshoot" loading="lazy" decoding="async" style={imgStyle} />
       </div>
-      <div style={cell(6)}>
-        <img src={img('Refine_shadow_lighting_photoshoot_202605240113.jpg')} alt="Thuyen Xua Gift Box" loading="lazy" decoding="async" style={imgStyle} />
+
+      {/* Flowing Parallax Polaroid */}
+      <div style={{
+        ...cell(12),
+        overflow: 'visible', // allow it to break bounds during parallax
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '80px',
+      }}>
+        <div
+          ref={polaroidRef}
+          style={{
+            width: '60%',
+            maxWidth: '300px',
+            borderRadius: '8px',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+            backgroundColor: '#fff',
+            padding: '12px 12px 80px 12px', // Polaroid frame effect
+            position: 'relative'
+          }}
+        >
+          <img
+            src={img('polaroid.jpg')}
+            alt="Thuyen Xua Polaroid"
+            loading="lazy"
+            decoding="async"
+            style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '4px' }}
+          />
+          {/* Handwritten text at the bottom of the polaroid */}
+          <div style={{
+            position: 'absolute',
+            bottom: '22px',
+            left: '0',
+            width: '100%',
+            textAlign: 'center',
+            fontFamily: "'Belmonte Ballpoint', cursive",
+            fontSize: '1.8rem',
+            color: '#1a1a1a',
+            transform: 'rotate(-2deg)' // slight slant for handwriting realism
+          }}>
+            Huy, Neomi, Son
+          </div>
+        </div>
       </div>
 
     </WorkModalLayout>

@@ -91,6 +91,9 @@
   cursor: pointer;
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   pointer-events: auto;
+  outline: none !important;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .doodle-circle {
