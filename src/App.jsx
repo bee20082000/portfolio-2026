@@ -2,6 +2,7 @@ import { useState, useEffect, startTransition } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 import Cursor from './components/ui/Cursor'
 import HomeGrid from './components/home/HomeGrid'
 import BlogModal from './components/modals/BlogModal'
@@ -163,6 +164,7 @@ export default function App() {
 
       <BlogModal activeCase={activeCase} onClose={() => setActiveCase(null)} />
       <SpeedInsights />
+      <Analytics />
     </>
   )
 }
