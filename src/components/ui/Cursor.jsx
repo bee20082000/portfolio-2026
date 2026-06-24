@@ -176,7 +176,7 @@ export default function Cursor() {
       const isWorkList = target.closest('.work-list-item')
       const isHeroBackground = target.closest('.tile-hero') && !target.closest('.bio-link') && !isWorkList
       const isCase = target.closest('.tile-case')
-      const el = !isHeroBackground && !isWorkList && target.closest('.tile, a, button, [role="button"], .clickable, .view-more-badge, .unified-close-btn, .spotify-btn')
+      const el = !isHeroBackground && !isWorkList && target.closest('.tile, a, button, [role="button"], .clickable, .view-more-badge, .unified-close-btn')
 
       if (isHeroBackground) {
         if (hoveredEl !== 'hero-bg') {

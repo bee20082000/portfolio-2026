@@ -276,9 +276,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           );
         }
       } else if (!entranceAnimated.current && chars.length > 0) {
-        // Render at 1% opacity in its final position to instantly trigger LCP 
-        // without the user seeing it before the entrance animation begins.
-        gsap.set(chars, { y: 0, scale: 1, opacity: 0.01 });
+        // We originally used opacity: 0.01 to trigger an early LCP score,
+        // but it causes visible ghosting. Setting to 0 for a clean visual experience.
+        gsap.set(chars, { y: 0, scale: 1, opacity: 0 });
       }
 
       // Defer ScrollTrigger refresh

@@ -5,7 +5,7 @@
      Covers all characters actually used: A–Z, a–z, 0–9 and punctuation.
      TTF kept as fallback for any character outside the subset. */
   src: url('./assets/fonts/Pardon-4x4.subset.woff2') format('woff2'),
-       url('./assets/fonts/Pardon-4x4.ttf') format('truetype');
+    url('./assets/fonts/Pardon-4x4.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: optional;
@@ -16,15 +16,6 @@
   font-family: 'Belmonte Ballpoint';
   src: url('./assets/fonts/Belmonte-Ballpoint-Cursive.Br-BZhnd.woff2') format('woff2');
   font-weight: normal;
-  font-style: normal;
-  font-display: optional;
-}
-
-/* ── CUSTOM FONTS: OTT MOORE-BLACK ───────────────── */
-@font-face {
-  font-family: 'OTT Moore-Black';
-  src: url('./assets/fonts/OTT-Moore-Black.otf') format('opentype');
-  font-weight: 100 900;
   font-style: normal;
   font-display: optional;
 }
@@ -146,39 +137,6 @@
   font-display: optional;
 }
 
-/* ── CUSTOM FONTS: AKKURAT MONO LL ────────────── */
-@font-face {
-  font-family: 'Akkurat Mono LL';
-  src: url('./assets/fonts/AkkuratMonoLL-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: 'Akkurat Mono LL';
-  src: url('./assets/fonts/AkkuratMonoLL-RegularItalic.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: 'Akkurat Mono LL';
-  src: url('./assets/fonts/AkkuratMonoLL-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: 'Akkurat Mono LL';
-  src: url('./assets/fonts/AkkuratMonoLL-BoldItalic.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: optional;
-}
-
 
 /* ── CONFIGURATION & GLOBAL COLOR PALETTE ───── */
 html {
@@ -268,12 +226,6 @@ input,
 .clickable,
 .view-more-badge,
 .unified-close-btn,
-.spotify-btn,
-.spotify-control-btn,
-.sticker,
-.fake-alert-toast,
-.chart-row,
-.mini-meme-item,
 *::before,
 *::after {
   cursor: none !important;
@@ -317,14 +269,7 @@ input,
   z-index: 10;
 }
 
-.inner {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 16px;
-  height: auto;
-}
+
 
 /* Column/Row Spans */
 .c2 {
@@ -479,48 +424,26 @@ input,
   font-size: 0.84375rem !important;
 }
 
-.tile:not(.tile-hero) .h3,
-.spotify-track {
+.tile:not(.tile-hero) .h3 {
   font-size: 0.90625rem !important;
   line-height: 1.25 !important;
 }
 
-.tile:not(.tile-hero) .body,
-.spotify-artist {
+.tile:not(.tile-hero) .body {
   font-size: 0.78125rem !important;
   font-weight: 700 !important;
   line-height: 1.4 !important;
 }
 
 /* ── HERO DETAILS & HOVER EFFECTS ────────────── */
-.hover-bold-target {
-  font-weight: 700;
-  display: inline-block;
-  transition: color 0.3s ease;
-}
 
-.hero-tile-wrapper {
-  position: relative;
-  width: 100%;
-  height: fit-content;
-  align-self: flex-start;
-}
 
 .tile-hero {
   position: relative !important;
   overflow: hidden !important;
 }
 
-.tile-hero .inner {
-  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 1;
-}
 
-.tile-hero.content-hidden .inner {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transform: scale(0.95);
-}
 
 /* ── PREMIUM EXPANDING BIO MODAL ─────────────── */
 .bio-modal-overlay {
@@ -571,42 +494,7 @@ input,
   border-radius: 0px !important;
 }
 
-/* ── HARDWARE-ACCELERATED VIDEO CONTAINERS ───── */
-.hw-accel-container,
-.hw-accel-container video {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
-  transform-style: preserve-3d;
-}
 
-.hw-accel-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.hw-accel-container video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform-origin: center center;
-}
-
-/* ── WORK TILE HOVER COMPRESSION ──────────────── */
-.tile-visual-wrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: inherit;
-  overflow: hidden;
-  z-index: 2;
-}
 
 h1,
 h2,
@@ -633,90 +521,5 @@ h4,
 
   100% {
     transform: translateX(-100%);
-  }
-}
-
-/* ── GLOBAL HOME PILL BUTTON ── */
-.global-home-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  color: #0A0A0A !important;
-  font-family: var(--font-family);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  text-transform: lowercase;
-  padding: 10px 24px;
-  border-radius: 99px;
-  cursor: none !important;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
-  will-change: transform;
-}
-
-.global-home-pill:hover {
-  background-color: #C3FB50 !important;
-  transform: scale(1.08);
-}
-
-.global-home-pill:active {
-  transform: scale(0.96);
-}
-
-/* ── VIEWPORT ADAPTATION MEDIA QUERIES ───────── */
-@media (max-width: 0px) {
-  .page {
-    padding: 0 20px 20px 20px;
-  }
-}
-
-@media (max-width: 0px) {
-  .page-wrapper {
-    height: auto !important;
-    min-height: 100vh;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-  }
-
-  .page {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    height: auto !important;
-    padding: 16px !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-  }
-
-  .page-content {
-    flex-direction: column !important;
-    height: auto !important;
-    gap: 24px !important;
-    width: 100% !important;
-  }
-
-  .bento {
-    display: grid;
-    grid-auto-flow: column dense;
-    grid-template-rows: repeat(4, 1fr);
-    grid-auto-columns: 140px;
-    gap: 16px;
-    height: calc(100vh - 180px);
-    max-height: 860px;
-    min-height: 600px;
-    align-self: center;
-  }
-
-  .tile {
-    width: 100% !important;
-    min-width: 0 !important;
-    height: auto !important;
-    aspect-ratio: auto !important;
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-  }
-
-  .topbar {
-    padding: 16px 20px 12px 20px !important;
   }
 }

@@ -44,8 +44,7 @@ export default function App() {
     const onClick = (e) => {
       const target = e.target.closest(
         'button, a, .tile-clock, .tile-skills, .tile-contact, .tile-photos, ' +
-        '.tile-case, .exp-card-item, .view-more-badge, .unified-close-btn, ' +
-        '.spotify-btn, .spotify-track, .spotify-progress, .bio-modal-dot'
+        '.tile-case, .exp-card-item, .view-more-badge, .unified-close-btn'
       )
       if (target) {
         const playAudio = () =>
