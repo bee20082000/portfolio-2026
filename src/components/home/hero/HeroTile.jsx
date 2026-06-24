@@ -293,8 +293,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               y: centerOffset, // Land in center
               rotationX: 0,
               rotationY: 0,
-              duration: 0.8, // Fast burst
-              stagger: 0.015,
+              duration: 0.4, // Fast burst
+              stagger: 0.008,
               ease: "back.out(2)", // Bouncy
             }
           );
@@ -302,25 +302,25 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           // 2. Sweep down to the bottom
           entranceTl.to(chars, {
             y: 0, // Moves them back to textEl's location (bottom)
-            duration: 0.8,
+            duration: 0.4,
             ease: "expo.inOut" // Smooth sweep
-          }, "+=0.3"); // Hold in center for a moment so user can read it
+          }, "+=0.05"); // Very brief hold in center
         }
 
         // 3. Bio and topbar appear exactly as the text lands at the bottom
         if (topbarItems.length > 0) {
           entranceTl.fromTo(topbarItems,
-            { y: -30, autoAlpha: 0 }, // match autoAlpha
-            { y: 0, autoAlpha: 1, duration: 0.8, ease: "power4.out", stagger: 0.05 },
-            "-=0.4"
+            { y: -15, autoAlpha: 0 }, // match autoAlpha
+            { y: 0, autoAlpha: 1, duration: 0.4, ease: "power4.out", stagger: 0.03 },
+            "-=0.2"
           );
         }
 
         if (bioText) {
           entranceTl.fromTo(bioText,
-            { y: 40, autoAlpha: 0 }, // match autoAlpha
-            { y: 0, autoAlpha: 1, duration: 0.8, ease: "power4.out" },
-            "-=0.3"
+            { y: 15, autoAlpha: 0 }, // match autoAlpha
+            { y: 0, autoAlpha: 1, duration: 0.4, ease: "power4.out" },
+            "-=0.2"
           );
         }
 
