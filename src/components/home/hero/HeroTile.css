@@ -214,7 +214,7 @@
   color: #FFFFFF;
   white-space: nowrap;
   display: block;
-  opacity: 0;
+  visibility: hidden;
   transform-origin: 0 0;
   position: absolute;
   top: 0;

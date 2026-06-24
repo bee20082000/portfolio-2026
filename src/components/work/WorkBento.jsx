@@ -113,6 +113,8 @@ const CoverPreviewItem = memo(({ work, isActive }) => {
           src={work.cover}
           alt={work.name}
           loading="eager"
+          width="500"
+          height="300"
           className={styles['cover-image']}
         />
       )}

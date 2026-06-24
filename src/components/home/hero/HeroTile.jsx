@@ -202,6 +202,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       // 3. Measure coordinates under reset styles (clear any GSAP y/scale first)
       gsap.set(textEl, { clearProps: "all" });
       textEl.style.fontSize = `${optimalPx}px`;
+      textEl.style.visibility = 'hidden';
       textEl.style.opacity = '0';
 
       // Measure text element's natural top inside the tile (it lives in the sticky topbar)
@@ -234,7 +235,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       const transY = viewportHeight - textTop - baselineOffset - bottomPad;
 
       // Initial state — apply y offset, keep visible
-      gsap.set(textEl, { y: transY, scale: 1, opacity: 1 });
+      gsap.set(textEl, { y: transY, scale: 1, autoAlpha: 1 });
 
       // 4. Create scrub timeline
       scrollTriggerInstance = ScrollTrigger.create({
@@ -262,8 +263,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               opacity: 1,
               scale: 1,
               rotation: 0,
-              duration: 1.6,
-              stagger: 0.05,
+              duration: 0.8,
+              stagger: 0.025,
               ease: "elastic.out(1, 0.4)",
               delay: 0.1
             }
@@ -271,11 +272,12 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
         }
       }
 
-      // Synchronously refresh ScrollTrigger to ensure correctness
-      ScrollTrigger.refresh();
-
-      // Double-check refresh after layout shift
-      setTimeout(() => ScrollTrigger.refresh(), 200);
+      // Defer ScrollTrigger refresh
+      if (typeof requestIdleCallback === 'function') {
+        requestIdleCallback(() => ScrollTrigger.refresh(), { timeout: 300 });
+      } else {
+        setTimeout(() => ScrollTrigger.refresh(), 200);
+      }
     };
 
     let resizeTimeout = null;

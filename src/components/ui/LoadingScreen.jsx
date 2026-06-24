@@ -11,7 +11,7 @@ const STEPS = [
 // Total minimum display time in ms before the overlay slides away.
 // Reduced from 4500→3000: each of the 3 text steps still gets ~1000ms,
 // enough for the full typewriter animation to complete — just faster overall.
-const EXIT_DELAY_MS = 3000
+const EXIT_DELAY_MS = 1500
 
 export default function LoadingScreen({ onReveal, onDone }) {
   const overlayRef = useRef(null)
@@ -67,7 +67,7 @@ export default function LoadingScreen({ onReveal, onDone }) {
     const blobs = gsap.utils.toArray(`.${styles.blob}`)
     const targets = [0.5, 1.5, 3, 4.5, 5.5]
     blobs.forEach((blob, i) => {
-      gsap.to(blob, { flexGrow: targets[i], duration: 1.2, repeat: -1, yoyo: true, ease: 'power3.inOut' })
+      gsap.to(blob, { scaleX: targets[i], duration: 1.2, repeat: -1, yoyo: true, ease: 'power3.inOut' })
     })
     return () => gsap.killTweensOf(blobs)
   }, [])
