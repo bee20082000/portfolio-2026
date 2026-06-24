@@ -9,7 +9,7 @@ import { audioManager } from "../../../utils/audio";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, loaded }) {
+const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, loaded, introReady }) {
   const tileRef = useRef(null);
   const scrollRef = useRef(null);
   const h1Ref = useRef(null);
@@ -251,10 +251,10 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
         invalidateOnRefresh: true,
       });
 
-      // 5. Entrance Animation for Characters (only run once per mount and when loaded)
-      if (loaded && !entranceAnimated.current) {
+      const chars = textEl.querySelectorAll('.hero-char');
+      // 5. Entrance Animation for Characters (only run once per mount and when introReady is true)
+      if (introReady && !entranceAnimated.current) {
         entranceAnimated.current = true;
-        const chars = textEl.querySelectorAll('.hero-char');
         if (chars.length > 0) {
           gsap.fromTo(chars,
             { y: -150, opacity: 0, scale: 0.5, rotation: () => Math.random() * 40 - 20 },
@@ -270,6 +270,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
             }
           );
         }
+      } else if (!entranceAnimated.current && chars.length > 0) {
+        // Keep them hidden initially until introReady is true
+        gsap.set(chars, { opacity: 0 });
       }
 
       // Defer ScrollTrigger refresh
@@ -302,7 +305,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
         scrollTriggerInstance.kill(false);
       }
     };
-  }, { dependencies: [activeTab, loaded], scope: tileRef });
+  }, { dependencies: [activeTab, loaded, introReady], scope: tileRef });
 
   const localLenisRef = useSmoothScroll({
     wrapperRef: tileRef,

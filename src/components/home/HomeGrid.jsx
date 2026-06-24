@@ -10,7 +10,7 @@ import HomeBento from './HomeBento'
 import AboutBento from '../about/AboutBento'
 import WorkBento from '../work/WorkBento'
 
-const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
+const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTab }) {
   const bentoRef = useRef(null)       // Home bento grid
   const bentoAboutRef = useRef(null)  // About bento grid
   const bentoWorkRef = useRef(null)   // Work bento grid
@@ -348,6 +348,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
         activeTab={activeTab}
         onSelect={onSelect}
         loaded={loaded}
+        introReady={introReady}
       />
       <AboutBento
         id="bento-about"
