@@ -4,13 +4,11 @@ import styles from './LoadingScreen.module.css'
 
 export default function LoadingScreen({ onReveal, onDone }) {
   const overlayRef = useRef(null)
-  const counterRef = useRef(null)
   
   const onRevealRef = useRef(onReveal)
   const onDoneRef = useRef(onDone)
-  const exitFiredRef = useRef(false)
 
-  // Keep callbacks current without resetting timers
+  // Keep callbacks current
   useEffect(() => { onRevealRef.current = onReveal }, [onReveal])
   useEffect(() => { onDoneRef.current = onDone }, [onDone])
 
@@ -20,68 +18,39 @@ export default function LoadingScreen({ onReveal, onDone }) {
     return () => { document.body.style.pointerEvents = '' }
   }, [])
 
-  // The Smooth 1 to 100 GSAP Animation
   useEffect(() => {
     if (!overlayRef.current) return
     
+    // We start with the full circle, then immediately wipe it out.
     gsap.set(overlayRef.current, { clipPath: 'circle(150% at 50% 50%)' })
     
-    const counter = { val: 1 }
-    
-    const tl = gsap.timeline({
+    // Call onReveal instantly so the background grid knows to render
+    if (onRevealRef.current) onRevealRef.current()
+
+    // Trigger the hero text explosion shortly after
+    const doneTimer = setTimeout(() => {
+      if (onDoneRef.current) onDoneRef.current()
+    }, 50)
+
+    // Iris wipe the background super fast
+    const wipeTween = gsap.to(overlayRef.current, {
+      clipPath: 'circle(0% at 50% 50%)',
+      duration: 0.5,
+      ease: 'expo.inOut',
       onComplete: () => {
-        if (exitFiredRef.current) return
-        exitFiredRef.current = true
-
-        if (onRevealRef.current) onRevealRef.current()
-
-        // 1. Shrink the number into the center
-        gsap.to(counterRef.current, {
-          scale: 0,
-          opacity: 0,
-          duration: 0.2, // Snappier
-          ease: 'expo.in' // No bounce
-        })
-
-        // Trigger the hero text explosion exactly when the iris starts wiping
-        setTimeout(() => {
-          if (onDoneRef.current) onDoneRef.current()
-        }, 150) // Synced with the new timings
-
-        // 2. Iris wipe the background
-        gsap.to(overlayRef.current, {
-          clipPath: 'circle(0% at 50% 50%)',
-          duration: 0.5, // Faster wipe
-          ease: 'expo.inOut', // Super crisp and snappy
-          delay: 0.15, // wait for number to vanish
-          onComplete: () => {
-            document.body.style.pointerEvents = ''
-          }
-        })
+        document.body.style.pointerEvents = ''
       }
     })
 
-    tl.to(counter, {
-      val: 100,
-      duration: 1.5, // Faster, snappier loading
-      ease: 'power3.inOut',
-      onUpdate: () => {
-        if (counterRef.current) {
-          counterRef.current.innerText = Math.round(counter.val)
-        }
-      }
-    })
-
-    return () => tl.kill()
+    return () => {
+      wipeTween.kill()
+      clearTimeout(doneTimer)
+    }
   }, [])
 
   return (
     <div className={styles['loading-overlay']} ref={overlayRef}>
-      <div className={styles['loading-inner']}>
-        <div className={styles['counter-container']}>
-          <span ref={counterRef} className={styles['counter-number']}>1</span>
-        </div>
-      </div>
+      {/* Skipping number counter for faster initial load */}
     </div>
   )
 }

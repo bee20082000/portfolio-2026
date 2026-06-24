@@ -16,23 +16,32 @@ const inlineCSS = () => {
         if (!fs.existsSync(assetsDir)) return
 
         const files = fs.readdirSync(assetsDir)
-        const cssFile = files.find(file => file.endsWith('.css'))
-        if (!cssFile) return
-
-        const cssPath = path.resolve(assetsDir, cssFile)
-        const cssContent = fs.readFileSync(cssPath, 'utf-8')
-
+        // Find all CSS files, as Vite might output multiple (e.g., dynamic imports)
+        const cssFiles = files.filter(file => file.endsWith('.css'))
+        
         const htmlPath = path.resolve(distDir, 'index.html')
         if (!fs.existsSync(htmlPath)) return
         let htmlContent = fs.readFileSync(htmlPath, 'utf-8')
 
-        // Replace link tag with style tag
-        const linkTagRegex = new RegExp(`<link[^>]*href="[^"]*assets\\/${cssFile.replace(/\./g, '\\.')}"[^>]*>`, 'i')
-        if (linkTagRegex.test(htmlContent)) {
-          htmlContent = htmlContent.replace(linkTagRegex, `<style>${cssContent}</style>`)
-          fs.writeFileSync(htmlPath, htmlContent, 'utf-8')
-          console.log(`[inline-css] Inlined assets/${cssFile} into dist/index.html`)
+        for (const cssFile of cssFiles) {
+          // Double escape for RegExp constructor
+          const escapedCssFile = cssFile.replace(/\./g, '\\.')
+          const linkTagRegex = new RegExp(`<link[^>]*href="[^"]*assets\\/${escapedCssFile}"[^>]*>`, 'i')
+          
+          if (linkTagRegex.test(htmlContent)) {
+            const cssPath = path.resolve(assetsDir, cssFile)
+            const cssContent = fs.readFileSync(cssPath, 'utf-8')
+            
+            // Use replacer function to avoid issue with $ patterns in cssContent
+            htmlContent = htmlContent.replace(linkTagRegex, () => `<style>${cssContent}</style>`)
+            console.log(`[inline-css] Inlined assets/${cssFile} into dist/index.html`)
+            
+            // Optionally delete the CSS file since it's now inlined
+            // fs.unlinkSync(cssPath) 
+          }
         }
+        
+        fs.writeFileSync(htmlPath, htmlContent, 'utf-8')
       } catch (err) {
         console.error('[inline-css] Failed to inline CSS:', err)
       }

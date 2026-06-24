@@ -27,7 +27,21 @@
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <style>
+      body {
+        margin: 0;
+        background-color: #13131A;
+      }
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #13131A;
+      }
+    </style>
+    <div id="initial-loader"></div>
+  </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
