@@ -54,7 +54,7 @@ export default function useSmoothScroll({
     };
 
     if (!options.duration && !options.easing && !('lerp' in options)) {
-      baseOptions.lerp = 0.18; // Even snappier catch-up (from 0.14) to reduce momentum sliding
+      baseOptions.lerp = 0.075; // Lower value for a silkier, smoother scrolling experience
     }
 
     const lenis = new Lenis({

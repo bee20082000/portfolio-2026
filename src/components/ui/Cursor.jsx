@@ -113,7 +113,7 @@ export default function Cursor() {
 
     const hidePill = () => {
       gsap.to(pillRef.current, {
-        scale: 0.6, opacity: 0, y: 10, duration: 0.28, ease: 'back.in(1.2)', overwrite: 'auto',
+        scale: 0.6, opacity: 0, y: 10, duration: 0.15, ease: 'power3.out', overwrite: 'auto',
         onComplete: () => { gsap.set(pillRef.current, { display: 'none' }) }
       })
     }
@@ -171,11 +171,12 @@ export default function Cursor() {
       })
     }
 
-    const handleMouseOver = (e) => {
-      const isWorkList = e.target.closest('.work-list-item')
-      const isHeroBackground = e.target.closest('.tile-hero') && !e.target.closest('.bio-link') && !isWorkList
-      const isCase = e.target.closest('.tile-case')
-      const el = !isHeroBackground && !isWorkList && e.target.closest('.tile, a, button, [role="button"], .clickable, .view-more-badge, .unified-close-btn, .spotify-btn')
+    const updateHoverState = (target) => {
+      if (!target) return
+      const isWorkList = target.closest('.work-list-item')
+      const isHeroBackground = target.closest('.tile-hero') && !target.closest('.bio-link') && !isWorkList
+      const isCase = target.closest('.tile-case')
+      const el = !isHeroBackground && !isWorkList && target.closest('.tile, a, button, [role="button"], .clickable, .view-more-badge, .unified-close-btn, .spotify-btn')
 
       if (isHeroBackground) {
         if (hoveredEl !== 'hero-bg') {
@@ -219,7 +220,17 @@ export default function Cursor() {
       }
     }
 
+    const handleMouseOver = (e) => updateHoverState(e.target)
+
+    const onScroll = () => {
+      if (hasMoved) {
+        const target = document.elementFromPoint(mx, my)
+        updateHoverState(target)
+      }
+    }
+
     window.addEventListener('mouseover', handleMouseOver, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
 
     // Cursor press-bounce on mousedown / mouseup
     const onDown = () => {
@@ -246,6 +257,7 @@ export default function Cursor() {
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', handleMouseOver)
+      window.removeEventListener('scroll', onScroll)
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('mouseup', onUp)
       document.removeEventListener('mouseleave', onMouseLeave)
