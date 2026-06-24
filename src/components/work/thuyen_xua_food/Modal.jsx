@@ -71,12 +71,12 @@ export default function ThuyenXuaFoodModal() {
 
       {/* Hero — man holding gift box */}
       <div style={cell(12)}>
-        <img src={img('mockup-1.jpg')} alt="Thuyen Xua Product" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('mockup-1.jpg')} alt="Thuyen Xua Product" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
 
       {/* Two detail shots side by side */}
       <div style={cell(12)}>
-        <img src={img('social.jpg')} alt="Thuyen Xua Photoshoot" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('social.jpg')} alt="Thuyen Xua Photoshoot" loading="lazy" decoding="async" style={imgStyle} width={4500} height={3128} />
       </div>
 
       {/* Flowing Parallax Polaroid */}
@@ -105,7 +105,7 @@ export default function ThuyenXuaFoodModal() {
             loading="lazy"
             decoding="async"
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '4px' }}
-          />
+          width={960} height={1280} />
           {/* Handwritten text at the bottom of the polaroid */}
           <div style={{
             position: 'absolute',

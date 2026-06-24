@@ -66,12 +66,12 @@ export default function AxonActiveModal() {
         <img src={img('TDC/cover.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
-        <img src={img('TDC/blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} width={3600} height={1600} />
       </div>
 
       {/* Blueprint plan for workspace zone */}
       <div style={cell(12)}>
-        <img src={img('TDC/blueprint-2.jpg')} alt="Workspace Zone Blueprint" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/blueprint-2.jpg')} alt="Workspace Zone Blueprint" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
 
       {/* Row filler — completes the row so description lands on its own row below */}
@@ -103,15 +103,15 @@ export default function AxonActiveModal() {
       </div>
 
       <div style={cell(6)}>
-        <img src={img('TDC/blueprint-train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/blueprint-train.jpg')} alt="Train Layout Blueprint" loading="lazy" decoding="async" style={imgStyle} width={2038} height={1568} />
       </div>
 
       {/* Train detail refs — interior textures */}
       <div style={cell(6)}>
-        <img src={img('TDC/train-2.jpg')} alt="Train Interior Reference" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/train-2.jpg')} alt="Train Interior Reference" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(6)}>
-        <img src={img('TDC/train-3.jpg')} alt="Train Detail Reference" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/train-3.jpg')} alt="Train Detail Reference" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
 
 
@@ -140,12 +140,12 @@ export default function AxonActiveModal() {
       {/* Blueprint plan + hiking sign reference */}
 
       <div style={cell(6)}>
-        <img src={img('TDC/hiking-sign-ref.jpg')} alt="Hiking Sign Reference" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/hiking-sign-ref.jpg')} alt="Hiking Sign Reference" loading="lazy" decoding="async" style={imgStyle} width={2560} height={1707} />
       </div>
 
       {/* → Actual result: the sign in the office */}
       <div style={cell(6)}>
-        <img src={img('TDC/hiking-sign.jpg')} alt="Hiking Sign in Office" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/hiking-sign.jpg')} alt="Hiking Sign in Office" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1600} />
       </div>
       {/* Row filler — completes the row so description lands on its own row below */}
       <div style={{ gridColumn: 'span 6' }} />
@@ -174,25 +174,25 @@ export default function AxonActiveModal() {
 
       {/* → Actual result: large open workspace */}
       <div style={cell(12)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-4.jpg')} alt="Office Open Space" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-4.jpg')} alt="Office Open Space" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(6)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-7.jpg')} alt="Office Collaboration Zone" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-7.jpg')} alt="Office Collaboration Zone" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(6)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-20.jpg')} alt="Office Interior Detail" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-20.jpg')} alt="Office Interior Detail" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(12)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-31.jpg')} alt="Workspace Zone" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-31.jpg')} alt="Workspace Zone" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(12)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-39.jpg')} alt="Workspace Detail" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-39.jpg')} alt="Workspace Detail" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(6)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-43.jpg')} alt="Office Finishing" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-43.jpg')} alt="Office Finishing" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
       <div style={cell(6)}>
-        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-46.jpg')} alt="Completed Office" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/Lesonphoto-Axon-Active-2048px-46.jpg')} alt="Completed Office" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
 
       {/* 2nd project */}
@@ -214,10 +214,10 @@ export default function AxonActiveModal() {
         </h1>
       </div>
       <div style={cell(12)}>
-        <img src={img('CT/plan-CT.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/plan-CT.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={3600} height={1600} />
       </div>
       <div style={cell(6)}>
-        <img src={img('CT/plan-CT-2.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/plan-CT-2.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={2560} height={1440} />
       </div>
       <div style={cell(6)}>
         {trainImages.map((src, idx) => (
@@ -233,19 +233,19 @@ export default function AxonActiveModal() {
         ))}
       </div>
       <div style={cell(12)}>
-        <img src={img('CT/train-5.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/train-5.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={2000} height={1289} />
       </div>
       <div style={cell(12)}>
-        <img src={img('CT/off-1.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/off-1.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={2000} height={1333} />
       </div>
       <div style={cell(12)}>
-        <img src={img('CT/off-2.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/off-2.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={2000} height={1333} />
       </div>
       <div style={cell(6)}>
-        <img src={img('CT/off-4.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/off-4.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={2000} height={1333} />
       </div>
       <div style={cell(6)}>
-        <img src={img('CT/off-3.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('CT/off-3.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} width={2000} height={1333} />
       </div>
     </WorkModalLayout >
   )

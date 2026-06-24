@@ -40,7 +40,7 @@ export default function LiptonTet2024Modal() {
           alt="Lipton Tet Cover"
           loading="lazy" decoding="async"
           style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
-        />
+        width={1920} height={1280} />
       </div>
       <div style={cellStyle(12)}>
         <img
@@ -48,7 +48,7 @@ export default function LiptonTet2024Modal() {
           alt="Lipton Tet Cover"
           loading="lazy" decoding="async"
           style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
-        />
+        width={1920} height={1281} />
       </div>
 
       <div style={cellStyle(12)}>
@@ -57,7 +57,7 @@ export default function LiptonTet2024Modal() {
           alt="Lipton Tet Cover"
           loading="lazy" decoding="async"
           style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
-        />
+        width={2752} height={1536} />
       </div>
 
       {/* Motion clips side by side */}

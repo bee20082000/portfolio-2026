@@ -31,14 +31,14 @@ export default function ChivasModal() {
           COVER STILL — catalog cover spread
       ══════════════════════════════════════════════ */}
       <div style={cell(12)}>
-        <img src={img('cover.jpg')} alt="Chivas Tet Catalog — Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('cover.jpg')} alt="Chivas Tet Catalog — Cover" loading="lazy" decoding="async" style={imgStyle} width={1900} height={1344} />
       </div>
 
       {/* ══════════════════════════════════════════════
           SECTION 1 — Gift Set Spreads
       ══════════════════════════════════════════════ */}
       <div style={cell(12)}>
-        <img src={img('1.jpg')} alt="Chivas Tet Catalog — Gift Set Spread" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('1.jpg')} alt="Chivas Tet Catalog — Gift Set Spread" loading="lazy" decoding="async" style={imgStyle} width={1191} height={842} />
       </div>
 
       {/* ══════════════════════════════════════════════
@@ -48,17 +48,17 @@ export default function ChivasModal() {
         <img src={img('3.jpg')} alt="Chivas Tet Catalog — Product Presentation" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
-        <img src={img('4.jpg')} alt="Chivas Tet Catalog — Luxury Detail" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('4.jpg')} alt="Chivas Tet Catalog — Luxury Detail" loading="lazy" decoding="async" style={imgStyle} width={1190} height={842} />
       </div>
 
       {/* ══════════════════════════════════════════════
           SECTION 3 — Festive Packaging & Final Spreads
       ══════════════════════════════════════════════ */}
       <div style={cell(12)}>
-        <img src={img('5.jpg')} alt="Chivas Tet Catalog — Festive Packaging" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('5.jpg')} alt="Chivas Tet Catalog — Festive Packaging" loading="lazy" decoding="async" style={imgStyle} width={1190} height={841} />
       </div>
       <div style={cell(12)}>
-        <img src={img('6.jpg')} alt="Chivas Tet Catalog — Final Spread" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('6.jpg')} alt="Chivas Tet Catalog — Final Spread" loading="lazy" decoding="async" style={imgStyle} width={1191} height={842} />
       </div>
 
     </WorkModalLayout>

@@ -56,7 +56,7 @@ const WORKS = [
   {
     id: 'nam_dinh_vu',
     name: 'Nam Dinh Vu Concept',
-    cover: '/asset/images/Nam-Dinh-Vu/Cong/JPEG/Cong.jpg'
+    cover: '/asset/images/Nam-Dinh-Vu/Cong/JPEG/Cong.webp'
   },
   {
     id: 'lipton',
@@ -66,7 +66,7 @@ const WORKS = [
   {
     id: 'tuongan',
     name: 'Tuong An Cooking Oil',
-    cover: '/asset/images/Tuong-an/tuong-an-cover.jpg'
+    cover: '/asset/images/Tuong-an/tuong-an-cover.webp'
   },
   {
     id: 'santen',

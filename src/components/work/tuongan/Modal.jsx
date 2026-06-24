@@ -96,7 +96,7 @@ export default function TuonganModal() {
           loading="lazy"
           decoding="async"
           style={imgStyle}
-        />
+        width={1920} height={1280} />
       </div>
 
       {/* Bento 1: Carousel Gallery */}

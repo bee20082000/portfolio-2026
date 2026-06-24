@@ -41,7 +41,7 @@ export default function MoeModal() {
 
       {/* Gori Logo — full width */}
       <div style={cell(6)}>
-        <img src={img('gori-logo.jpg')} alt="Gori Logo" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('gori-logo.jpg')} alt="Gori Logo" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1600} />
       </div>
       {/* Old identity + KV video side by side */}
       <div style={cell(6)}>
@@ -80,7 +80,7 @@ export default function MoeModal() {
 
       {/* Old identity + KV video side by side */}
       <div style={cell(6)}>
-        <img src={img('gori-old-2.jpg')} alt="Gori Old Identity" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('gori-old-2.jpg')} alt="Gori Old Identity" loading="lazy" decoding="async" style={imgStyle} width={1600} height={1200} />
         <div style={{
           fontFamily: "Install Rounded",
           position: 'absolute',
@@ -135,18 +135,18 @@ export default function MoeModal() {
 
       {/* Cover — full width */}
       <div style={cell(6)}>
-        <img src={img('moe-cover.webp')} alt="Moe Packaging Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('moe-cover.webp')} alt="Moe Packaging Cover" loading="lazy" decoding="async" style={imgStyle} width={1792} height={2400} />
       </div>
 
 
       {/* Photo 3 — full width */}
       <div style={cell(6)}>
-        <img src={img('photo-3.jpg')} alt="Moe Packaging Photo 3" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-3.jpg')} alt="Moe Packaging Photo 3" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
 
       {/* Photo 2 + Photo 1 */}
       <div style={cell(12)}>
-        <img src={img('photo-1.jpg')} alt="Moe Packaging Photo 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-1.jpg')} alt="Moe Packaging Photo 1" loading="lazy" decoding="async" style={imgStyle} width={1200} height={896} />
       </div>
 
 
@@ -212,18 +212,18 @@ export default function MoeModal() {
 
       {/* Photo 4 + Photo 5 */}
       <div style={cell(4)}>
-        <img src={img('photo-4.jpg')} alt="Moe Packaging Photo 4" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-4.jpg')} alt="Moe Packaging Photo 4" loading="lazy" decoding="async" style={imgStyle} width={896} height={1200} />
       </div>
       <div style={cell(6)}>
-        <img src={img('photo-5.webp')} alt="Moe Packaging Photo 5" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-5.webp')} alt="Moe Packaging Photo 5" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
       <div style={cell(6)}>
-        <img src={img('photo-6.webp')} alt="Moe Packaging Photo 6" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('photo-6.webp')} alt="Moe Packaging Photo 6" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
 
       {/* Moe-2 full width */}
       <div style={cell(12)}>
-        <img src={img('moe-2.jpg')} alt="Moe Interior" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('moe-2.jpg')} alt="Moe Interior" loading="lazy" decoding="async" style={imgStyle} width={1200} height={896} />
       </div>
 
     </WorkModalLayout>

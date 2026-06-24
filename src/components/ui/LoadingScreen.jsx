@@ -4,12 +4,12 @@ import styles from './LoadingScreen.module.css'
 
 const STEPS = [
   "be patients",
-  "50%",
+  "almost there%",
   "okay, ready.",
 ]
 
 // Total minimum display time in ms before the overlay slides away
-const EXIT_DELAY_MS = 4500
+const EXIT_DELAY_MS = 1000
 
 export default function LoadingScreen({ onReveal, onDone }) {
   const overlayRef = useRef(null)

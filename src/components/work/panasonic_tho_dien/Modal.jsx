@@ -37,7 +37,7 @@ export default function PanasonicThoDienModal() {
             height: 'auto',
             display: 'block'
           }}
-        />
+        width={2048} height={1366} />
         <div style={{
           fontFamily: 'Install Rounded',
           position: 'absolute',
@@ -68,7 +68,7 @@ export default function PanasonicThoDienModal() {
             height: 'auto',
             display: 'block'
           }}
-        />
+        width={2048} height={1365} />
         <div style={{
           fontFamily: 'Install Rounded',
           position: 'absolute',
@@ -92,37 +92,37 @@ export default function PanasonicThoDienModal() {
           SOCIAL POSTS
       ══════════════════════════════════════════════ */}
       <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-1.webp')} alt="Pana - AOC post 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Social/Pana-AOC-post-1.webp')} alt="Pana - AOC post 1" loading="lazy" decoding="async" style={imgStyle} width={1500} height={1500} />
       </div>
       <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-2.webp')} alt="Pana - AOC post 2" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Social/Pana-AOC-post-2.webp')} alt="Pana - AOC post 2" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1200} />
       </div>
       <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-3.webp')} alt="Pana - AOC post 3" loading="lazy" decoding="async" style={imgStyle} />
-      </div>
-
-      <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-4.webp')} alt="Pana - AOC post 4" loading="lazy" decoding="async" style={imgStyle} />
-      </div>
-      <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-5.webp')} alt="Pana - AOC post 5" loading="lazy" decoding="async" style={imgStyle} />
-      </div>
-      <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-6.webp')} alt="Pana - AOC post 6" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Social/Pana-AOC-post-3.webp')} alt="Pana - AOC post 3" loading="lazy" decoding="async" style={imgStyle} width={1722} height={1500} />
       </div>
 
       <div style={cell(4)}>
-        <img src={img('Social/Pana-AOC-post-7.webp')} alt="Pana - AOC post 7" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Social/Pana-AOC-post-4.webp')} alt="Pana - AOC post 4" loading="lazy" decoding="async" style={imgStyle} width={1500} height={1500} />
+      </div>
+      <div style={cell(4)}>
+        <img src={img('Social/Pana-AOC-post-5.webp')} alt="Pana - AOC post 5" loading="lazy" decoding="async" style={imgStyle} width={1500} height={1500} />
+      </div>
+      <div style={cell(4)}>
+        <img src={img('Social/Pana-AOC-post-6.webp')} alt="Pana - AOC post 6" loading="lazy" decoding="async" style={imgStyle} width={1500} height={1500} />
+      </div>
+
+      <div style={cell(4)}>
+        <img src={img('Social/Pana-AOC-post-7.webp')} alt="Pana - AOC post 7" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1200} />
       </div>
       <div style={cell(4)}>
         <video src={img('Social/Pana-AOC-post-8.mp4')} autoPlay loop muted playsInline style={imgStyle} />
       </div>
       <div style={cell(4)}>
-        <img src={img('Social/Pana-Nam-moi.webp')} alt="Pana - Nam moi" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Social/Pana-Nam-moi.webp')} alt="Pana - Nam moi" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1200} />
       </div>
 
       <div style={cell(4)}>
-        <img src={img('Social/Pana-dai-ly.webp')} alt="Pana - Dai ly" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Social/Pana-dai-ly.webp')} alt="Pana - Dai ly" loading="lazy" decoding="async" style={imgStyle} width={1500} height={1500} />
       </div>
 
     </WorkModalLayout >

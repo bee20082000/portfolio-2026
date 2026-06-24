@@ -32,7 +32,7 @@ export default function LiptonModal() {
           title="Lipton - KV"
           loading="lazy" decoding="async"
           style={imgStyle}
-        />
+        width={3280} height={1440} />
       </div>
 
       {/* Vespa lifestyle photo */}
@@ -42,7 +42,7 @@ export default function LiptonModal() {
           alt="Lipton Summer Campaign Vespa Scene"
           loading="lazy" decoding="async"
           style={imgStyle}
-        />
+        width={1200} height={896} />
       </div>
 
       {/* Social post videos side by side */}

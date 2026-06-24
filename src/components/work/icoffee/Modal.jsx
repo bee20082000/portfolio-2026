@@ -35,24 +35,24 @@ export default function ICoffeeModal() {
           HERO COVERS
       ══════════════════════════════════════════════ */}
       <div style={cell(12)}>
-        <img src={img('glvf-logo.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('glvf-logo.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} width={1920} height={800} />
       </div>
       <div style={cell(12)}>
-        <img src={img('Scene-1.webp')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Scene-1.webp')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} width={3000} height={1396} />
       </div>
       <div style={cell(12)}>
-        <img src={img('cafe-glcf.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('cafe-glcf.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1350} />
       </div>
       <div style={cell(6)}>
-        <img src={img('Scene-2.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Scene-2.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} width={2000} height={1400} />
       </div>
       <div style={cell(6)}>
-        <img src={img('SAIGON_VINHHOI_8.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('SAIGON_VINHHOI_8.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} width={2048} height={1366} />
       </div>
 
 
       <div style={cell(12)}>
-        <img src={img('Banner_Mockup_v03.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Banner_Mockup_v03.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} width={1920} height={1536} />
       </div>
 
 
@@ -90,7 +90,7 @@ export default function ICoffeeModal() {
           Great coffee deserves great packaging. With its previous design showing its age, iCoffee saw GLCF 2025 as an opportunity to give its packaging a fresh roast - more contemporary, memorable, and shelf-ready.        </p>
       </div>
       <div style={cell(8)}>
-        <img src={img('Icoffee_Drip_2025_FA-1.jpg')} alt="iCoffee Campaign render 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Icoffee_Drip_2025_FA-1.jpg')} alt="iCoffee Campaign render 1" loading="lazy" decoding="async" style={imgStyle} width={4200} height={2059} />
       </div>
 
       {/* Video Sequence */}
@@ -147,10 +147,10 @@ export default function ICoffeeModal() {
           LOVE COFFEE        </div>
       </div>
       <div style={cell(12)}>
-        <img src={img('1.jpg')} alt="iCoffee Campaign render 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('1.jpg')} alt="iCoffee Campaign render 1" loading="lazy" decoding="async" style={imgStyle} width={1200} height={896} />
       </div>
       <div style={cell(12)}>
-        <img src={img('2.jpg')} alt="iCoffee Campaign render 2" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('2.jpg')} alt="iCoffee Campaign render 2" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
 
     </WorkModalLayout>
