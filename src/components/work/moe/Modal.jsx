@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import WorkModalLayout from '../shared/WorkModalLayout';
 
 const data = {
@@ -36,6 +37,35 @@ const cell = (span, extra = {}) => ({
 });
 
 export default function MoeModal() {
+  useEffect(() => {
+    // 1. Create preconnect links
+    const preconnect1 = document.createElement('link');
+    preconnect1.rel = 'preconnect';
+    preconnect1.href = 'https://fonts.googleapis.com';
+    
+    const preconnect2 = document.createElement('link');
+    preconnect2.rel = 'preconnect';
+    preconnect2.href = 'https://fonts.gstatic.com';
+    preconnect2.crossOrigin = 'anonymous';
+
+    // 2. Create the Google Font link
+    const fontLink = document.createElement('link');
+    fontLink.rel = 'stylesheet';
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap';
+
+    // Append to head
+    document.head.appendChild(preconnect1);
+    document.head.appendChild(preconnect2);
+    document.head.appendChild(fontLink);
+
+    return () => {
+      // Clean up on unmount
+      if (document.head.contains(preconnect1)) document.head.removeChild(preconnect1);
+      if (document.head.contains(preconnect2)) document.head.removeChild(preconnect2);
+      if (document.head.contains(fontLink)) document.head.removeChild(fontLink);
+    };
+  }, []);
+
   return (
     <WorkModalLayout data={data}>
 

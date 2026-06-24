@@ -96,13 +96,18 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
     const content = scrollRef.current;
     if (!content || activeTab !== 'home') return;
 
+    let rAFId = null;
     const observer = new ResizeObserver(() => {
-      ScrollTrigger.refresh();
+      cancelAnimationFrame(rAFId);
+      rAFId = requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
     });
     observer.observe(content);
 
     return () => {
       observer.disconnect();
+      cancelAnimationFrame(rAFId);
     };
   }, [activeTab]);
 
@@ -449,7 +454,16 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                     <div className="hero-contact-wrapper">
                       <div
                         className="hero-circle-icon-wrapper"
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Copy email address"
                         onClick={(e) => handleCopy('huy.nguyen20800@gmail.com', 'email', e)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleCopy('huy.nguyen20800@gmail.com', 'email', e);
+                          }
+                        }}
                       >
                         <div className="hero-icon-swap">
                           <svg
@@ -488,7 +502,16 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                     <div className="hero-contact-wrapper">
                       <div
                         className="hero-circle-icon-wrapper"
+                        role="button"
+                        tabIndex={0}
+                        aria-label="Copy phone number"
                         onClick={(e) => handleCopy('0793736688', 'phone', e)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleCopy('0793736688', 'phone', e);
+                          }
+                        }}
                       >
                         <div className="hero-icon-swap">
                           <svg
@@ -536,6 +559,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hero-circle-icon-wrapper"
+                      aria-label="LinkedIn Profile"
                       onClick={(e) => {
                         animClick(e.currentTarget);
                       }}

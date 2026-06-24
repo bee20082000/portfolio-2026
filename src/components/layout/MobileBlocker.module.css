@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   background-color: #01CF6A;
-  color: #fff;
+  color: #0a0a0a;
   z-index: 99999;
   justify-content: center;
   align-items: center;
@@ -21,12 +21,12 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.02em;
-
+  color: #0a0a0a;
 }
 
 .content p {
   font-size: 1.5rem;
-  color: #ffffff;
+  color: #0a0a0a;
   line-height: 1;
 }
 

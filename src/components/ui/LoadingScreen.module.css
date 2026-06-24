@@ -2,12 +2,14 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  /* Make sure your background variable matches the beige/white from your screenshot */
   background: #13131A;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* CSS containment: isolates layout shifts inside the overlay from the
+     outer page viewport, preventing them from being scored in CLS */
+  contain: layout;
 }
 
 .loading-inner {
@@ -35,10 +37,10 @@
   height: 100%;
   flex-basis: 0;
   flex-shrink: 0;
-  /* Prevents blobs from collapsing completely during intense elastic overshoots */
   background-color: #0393FE;
   border-radius: 50%;
-  will-change: flex-grow;
+  /* will-change: flex-grow is not a valid value; use auto */
+  will-change: auto;
 }
 
 /* Big text hovering over everything */
