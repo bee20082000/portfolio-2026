@@ -271,47 +271,58 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
         const entranceTl = gsap.timeline();
 
+        // Safe calculation to place text in the center
+        const safeTransY = isNaN(transY) ? 500 : transY;
+        const centerOffset = -safeTransY + (window.innerHeight / 2) - 100;
+
         if (chars.length > 0) {
-          // 1. Smooth, responsive slide-up and fade-in directly at their final position (no bounce)
+          // 1. Smooth slide-up and fade-in directly to the center (no bounce)
           entranceTl.fromTo(chars,
             {
-              y: 35,
-              scale: 0.92,
+              y: centerOffset + 20,
+              scale: 0.9,
               autoAlpha: 0,
             },
             {
-              y: 0,
+              y: centerOffset,
               scale: 1,
               autoAlpha: 1,
-              duration: 0.7,
-              stagger: 0.012,
-              ease: "power4.out", // Super smooth ease-out, no bounce
+              duration: 0.5,
+              stagger: 0.015,
+              ease: "power4.out", // Clean, premium ease-out with no bounce
             },
-            0 // Starts immediately
+            0
           );
+
+          // 2. Sweep down to the bottom
+          entranceTl.to(chars, {
+            y: 0,
+            duration: 0.5,
+            ease: "expo.inOut" // Smooth, fluid sweep down
+          }, "+=0.15"); // Brief hold in center so it's readable
         }
 
-        // 2. Coordinated reveal of bio and topbar items
+        // 3. Bio and topbar appear as the text lands at the bottom
         if (topbarItems.length > 0) {
           entranceTl.fromTo(topbarItems,
             { y: -15, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", stagger: 0.03 },
-            0.15 // Slightly delayed for a fluid secondary layer
+            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out", stagger: 0.03 },
+            "-=0.25"
           );
         }
 
         if (bioText) {
           entranceTl.fromTo(bioText,
             { y: 15, autoAlpha: 0 },
-            { y: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out" },
-            0.2 // Follows the title wave
+            { y: 0, autoAlpha: 1, duration: 0.5, ease: "power3.out" },
+            "-=0.25"
           );
         }
 
       } else if (!entranceAnimated.current) {
         // Initial hidden states before introReady fires
         if (chars.length > 0) {
-          gsap.set(chars, { y: 35, scale: 0.92, autoAlpha: 0 });
+          gsap.set(chars, { scale: 0.01, autoAlpha: 0 });
         }
         if (topbarItems.length > 0) gsap.set(topbarItems, { autoAlpha: 0 });
         if (bioText) gsap.set(bioText, { autoAlpha: 0 });
