@@ -4,8 +4,6 @@ import styles from './LoadingScreen.module.css'
 
 const STEPS = [
   "be patients",
-  "almost there%",
-  "okay, ready.",
 ]
 
 // Total minimum display time in ms before the overlay slides away
