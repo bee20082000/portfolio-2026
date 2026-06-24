@@ -38,9 +38,44 @@
         inset: 0;
         z-index: 9999;
         background: #13131A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      #initial-loader .loading-inner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+      }
+      #initial-loader .counter-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+        font-family: 'Pardon 4x4', monospace;
+        font-size: 1.25rem;
+        line-height: 1;
+      }
+      #initial-loader .counter-number {
+        font-variant-numeric: tabular-nums;
+        min-width: 2.8em;
+        text-align: center;
+        letter-spacing: -0.05em;
+        user-select: none;
       }
     </style>
-    <div id="initial-loader"></div>
+    <div id="initial-loader">
+      <div class="loading-inner">
+        <div class="counter-container">
+          <span class="counter-number">1</span>
+        </div>
+      </div>
+    </div>
   </div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

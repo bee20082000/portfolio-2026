@@ -4,9 +4,11 @@ import styles from './LoadingScreen.module.css'
 
 export default function LoadingScreen({ onReveal, onDone }) {
   const overlayRef = useRef(null)
+  const counterRef = useRef(null)
   
   const onRevealRef = useRef(onReveal)
   const onDoneRef = useRef(onDone)
+  const exitFiredRef = useRef(false)
 
   // Keep callbacks current
   useEffect(() => { onRevealRef.current = onReveal }, [onReveal])
@@ -21,36 +23,65 @@ export default function LoadingScreen({ onReveal, onDone }) {
   useEffect(() => {
     if (!overlayRef.current) return
     
-    // We start with the full circle, then immediately wipe it out.
     gsap.set(overlayRef.current, { clipPath: 'circle(150% at 50% 50%)' })
     
-    // Call onReveal instantly so the background grid knows to render
-    if (onRevealRef.current) onRevealRef.current()
-
-    // Trigger the hero text explosion shortly after
-    const doneTimer = setTimeout(() => {
-      if (onDoneRef.current) onDoneRef.current()
-    }, 50)
-
-    // Iris wipe the background super fast
-    const wipeTween = gsap.to(overlayRef.current, {
-      clipPath: 'circle(0% at 50% 50%)',
-      duration: 0.5,
-      ease: 'expo.inOut',
+    const counter = { val: 1 }
+    
+    const tl = gsap.timeline({
       onComplete: () => {
-        document.body.style.pointerEvents = ''
+        if (exitFiredRef.current) return
+        exitFiredRef.current = true
+
+        if (onRevealRef.current) onRevealRef.current()
+
+        // 1. Shrink the number into the center
+        gsap.to(counterRef.current, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.15,
+          ease: 'expo.in'
+        })
+
+        // Trigger the hero text explosion exactly when the iris starts wiping
+        setTimeout(() => {
+          if (onDoneRef.current) onDoneRef.current()
+        }, 100)
+
+        // 2. Iris wipe the background
+        gsap.to(overlayRef.current, {
+          clipPath: 'circle(0% at 50% 50%)',
+          duration: 0.4,
+          ease: 'expo.inOut',
+          delay: 0.1, // wait briefly for number to vanish
+          onComplete: () => {
+            document.body.style.pointerEvents = ''
+          }
+        })
       }
     })
 
-    return () => {
-      wipeTween.kill()
-      clearTimeout(doneTimer)
-    }
+    // Animate from 1 to 100 in 0.4 seconds to step many numbers quickly
+    tl.to(counter, {
+      val: 100,
+      duration: 0.4,
+      ease: 'power3.inOut',
+      onUpdate: () => {
+        if (counterRef.current) {
+          counterRef.current.innerText = Math.round(counter.val)
+        }
+      }
+    })
+
+    return () => tl.kill()
   }, [])
 
   return (
     <div className={styles['loading-overlay']} ref={overlayRef}>
-      {/* Skipping number counter for faster initial load */}
+      <div className={styles['loading-inner']}>
+        <div className={styles['counter-container']}>
+          <span ref={counterRef} className={styles['counter-number']}>1</span>
+        </div>
+      </div>
     </div>
   )
 }
