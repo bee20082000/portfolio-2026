@@ -32,10 +32,10 @@ export default function LoadingScreen({ onReveal, onDone }) {
       }
     })
 
-    // 1. Count from 1 to 100 quickly
+    // 1. Count from 1 to 100 quickly but smoothly
     tl.to(counter, {
       val: 100,
-      duration: 0.35,
+      duration: 0.5,
       ease: 'power2.out',
       onUpdate: () => {
         if (counterRef.current) {
@@ -56,21 +56,21 @@ export default function LoadingScreen({ onReveal, onDone }) {
     tl.to(counterRef.current, {
       scale: 0.5,
       opacity: 0,
-      duration: 0.25,
+      duration: 0.3,
       ease: 'power2.in'
     }, 'reveal')
 
     // Iris wipe the black background
     tl.to(overlayRef.current, {
       clipPath: 'circle(0% at 50% 50%)',
-      duration: 0.55,
+      duration: 0.7,
       ease: 'power3.inOut'
     }, 'reveal')
 
-    // Trigger the hero text burst 0.15s into the wipe, creating a layered, fluid overlap
+    // Trigger the hero text burst 0.2s into the wipe, creating a layered, fluid overlap
     tl.call(() => {
       if (onDoneRef.current) onDoneRef.current()
-    }, null, 'reveal+=0.15')
+    }, null, 'reveal+=0.2')
 
     return () => tl.kill()
   }, [])
