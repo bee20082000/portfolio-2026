@@ -16,6 +16,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
   const measureRef = useRef(null);
   const namePlaceholderRef = useRef(null);
   const entranceAnimated = useRef(false);
+  const scrollTriggerRef = useRef(null);
   const baselineHelperRef = useRef(null);
 
   const [copiedType, setCopiedType] = useState(null);
@@ -173,8 +174,6 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
   // ─── Dynamic Scale & ScrollTrigger Collapse Animation ─────────────────────
   useGSAP(() => {
-    let scrollTriggerInstance = null;
-
     const scaleAndAnimateNameText = () => {
       if (activeTab !== 'home') return;
 
@@ -199,9 +198,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       }
 
       // 2. Kill existing ScrollTrigger
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
-        scrollTriggerInstance = null;
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.kill();
+        scrollTriggerRef.current = null;
       }
 
       // 3. Measure coordinates under reset styles (clear any GSAP y/scale first)
@@ -243,7 +242,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       gsap.set(textEl, { y: transY, scale: 1, autoAlpha: 1 });
 
       // 4. Create scrub timeline
-      scrollTriggerInstance = ScrollTrigger.create({
+      scrollTriggerRef.current = ScrollTrigger.create({
         trigger: tileEl,
         scroller: tileEl,
         start: "top top",
@@ -294,11 +293,12 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
             0
           );
 
-          // 2. Sweep down to the bottom
+          // 2. Sweep down to the bottom (using power3.inOut and force3D for hardware-accelerated fluid motion)
           entranceTl.to(chars, {
             y: 0,
-            duration: 0.5,
-            ease: "expo.inOut" // Smooth, fluid sweep down
+            duration: 0.6,
+            ease: "power3.inOut",
+            force3D: true
           }, "+=0.15"); // Brief hold in center so it's readable
         }
 
@@ -354,8 +354,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
     return () => {
       if (resizeTimeout) clearTimeout(resizeTimeout);
       window.removeEventListener('resize', handleResize);
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill(false);
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.kill(false);
       }
     };
   }, { dependencies: [activeTab, loaded, introReady], scope: tileRef });
