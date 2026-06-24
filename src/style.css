@@ -1,7 +1,11 @@
 /* ── CUSTOM FONTS: PARDON 4X4 ────────────────────── */
 @font-face {
   font-family: 'Pardon 4x4';
-  src: url('./assets/fonts/Pardon-4x4.ttf') format('truetype');
+  /* Subsetted WOFF2 (16KB) — down from 390KB TTF.
+     Covers all characters actually used: A–Z, a–z, 0–9 and punctuation.
+     TTF kept as fallback for any character outside the subset. */
+  src: url('./assets/fonts/Pardon-4x4.subset.woff2') format('woff2'),
+       url('./assets/fonts/Pardon-4x4.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

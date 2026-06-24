@@ -5,8 +5,8 @@ const data = {
   category: 'Branding Asset',
   client: 'Lipton Việt Nam',
   timeline: '2023',
-  challenge: 'How do we centralize control of 20+ smart home appliances without overwhelming the user? The market was saturated with complex, technical dashboards. The client needed an interface that felt human, warm, and accessible to everyone from kids to seniors.',
-  strategy1: 'We conducted 15 in-depth user interviews and observed how families interact with their homes. Users don\'t think about "devices"; they think about "moods" — Good Morning, Leaving Home, Movie Night.',
+  challenge: 'Summer is peak beach season - a time when people naturally reach for something refreshing, light, and easy to share. For Lipton, this is a chance to own those “sunny moments” with a more vibrant tropical expression. The challenge is to refresh the brand’s social presence and key visuals so it feels naturally part of summer lifestyle, not just a product in it.',
+  strategy1: 'We developed a set of new social assets and a refreshed Key Visual system inspired by tropical energy - bright sunlight, coastal textures, and juicy, refreshing moments. The visual direction leans into a more playful summer rhythm: lighter compositions, warmer tones, and lifestyle-driven storytelling that captures tea as part of beach days, chill gatherings, and spontaneous refreshment breaks. The result is a seasonal system that makes Lipton feel like a natural companion to summer, not just a drink of the season.',
   accent: '#ff5c2b',
 }
 

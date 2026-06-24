@@ -205,7 +205,13 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, activeTab }) {
 
     const tl = gsap.timeline({
       onComplete: () => {
-        ScrollTrigger.refresh();
+        // Defer the expensive layout recalculation to idle time so the
+        // tab-switch response is committed to screen before this runs (INP fix).
+        if (typeof requestIdleCallback === 'function') {
+          requestIdleCallback(() => ScrollTrigger.refresh(), { timeout: 500 })
+        } else {
+          setTimeout(() => ScrollTrigger.refresh(), 50)
+        }
       }
     })
 

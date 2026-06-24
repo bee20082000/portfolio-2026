@@ -8,8 +8,10 @@ const STEPS = [
   "okay, ready.",
 ]
 
-// Total minimum display time in ms before the overlay slides away
-const EXIT_DELAY_MS = 4500
+// Total minimum display time in ms before the overlay slides away.
+// Reduced from 4500→3000: each of the 3 text steps still gets ~1000ms,
+// enough for the full typewriter animation to complete — just faster overall.
+const EXIT_DELAY_MS = 3000
 
 export default function LoadingScreen({ onReveal, onDone }) {
   const overlayRef = useRef(null)

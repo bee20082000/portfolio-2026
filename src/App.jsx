@@ -38,7 +38,8 @@ export default function App() {
     return () => window.removeEventListener('mousemove', onMove)
   }, [])
 
-  // Play click sound on interactive elements
+  // Play click sound on interactive elements — deferred to idle time so it
+  // doesn't compete with post-click rendering work (INP improvement).
   useEffect(() => {
     const onClick = (e) => {
       const target = e.target.closest(
@@ -47,11 +48,15 @@ export default function App() {
         '.spotify-btn, .spotify-track, .spotify-progress, .bio-modal-dot'
       )
       if (target) {
-        setTimeout(() => {
+        const playAudio = () =>
           audioManager
             .play('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3', 0.5)
             .catch(() => {})
-        }, 0)
+        if (typeof requestIdleCallback === 'function') {
+          requestIdleCallback(playAudio, { timeout: 300 })
+        } else {
+          setTimeout(playAudio, 0)
+        }
       }
     }
     window.addEventListener('click', onClick, { passive: true })

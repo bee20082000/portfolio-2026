@@ -22,6 +22,12 @@ export default function Cursor() {
     const setCurX = gsap.quickSetter(curRef.current, 'x', 'px')
     const setCurY = gsap.quickSetter(curRef.current, 'y', 'px')
 
+    // Track last written position to skip redundant DOM style mutations.
+    // Use Infinity (not NaN) as sentinel: Math.abs(x - Infinity) = Infinity > 0.05
+    // ensures the very first tick always writes the position to the DOM.
+    let lastSetX = Infinity
+    let lastSetY = Infinity
+
     let hasMoved = typeof window.lastMouseX === 'number'
     gsap.set(curRef.current, { opacity: hasMoved ? 1 : 0 })
 
@@ -71,8 +77,17 @@ export default function Cursor() {
       }
 
       // Apply coordinates offset so the visual tip (22.91%, 9.58%) of the 36x36px SVG is directly under the mouse
-      setCurX(rx - 8.25)
-      setCurY(ry - 3.45)
+      const nextX = rx - 8.25
+      const nextY = ry - 3.45
+
+      // Only write to DOM when position has meaningfully changed — eliminates
+      // hundreds of redundant style mutations per second when cursor is still.
+      if (Math.abs(nextX - lastSetX) > 0.05 || Math.abs(nextY - lastSetY) > 0.05) {
+        setCurX(nextX)
+        setCurY(nextY)
+        lastSetX = nextX
+        lastSetY = nextY
+      }
 
       lastMx = mx
       lastMy = my
