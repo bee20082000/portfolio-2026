@@ -71,7 +71,7 @@ const WORKS = [
   {
     id: 'santen',
     name: 'Santen Social',
-    cover: '/asset/images/santen/cover.jpg'
+    cover: '/asset/images/santen/cover.webp'
   }
 ];
 
