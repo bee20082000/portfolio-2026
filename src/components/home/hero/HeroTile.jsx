@@ -257,62 +257,81 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       });
 
       const chars = textEl.querySelectorAll('.hero-char');
-      const topbarItems = tileEl.querySelectorAll('.hero-topbar-item');
+      // Exclude the parent container of the main text, otherwise it hides the text during the initial burst
+      const topbarItems = tileEl.querySelectorAll('.hero-topbar-item:not(.hero-topbar-name)');
       const bioText = tileEl.querySelector('.hero-bio-container');
 
       // 5. Entrance Animation for Characters, Topbar, and Bio (only run once per mount and when introReady is true)
       if (introReady && !entranceAnimated.current) {
         entranceAnimated.current = true;
 
-        // Add perspective to the parent container so Z-axis animations look truly 3D,
-        // without affecting the scroll height or bounding rects of the parent.
-        gsap.set(textEl, { perspective: 1000, transformStyle: "preserve-3d" });
+        // Add perspective to the parent container so Z-axis animations look truly 3D
+        // (Removed transformStyle: preserve-3d as it causes opacity/blending glitches in Webkit)
+        gsap.set(textEl, { perspective: 1000 });
 
-        const entranceTl = gsap.timeline(); // removed delay to sync perfectly with iris wipe
+        const entranceTl = gsap.timeline();
+
+        // Safe calculation to place text in the center
+        const safeTransY = isNaN(transY) ? 500 : transY;
+        const centerOffset = -safeTransY + (window.innerHeight / 2) - 100;
 
         if (chars.length > 0) {
+          // 1. Burst into the center of the screen
           entranceTl.fromTo(chars,
             {
-              z: -2000,
-              scale: 0,
-              opacity: 0,
-              rotationX: () => Math.random() * 180 - 90,
-              rotationY: () => Math.random() * 180 - 90,
+              z: -1000,
+              scale: 0.01, // Prevent 0-scale rendering bugs
+              autoAlpha: 0, // Using autoAlpha fixes opacity glitches
+              y: centerOffset, // Start in center
+              rotationX: 45, // Simpler rotation to guarantee no weird culling
+              rotationY: 45,
             },
             {
               z: 0,
               scale: 1,
-              opacity: 1,
+              autoAlpha: 1, // Using autoAlpha fixes opacity glitches
+              y: centerOffset, // Land in center
               rotationX: 0,
               rotationY: 0,
-              duration: 1.2, // Faster
-              stagger: 0.015, // Tighter
-              ease: "expo.out", // No bounce
-            }, 0
+              duration: 0.8, // Fast burst
+              stagger: 0.015,
+              ease: "back.out(2)", // Bouncy
+            }
           );
+
+          // 2. Sweep down to the bottom
+          entranceTl.to(chars, {
+            y: 0, // Moves them back to textEl's location (bottom)
+            duration: 0.8,
+            ease: "expo.inOut" // Smooth sweep
+          }, "+=0.3"); // Hold in center for a moment so user can read it
         }
 
+        // 3. Bio and topbar appear exactly as the text lands at the bottom
         if (topbarItems.length > 0) {
           entranceTl.fromTo(topbarItems,
-            { y: -30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: "power4.out", stagger: 0.05 },
-            0.15 // Follows up quickly
+            { y: -30, autoAlpha: 0 }, // match autoAlpha
+            { y: 0, autoAlpha: 1, duration: 0.8, ease: "power4.out", stagger: 0.05 },
+            "-=0.4"
           );
         }
 
         if (bioText) {
           entranceTl.fromTo(bioText,
-            { y: 40, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" },
-            0.25 // Follows up quickly
+            { y: 40, autoAlpha: 0 }, // match autoAlpha
+            { y: 0, autoAlpha: 1, duration: 0.8, ease: "power4.out" },
+            "-=0.3"
           );
         }
 
       } else if (!entranceAnimated.current) {
         // Initial hidden states before introReady fires
-        if (chars.length > 0) gsap.set(chars, { scale: 1, opacity: 0 }); // Note: do not mess with translation/scale layout properties heavily here
-        if (topbarItems.length > 0) gsap.set(topbarItems, { opacity: 0 });
-        if (bioText) gsap.set(bioText, { opacity: 0 });
+        if (chars.length > 0) {
+          // Safe hide without zero-scale bugs
+          gsap.set(chars, { scale: 0.01, autoAlpha: 0 });
+        }
+        if (topbarItems.length > 0) gsap.set(topbarItems, { autoAlpha: 0 });
+        if (bioText) gsap.set(bioText, { autoAlpha: 0 });
       }
 
       // Defer ScrollTrigger refresh
@@ -586,35 +605,68 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               {/* Card 2: LinkedIn */}
               <div className="hero-contact-card hero-card-linkedin">
                 <div className="hero-contact-container">
-                  <h2 className="hero-contact-title">My Linkedin!!</h2>
-                  <div className="hero-contact-wrapper">
-                    <a
-                      href="https://www.linkedin.com/in/huy-nguyen-20820/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hero-circle-icon-wrapper"
-                      aria-label="LinkedIn Profile"
-                      onClick={(e) => {
-                        animClick(e.currentTarget);
-                      }}
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="hero-copy-svg"
+                  <h2 className="hero-contact-title">More info</h2>
+                  <div className="hero-contact-rows-group">
+                    <div className="hero-contact-wrapper">
+                      <a
+                        href="https://www.linkedin.com/in/huy-nguyen-20820/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hero-circle-icon-wrapper"
+                        aria-label="LinkedIn Profile"
+                        onClick={(e) => {
+                          animClick(e.currentTarget);
+                        }}
                       >
-                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                        <polyline points="7 7 17 7 17 17"></polyline>
-                      </svg>
-                    </a>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="hero-copy-svg"
+                        >
+                          <line x1="7" y1="17" x2="17" y2="7"></line>
+                          <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                      </a>
 
-                    <div className="hero-text-block">
-                      <span className="hero-contact-label">My LinkedIn</span>
-                      <span className="hero-contact-value">Huy Nguyen</span>
+                      <div className="hero-text-block">
+                        <span className="hero-contact-label">LinkedIn</span>
+                        <span className="hero-contact-value">Huy Nguyen</span>
+                      </div>
+                    </div>
+
+                    <div className="hero-contact-wrapper">
+                      <a
+                        href="/asset/Nguyen Quoc Huy-CV.pdf"
+                        download
+                        className="hero-circle-icon-wrapper"
+                        aria-label="Download CV"
+                        onClick={(e) => {
+                          animClick(e.currentTarget);
+                        }}
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="hero-copy-svg"
+                        >
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                          <polyline points="7 10 12 15 17 10"></polyline>
+                          <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                      </a>
+
+                      <div className="hero-text-block">
+                        <span className="hero-contact-label">Resume</span>
+                        <span className="hero-contact-value">Download my resume</span>
+                      </div>
                     </div>
                   </div>
                 </div>

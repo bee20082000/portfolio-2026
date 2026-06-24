@@ -61,6 +61,27 @@ export default function ChivasModal() {
         <img src={img('6.jpg')} alt="Chivas Tet Catalog — Final Spread" loading="lazy" decoding="async" style={imgStyle} width={1191} height={842} />
       </div>
 
+      {/* Wayfinding description — own row, starts at col 8, no bg, no border */}
+      <div style={{
+        gridColumn: '1 / -1',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        textAlign: 'justify',
+        padding: '0 4px',
+      }}>
+        <p className="work-modal-body-text">
+          <a 
+            href="https://drive.google.com/file/d/1EtaaTP6b1KYJIt-9OF2WoHB9U3-4V6Xu/view?usp=sharing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'underline', color: 'inherit' }}
+          >
+            View full PDF here
+          </a>
+        </p>
+      </div>
+
     </WorkModalLayout>
   )
 }
