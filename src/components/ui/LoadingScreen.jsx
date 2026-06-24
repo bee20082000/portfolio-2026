@@ -3,15 +3,13 @@ import gsap from 'gsap'
 import styles from './LoadingScreen.module.css'
 
 const STEPS = [
-  "almost there...",
+  "be patients",
   "50%",
   "okay, ready.",
 ]
 
-// Total minimum display time in ms before the overlay slides away.
-// Reduced from 4500→3000: each of the 3 text steps still gets ~1000ms,
-// enough for the full typewriter animation to complete — just faster overall.
-const EXIT_DELAY_MS = 1500
+// Total minimum display time in ms before the overlay slides away
+const EXIT_DELAY_MS = 4500
 
 export default function LoadingScreen({ onReveal, onDone }) {
   const overlayRef = useRef(null)
@@ -67,7 +65,7 @@ export default function LoadingScreen({ onReveal, onDone }) {
     const blobs = gsap.utils.toArray(`.${styles.blob}`)
     const targets = [0.5, 1.5, 3, 4.5, 5.5]
     blobs.forEach((blob, i) => {
-      gsap.to(blob, { scaleX: targets[i], duration: 1.2, repeat: -1, yoyo: true, ease: 'power3.inOut' })
+      gsap.to(blob, { flexGrow: targets[i], duration: 1.2, repeat: -1, yoyo: true, ease: 'power3.inOut' })
     })
     return () => gsap.killTweensOf(blobs)
   }, [])
@@ -81,11 +79,11 @@ export default function LoadingScreen({ onReveal, onDone }) {
     if (exitFiredRef.current) return
     exitFiredRef.current = true
 
+    // Reveal page content while overlay is still visible
+    if (onRevealRef.current) onRevealRef.current()
+
     // Short pause then slide overlay away
     const id = setTimeout(() => {
-      // Reveal page content just as the slide-away transition begins
-      if (onRevealRef.current) onRevealRef.current()
-
       gsap.to(overlay, {
         yPercent: -100,
         duration: 0.8,
@@ -105,13 +103,13 @@ export default function LoadingScreen({ onReveal, onDone }) {
   }, [])
 
   return (
-    <div className={styles['loading-overlay']} ref={overlayRef} style={{ cursor: 'none' }}>
+    <div className={styles['loading-overlay']} ref={overlayRef}>
       <div className={styles['loading-inner']}>
 
         {/* Animated blob strips */}
         <div className={styles['blob-container']}>
-          {[5, 4, 3, 2, 1].map((w) => (
-            <div key={w} className={styles.blob} style={{ flexGrow: w }} />
+          {[5, 4, 3, 2, 1].map((w, i) => (
+            <div key={i} className={styles.blob} style={{ flexGrow: w }} />
           ))}
         </div>
 

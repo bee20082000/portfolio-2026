@@ -33,11 +33,12 @@
 
 .blob {
   height: 100%;
-  flex: 1;
+  flex-basis: 0;
+  flex-shrink: 0;
   /* Prevents blobs from collapsing completely during intense elastic overshoots */
   background-color: #0393FE;
   border-radius: 50%;
-  will-change: transform;
+  will-change: flex-grow;
 }
 
 /* Big text hovering over everything */
