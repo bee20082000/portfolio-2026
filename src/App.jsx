@@ -1,14 +1,15 @@
-import { useState, useEffect, startTransition } from 'react'
+import { useState, useEffect, startTransition, Suspense, lazy } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Cursor from './components/ui/Cursor'
 import HomeGrid from './components/home/HomeGrid'
-import BlogModal from './components/modals/BlogModal'
 import LoadingScreen from './components/ui/LoadingScreen'
 import MobileBlocker from './components/layout/MobileBlocker'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import { audioManager } from './utils/audio'
 import styles from './App.module.css'
+
+const BlogModal = lazy(() => import('./components/modals/BlogModal'))
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -18,6 +19,14 @@ export default function App() {
   const [loaded,         setLoaded]         = useState(false)
   const [screenUnmounted,setScreenUnmounted]= useState(false)
   const [isBioOpen,      setIsBioOpen]      = useState(false)
+  const [modalEverOpened,setModalEverOpened]= useState(false)
+
+  // Track if a project modal has ever been opened to defer bundle loading
+  useEffect(() => {
+    if (activeCase) {
+      setModalEverOpened(true)
+    }
+  }, [activeCase])
 
 
   // Lock dark mode & disable browser scroll restoration
@@ -62,8 +71,9 @@ export default function App() {
     return () => window.removeEventListener('click', onClick)
   }, [])
 
+  const isScrollLocked = (isBioOpen || activeTab === 'home') && !activeCase
   // ── Global smooth scroll (starts only after the page is revealed) ──
-  const lenisRef = useSmoothScroll({ enabled: loaded })
+  const lenisRef = useSmoothScroll({ enabled: loaded, isLocked: isScrollLocked })
 
   // ── Page-swap freeze: freeze background when modal is open ──
   // Instead of stopping Lenis, we freeze the page visually and let
@@ -111,17 +121,6 @@ export default function App() {
     }
   }, [])
 
-  // Pause Lenis for bio panel and home tab (but NOT for modal — modal uses page-swap)
-  useEffect(() => {
-    const lenis = lenisRef.current
-    if (!lenis) return
-    if ((isBioOpen || activeTab === 'home') && !activeCase) {
-      lenis.stop()
-    } else {
-      lenis.start()
-    }
-  }, [isBioOpen, activeTab, activeCase]) // intentionally exclude lenisRef – it's a stable ref
-
   // Bio scroll-lock events dispatched from HeroTile
   useEffect(() => {
     const handler = (e) => setIsBioOpen(!!e.detail)
@@ -164,7 +163,11 @@ export default function App() {
         </div>
       </div>
 
-      <BlogModal activeCase={activeCase} onClose={() => setActiveCase(null)} />
+      {modalEverOpened && (
+        <Suspense fallback={null}>
+          <BlogModal activeCase={activeCase} onClose={() => setActiveCase(null)} />
+        </Suspense>
+      )}
     </>
   )
 }

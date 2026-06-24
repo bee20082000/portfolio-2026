@@ -1,15 +1,15 @@
+/* ── Loading Overlay ─────────────────────────────────────────────────────── */
 .loading-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #13131A;
+  background: #13131A; /* matching the deep brand dark */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* CSS containment: isolates layout shifts inside the overlay from the
-     outer page viewport, preventing them from being scored in CLS */
   contain: layout;
+  will-change: transform;
 }
 
 .loading-inner {
@@ -22,64 +22,24 @@
   height: 100vh;
 }
 
-.blob-container {
+/* ── The Counter UI ──────────────────────────────────────────────────────── */
+.counter-container {
   display: flex;
-  width: 100%;
-  height: 100%;
-  gap: 0;
-  /* Ensures they share edges exactly */
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF; /* Requested white */
+  font-family: 'Pardon 4x4', monospace;
+  font-size: 1.25rem; /* Make it small, matching the "About" and "Contact" text */
+  line-height: 1;
 }
 
-.blob {
-  height: 100%;
-  flex-basis: 0;
-  flex-shrink: 0;
-  background-color: #0393FE;
-  border-radius: 50%;
-  /* will-change: flex-grow is not a valid value; use auto */
-  will-change: auto;
-}
-
-/* Big text hovering over everything */
-.loading-text-big {
-  position: relative;
-  z-index: 2;
-  font-size: 5rem;
-  font-weight: 400;
-  color: #13131A;
-  text-align: center;
-  padding: 0 20px;
-  pointer-events: none;
-  font-family: 'Pardon 4x4';
-  letter-spacing: 0em;
-}
-
-@media (max-width: 48em) {
-  .loading-text-big {
-    font-size: 1.8rem;
-  }
-}
-
-.loading-cursor {
-  display: inline-block;
-  margin-left: 6px;
-  font-weight: 300;
-  animation: cursorBlink 0.8s infinite;
-  color: #13131A;
-  font-family: 'Pardon 4x4' !important;
-}
-
-@keyframes cursorBlink {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
+.counter-number {
+  /* tabular-nums forces monospaced digits, preventing layout jitter as numbers change */
+  font-variant-numeric: tabular-nums;
+  /* reserving space for 3 digits (100) so it stays perfectly centered */
+  min-width: 2.8em; 
+  text-align: center; /* Center aligned */
+  letter-spacing: -0.05em;
+  user-select: none;
+  will-change: transform, filter, opacity; /* optimization for the creative jump effect */
 }

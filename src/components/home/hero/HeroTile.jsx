@@ -257,28 +257,62 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       });
 
       const chars = textEl.querySelectorAll('.hero-char');
-      // 5. Entrance Animation for Characters (only run once per mount and when introReady is true)
+      const topbarItems = tileEl.querySelectorAll('.hero-topbar-item');
+      const bioText = tileEl.querySelector('.hero-bio-container');
+
+      // 5. Entrance Animation for Characters, Topbar, and Bio (only run once per mount and when introReady is true)
       if (introReady && !entranceAnimated.current) {
         entranceAnimated.current = true;
+
+        // Add perspective to the parent container so Z-axis animations look truly 3D,
+        // without affecting the scroll height or bounding rects of the parent.
+        gsap.set(textEl, { perspective: 1000, transformStyle: "preserve-3d" });
+
+        const entranceTl = gsap.timeline(); // removed delay to sync perfectly with iris wipe
+
         if (chars.length > 0) {
-          gsap.fromTo(chars,
-            { y: -150, opacity: 0, scale: 0.5, rotation: () => Math.random() * 40 - 20 },
+          entranceTl.fromTo(chars,
             {
-              y: 0,
-              opacity: 1,
+              z: -2000,
+              scale: 0,
+              opacity: 0,
+              rotationX: () => Math.random() * 180 - 90,
+              rotationY: () => Math.random() * 180 - 90,
+            },
+            {
+              z: 0,
               scale: 1,
-              rotation: 0,
-              duration: 0.8,
-              stagger: 0.025,
-              ease: "elastic.out(1, 0.4)",
-              delay: 0.1
-            }
+              opacity: 1,
+              rotationX: 0,
+              rotationY: 0,
+              duration: 1.2, // Faster
+              stagger: 0.015, // Tighter
+              ease: "expo.out", // No bounce
+            }, 0
           );
         }
-      } else if (!entranceAnimated.current && chars.length > 0) {
-        // We originally used opacity: 0.01 to trigger an early LCP score,
-        // but it causes visible ghosting. Setting to 0 for a clean visual experience.
-        gsap.set(chars, { y: 0, scale: 1, opacity: 0 });
+
+        if (topbarItems.length > 0) {
+          entranceTl.fromTo(topbarItems,
+            { y: -30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power4.out", stagger: 0.05 },
+            0.15 // Follows up quickly
+          );
+        }
+
+        if (bioText) {
+          entranceTl.fromTo(bioText,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" },
+            0.25 // Follows up quickly
+          );
+        }
+
+      } else if (!entranceAnimated.current) {
+        // Initial hidden states before introReady fires
+        if (chars.length > 0) gsap.set(chars, { scale: 1, opacity: 0 }); // Note: do not mess with translation/scale layout properties heavily here
+        if (topbarItems.length > 0) gsap.set(topbarItems, { opacity: 0 });
+        if (bioText) gsap.set(bioText, { opacity: 0 });
       }
 
       // Defer ScrollTrigger refresh
@@ -593,6 +627,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               <div>
                 Fonts : Install &amp; Maroni by <a href="https://www.arthurcalame.com/" target="_blank" rel="noopener noreferrer">Arthur Calame</a>.
                 <br></br>
+                Pardon 4x4 by <a href="https://pfa-typefaces.com/" target="_blank" rel="noopener noreferrer">PFA Typefaces</a>.
+                <br></br>
+
                 Website made with Google Antigravity.
               </div>
             </div>
