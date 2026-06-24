@@ -63,7 +63,7 @@ export default function AxonActiveModal() {
           HERO COVER
       ══════════════════════════════════════════════ */}
       <div style={cell(12)}>
-        <img src={img('TDC/cover.jpg')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('TDC/cover.webp')} alt="Axon Active Cover" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
         <img src={img('TDC/blueprint-1.jpg')} alt="Wayfinding Blueprint Plan" loading="lazy" decoding="async" style={imgStyle} width={3600} height={1600} />

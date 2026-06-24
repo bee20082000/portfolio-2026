@@ -105,7 +105,7 @@ export default function ThuyenXuaFoodModal() {
             loading="lazy"
             decoding="async"
             style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '4px' }}
-          width={960} height={1280} />
+            width={960} height={1280} />
           {/* Handwritten text at the bottom of the polaroid */}
           <div style={{
             position: 'absolute',
@@ -113,7 +113,7 @@ export default function ThuyenXuaFoodModal() {
             left: '0',
             width: '100%',
             textAlign: 'center',
-            fontFamily: "'Belmonte Ballpoint', cursive",
+            fontFamily: "'Belmonte Ballpoint'",
             fontSize: '1.8rem',
             color: '#1a1a1a',
             transform: 'rotate(-2deg)' // slight slant for handwriting realism
