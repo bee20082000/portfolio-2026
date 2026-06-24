@@ -8,7 +8,6 @@ export default function LoadingScreen({ onReveal, onDone }) {
   
   const onRevealRef = useRef(onReveal)
   const onDoneRef = useRef(onDone)
-  const exitFiredRef = useRef(false)
 
   // Keep callbacks current
   useEffect(() => { onRevealRef.current = onReveal }, [onReveal])
@@ -29,48 +28,49 @@ export default function LoadingScreen({ onReveal, onDone }) {
     
     const tl = gsap.timeline({
       onComplete: () => {
-        if (exitFiredRef.current) return
-        exitFiredRef.current = true
-
-        if (onRevealRef.current) onRevealRef.current()
-
-        // 1. Shrink the number into the center
-        gsap.to(counterRef.current, {
-          scale: 0,
-          opacity: 0,
-          duration: 0.15,
-          ease: 'expo.in'
-        })
-
-        // Trigger the hero text explosion exactly when the iris starts wiping
-        setTimeout(() => {
-          if (onDoneRef.current) onDoneRef.current()
-        }, 100)
-
-        // 2. Iris wipe the background
-        gsap.to(overlayRef.current, {
-          clipPath: 'circle(0% at 50% 50%)',
-          duration: 0.4,
-          ease: 'expo.inOut',
-          delay: 0.1, // wait briefly for number to vanish
-          onComplete: () => {
-            document.body.style.pointerEvents = ''
-          }
-        })
+        document.body.style.pointerEvents = ''
       }
     })
 
-    // Animate from 1 to 100 in 0.4 seconds to step many numbers quickly
+    // 1. Count from 1 to 100 quickly
     tl.to(counter, {
       val: 100,
-      duration: 0.4,
-      ease: 'power3.inOut',
+      duration: 0.35,
+      ease: 'power2.out',
       onUpdate: () => {
         if (counterRef.current) {
           counterRef.current.innerText = Math.round(counter.val)
         }
       }
     })
+
+    // 2. Unified reveal transition sequence
+    tl.addLabel('reveal')
+
+    // Call onReveal instantly so background grid starts preparing
+    tl.call(() => {
+      if (onRevealRef.current) onRevealRef.current()
+    }, null, 'reveal')
+
+    // Fade and scale down the counter number
+    tl.to(counterRef.current, {
+      scale: 0.5,
+      opacity: 0,
+      duration: 0.25,
+      ease: 'power2.in'
+    }, 'reveal')
+
+    // Iris wipe the black background
+    tl.to(overlayRef.current, {
+      clipPath: 'circle(0% at 50% 50%)',
+      duration: 0.55,
+      ease: 'power3.inOut'
+    }, 'reveal')
+
+    // Trigger the hero text burst 0.15s into the wipe, creating a layered, fluid overlap
+    tl.call(() => {
+      if (onDoneRef.current) onDoneRef.current()
+    }, null, 'reveal+=0.15')
 
     return () => tl.kill()
   }, [])
