@@ -21,7 +21,7 @@ const WORKS = [
   {
     id: 'axon_active',
     name: 'Axon Active New Office',
-    cover: '/asset/images/axon-active/TDC/cover.jpg'
+    cover: '/asset/images/axon-active/TDC/cover.webp'
   },
   {
     id: 'icoffee',
@@ -46,7 +46,7 @@ const WORKS = [
   {
     id: 'thuyen_xua_food',
     name: 'Thuyen Xua Food',
-    cover: '/asset/images/Thuyen-xua/cover-1.jpg'
+    cover: '/asset/images/Thuyen-xua/cover-1.webp'
   },
   {
     id: 'nakivo',

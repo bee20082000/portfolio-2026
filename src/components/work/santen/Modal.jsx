@@ -26,7 +26,7 @@ const data = {
     '/asset/images/santen/Sancoba-Moment-Post2-1801.webp',
     '/asset/images/santen/Santen-HA-post.webp',
     '/asset/images/santen/Santen-Nam-Nu-post.webp',
-    '/asset/images/santen/Santen-trend-post5-opt-2.gif',
+    '/asset/images/santen/Santen-trend-post5-opt-2.mp4',
     '/asset/images/santen/sancoba-product-post-8.webp',
     '/asset/images/santen/sancoba-product-post-4.webp'
   ],
@@ -36,29 +36,47 @@ const data = {
 export default function SantenModal() {
   return (
     <WorkModalLayout data={data}>
-      {data.images.map((src, index) => (
-        <div
-          key={src}
-          style={{
-            gridColumn: 'span 3',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            backgroundColor: '#1c1d22',
-          }}
-        >
-          <img
-            src={src}
-            alt={`Santen Campaign ${index + 1}`}
-            loading="lazy"
-            decoding="async"
+      {data.images.map((src, index) => {
+        const isVideo = src.endsWith('.mp4');
+        return (
+          <div
+            key={src}
             style={{
-              width: '100%',
-              height: 'auto',
-              display: 'block',
+              gridColumn: 'span 3',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              backgroundColor: '#1c1d22',
             }}
-          />
-        </div>
-      ))}
+          >
+            {isVideo ? (
+              <video
+                src={src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                }}
+              />
+            ) : (
+              <img
+                src={src}
+                alt={`Santen Campaign ${index + 1}`}
+                loading="lazy"
+                decoding="async"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                }}
+              />
+            )}
+          </div>
+        );
+      })}
     </WorkModalLayout>
   );
 }

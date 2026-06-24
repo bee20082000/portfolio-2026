@@ -38,7 +38,7 @@ export default function ICoffeeModal() {
         <img src={img('glvf-logo.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
-        <img src={img('Scene-1.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
+        <img src={img('Scene-1.webp')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
       </div>
       <div style={cell(12)}>
         <img src={img('cafe-glcf.jpg')} alt="GLCF flag banner 1" loading="lazy" decoding="async" style={imgStyle} />
