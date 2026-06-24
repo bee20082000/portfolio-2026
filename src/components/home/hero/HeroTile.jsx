@@ -271,8 +271,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           );
         }
       } else if (!entranceAnimated.current && chars.length > 0) {
-        // Keep them hidden initially until introReady is true
-        gsap.set(chars, { opacity: 0 });
+        // Render at 1% opacity in its final position to instantly trigger LCP 
+        // without the user seeing it before the entrance animation begins.
+        gsap.set(chars, { y: 0, scale: 1, opacity: 0.01 });
       }
 
       // Defer ScrollTrigger refresh
