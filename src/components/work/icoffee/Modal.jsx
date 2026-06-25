@@ -113,7 +113,7 @@ export default function ICoffeeModal() {
           }}
         />
         <div style={{
-          fontFamily: 'Install',
+          fontFamily: 'Install Rounded',
           position: 'absolute',
           top: '20px',
           left: '10px',
@@ -130,7 +130,7 @@ export default function ICoffeeModal() {
           DRINK COFFEE
         </div>
         <div style={{
-          fontFamily: 'Install',
+          fontFamily: 'Install Rounded',
           position: 'absolute',
           bottom: '20px',
           left: '10px',
