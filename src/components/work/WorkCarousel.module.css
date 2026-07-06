@@ -1,0 +1,255 @@
+/* ═══════════════════════════════════════════════════════════
+   BALATRO-STYLE WORK CARD CAROUSEL
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── WRAPPER ────────────────────────────────────────────────── */
+.carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Felt-table radial gradient backdrop */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(15, 35, 20, 0.55) 0%, transparent 70%),
+    transparent;
+}
+
+/* ── SECTION HEADER ─────────────────────────────────────────── */
+.carousel-header {
+  position: absolute;
+  top: clamp(24px, 4vh, 44px);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 clamp(32px, 5vw, 80px);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.carousel-label {
+  font-family: var(--font-family);
+  font-size: clamp(0.7rem, 1vw, 0.875rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.carousel-counter {
+  font-family: 'Maroni Condensed', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+
+.carousel-counter .counter-active {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+}
+
+/* ── SCROLL TRACK ───────────────────────────────────────────── */
+.carousel-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.5vw, 36px);
+  /* horizontal scroll */
+  overflow-x: scroll;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  /* vertical centering padding + side padding for peek */
+  padding: clamp(40px, 6vh, 80px) clamp(20vw, 30vw, 36vw);
+  box-sizing: border-box;
+  cursor: grab;
+  /* hide native scrollbar — global * rule already hides it, just be safe */
+  scrollbar-width: none;
+  will-change: transform;
+  position: relative;
+  z-index: 10;
+  /* prevent vertical scroll steal */
+  touch-action: pan-x;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.carousel-track:active {
+  cursor: grabbing;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── CARD SLOT (handles snap + 3D perspective) ──────────── */
+.card-slot {
+  flex: 0 0 auto;
+  /* Card size — landscape 4:3 */
+  width: clamp(300px, 35vw, 560px);
+  aspect-ratio: 4 / 3;
+  scroll-snap-align: center;
+  perspective: 1200px;
+  position: relative;
+  z-index: 1;
+  /* NOTE: opacity and transform are managed entirely by GSAP.
+     Do NOT set them here — CSS and GSAP will fight each other. */
+}
+
+/* ── CARD INNER (3D flip surface) ──────────────────────── */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  border-radius: 18px;
+  /* NO transition here — GSAP exclusively owns all transforms.
+     Any CSS transition creates stutter when GSAP and RAF compete. */
+  will-change: transform;
+}
+
+/* ── CARD FACE ──────────────────────────────────────────── */
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #1a1b24 0%, #13131a 50%, #0e0e15 100%);
+  display: flex;
+  flex-direction: column;
+  /* Subtle inner border only — no external shadows */
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ── COVER MEDIA ────────────────────────────────────────────── */
+.card-cover {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.card-cover-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.04);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* ── CARD ACTIVE / HOVER STATES ──────────────────────── */
+.card-slot.is-active .card-face {
+  /* Slightly brighter inner border when active — no shadows */
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.card-slot.is-active {
+  filter: brightness(1) saturate(1);
+  transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+/* ── SCROLL NAVIGATION DOTS ─────────────────────────────────── */
+.carousel-dots {
+  position: absolute;
+  bottom: clamp(24px, 4vh, 48px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.carousel-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.carousel-dot.is-active {
+  background: rgba(255, 255, 255, 0.85);
+  width: 20px;
+  border-radius: 3px;
+}
+
+/* ── KEYBOARD NAV HINT ──────────────────────────────────────── */
+.carousel-nav-hint {
+  position: absolute;
+  bottom: clamp(24px, 4vh, 48px);
+  right: clamp(32px, 5vw, 80px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-family);
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.18);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.nav-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── DECK ORIGIN MARKER (GSAP uses this for "deal from" position) ── */
+.deck-origin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SUIT SYMBOLS mapping via CSS vars ──────────────────────── */
+/* Each card gets a --card-suit CSS var via JS (♠ ♥ ♦ ♣) */
+
+/* ── HOVER FOIL (enabled when mouse enters card) ──────────────── */
+.card-slot:hover .card-foil {
+  opacity: 1;
+}
+
+.card-slot:hover .card-cover-media {
+  transform: scale(1.08);
+}
+
+/* ── CLICKED CARD FEEDBACK ──────────────────────────────────── */
+.card-slot.is-clicked .card-inner {
+  transition: transform 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* ── WORK CARD CLASS (used by HomeGrid GSAP selectors) ────────── */
+.work-card {
+  /* Marker class — no extra styles needed, slot handles all visuals */
+}

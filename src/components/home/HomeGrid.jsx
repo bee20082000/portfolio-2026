@@ -39,8 +39,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
     if (!bentoHome || !bentoAbout || !bentoWork) return
 
     const homeTiles = bentoHome.querySelectorAll('.tile')
-    const workTiles = bentoWork.querySelectorAll('.tile')
-    const workHeader = bentoWork.querySelector('.work-header')
+    const workTiles = bentoWork.querySelectorAll('.work-card')
     const allTiles = [...homeTiles, ...workTiles]
 
     if (!hasRevealedRef.current) {
@@ -71,7 +70,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
         gsap.set(bentoHome, { filter: 'blur(10px)', opacity: 0.25, scale: 1 })
       }
       gsap.set(bentoWork, {
-        height: activeTab === 'work' ? 'auto' : 0,
+        height: activeTab === 'work' ? '100vh' : 0,
         overflow: activeTab === 'work' ? 'visible' : 'hidden',
         visibility: activeTab === 'work' ? 'visible' : 'hidden',
         pointerEvents: activeTab === 'work' ? 'auto' : 'none'
@@ -80,16 +79,14 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
       if (activeTab === 'home') {
         gsap.set(homeTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
         gsap.set(workTiles, { opacity: 0 })
-        if (workHeader) gsap.set(workHeader, { opacity: 0, y: 15 })
       } else if (activeTab === 'about') {
         // Home stays fully visible behind the postcard
         gsap.set(homeTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
         gsap.set(workTiles, { opacity: 0 })
-        if (workHeader) gsap.set(workHeader, { opacity: 0, y: 15 })
       } else {
         gsap.set(homeTiles, { opacity: 0 })
-        gsap.set(workTiles, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
-        if (workHeader) gsap.set(workHeader, { opacity: 1, scale: 1, y: 0, clearProps: 'transform,opacity' })
+        // Work carousel handles its own entrance via dealCards()
+        gsap.set(workTiles, { opacity: 1 })
       }
     }
 
@@ -101,28 +98,28 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
       })
     })
 
-    // Sibling dimming interaction (applied only to Work tiles)
-    workTiles.forEach((tile) => {
+    // Sibling dimming interaction (applied only to Work cards)
+    workTiles.forEach((card) => {
       const handleEnter = () => {
         if (window.innerWidth <= 1024) return
         if (activeTabRef.current !== 'work') return
-        const siblings = Array.from(tile.parentNode.children)
+        const siblings = Array.from(card.parentNode.children)
         siblings.forEach((sibling) => {
-          if (sibling === tile || !sibling.classList.contains('tile')) return
-          gsap.to(sibling, { opacity: 0.45, duration: 0.4, ease: 'power2.out', overwrite: 'auto' })
+          if (sibling === card || !sibling.classList.contains('work-card')) return
+          gsap.to(sibling, { opacity: 0.35, duration: 0.4, ease: 'power2.out', overwrite: 'auto' })
         })
       }
       const handleLeave = () => {
         if (window.innerWidth <= 1024) return
         if (activeTabRef.current !== 'work') return
-        const siblings = Array.from(tile.parentNode.children)
+        const siblings = Array.from(card.parentNode.children)
         siblings.forEach((sibling) => {
-          if (sibling === tile || !sibling.classList.contains('tile')) return
+          if (sibling === card || !sibling.classList.contains('work-card')) return
           gsap.to(sibling, { opacity: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto', clearProps: 'opacity' })
         })
       }
-      tile.addEventListener('mouseenter', handleEnter, { passive: true })
-      tile.addEventListener('mouseleave', handleLeave, { passive: true })
+      card.addEventListener('mouseenter', handleEnter, { passive: true })
+      card.addEventListener('mouseleave', handleLeave, { passive: true })
     })
   }, { dependencies: [loaded], scope: bentoParentRef })
 
@@ -149,8 +146,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
     prevTabRef.current = activeTab
 
     const homeTiles = bentoHome.querySelectorAll('.tile')
-    const workTiles = bentoWork.querySelectorAll('.tile')
-    const workHeader = bentoWork.querySelector('.work-header')
+    const workTiles = bentoWork.querySelectorAll('.work-card')
     const aboutTiles = bentoAbout.querySelectorAll('.about-postcard')
 
     const getGridAndTiles = (tab) => {
@@ -167,7 +163,6 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
       bentoHome, bentoAbout, bentoWork,
       ...homeTiles, ...workTiles
     ]
-    if (workHeader) elementsToKill.push(workHeader)
     gsap.killTweensOf(elementsToKill)
 
     // Synchronously restore the source grid to visible so it doesn't vanish before its fade-out animation plays
@@ -176,7 +171,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
     } else if (prevTab === 'about') {
       gsap.set(source.grid, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
     } else {
-      gsap.set(source.grid, { visibility: 'visible', height: 'auto', overflow: 'visible', pointerEvents: 'none' })
+      gsap.set(source.grid, { visibility: 'visible', height: '100vh', overflow: 'visible', pointerEvents: 'none' })
     }
 
     // Synchronously setup initial states for the destination grid to prevent visible flash
@@ -189,14 +184,12 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
     } else if (activeTab === 'about') {
       gsap.set(dest.grid, { visibility: 'visible', pointerEvents: 'none', height: '100vh', overflow: 'visible', opacity: 1 })
     } else {
-      // Prevent FOUC: Set grid opacity to 0 instantly, then reveal it right before tile animation
-      gsap.set(dest.grid, { visibility: 'visible', pointerEvents: 'none', height: 'auto', overflow: 'visible', opacity: 0 })
+      // Prevent FOUC: Set grid opacity to 0 instantly, then reveal right before card deal
+      gsap.set(dest.grid, { visibility: 'visible', pointerEvents: 'none', height: '100vh', overflow: 'visible', opacity: 0 })
 
       if (activeTab === 'work') {
-        gsap.set(dest.tiles, { opacity: 0, y: 120 })
-        if (workHeader) {
-          gsap.set(workHeader, { opacity: 0, y: 80 })
-        }
+        // Work carousel handles entrance via dealCards(); pre-hide cards for clean entry
+        gsap.set(dest.tiles, { opacity: 0 })
       } else {
         // About tab
         gsap.set(dest.tiles, { opacity: 0, y: 80 })
@@ -246,12 +239,6 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
         stagger: { grid: 'auto', from: 'start', amount: 0.05 },
         ease: 'power2.in', overwrite: 'auto'
       }, 0)
-      if (prevTab === 'work' && workHeader) {
-        tl.to(workHeader, {
-          opacity: 0, y: -30,
-          duration: 0.2, ease: 'power2.in', overwrite: 'auto'
-        }, 0)
-      }
     }
 
     // ── STEP 2: Hide Outgoing Grid & Reset Scroll ──────────────────────────
@@ -304,20 +291,11 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
         tl.to(bentoHome, { opacity: 0.25, scale: 1, filter: 'blur(10px)', duration: 0.5, ease: 'power2.out', overwrite: 'auto' }, 0.15)
       }
     } else if (activeTab === 'work') {
+      // Fade in the wrapper, then fire the deal animation
       tl.set(dest.grid, { opacity: 1 }, 0.15)
-      tl.to(dest.tiles, {
-        opacity: 1, y: 0,
-        duration: 0.7,
-        stagger: { grid: 'auto', from: 'start', amount: 0.15 },
-        ease: 'power3.out', overwrite: 'auto', clearProps: 'transform,opacity'
-      }, 0.15)
-      if (workHeader) {
-        tl.to(workHeader, {
-          opacity: 1, y: 0,
-          duration: 0.6, ease: 'power3.out', overwrite: 'auto',
-          clearProps: 'transform,opacity'
-        }, 0.15)
-      }
+      tl.call(() => {
+        window.dispatchEvent(new CustomEvent('workCarouselDeal'))
+      }, null, 0.18)
     }
 
     tl.set(dest.grid, { pointerEvents: 'auto', clearProps: 'scale,opacity' })
