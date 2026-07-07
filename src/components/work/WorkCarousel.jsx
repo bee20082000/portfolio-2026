@@ -60,40 +60,33 @@ const WorkCard = memo(({ work, index, isActive, onClick }) => {
   const innerRef = useRef(null);
   const [isClicked, setIsClicked] = useState(false);
 
-  /* ── 3D TILT via GSAP — no direct style.transform writes ─────── */
   const handleMouseMove = useCallback((e) => {
     if (!slotRef.current || !innerRef.current) return;
-    const rect = slotRef.current.getBoundingClientRect();
-    const x  = e.clientX - rect.left;
-    const y  = e.clientY - rect.top;
-    const nx = (x / rect.width)  * 2 - 1; // -1 → 1
-    const ny = (y / rect.height) * 2 - 1;
-
-    // GSAP drives the tilt smoothly — overwrite:'auto' cancels prev tween on each move
+    
+    // Slide up on hover, keeping the uniform 3D deck angle
     gsap.to(innerRef.current, {
-      rotateX:   ny * -12,
-      rotateY:   nx *  16,
-      z:         20,
-      duration:  0.22,
-      ease:      'power2.out',
+      y: -40,
+      duration: 0.15,
+      ease: 'power2.out',
       overwrite: 'auto',
     });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
-    // GSAP spring-back: same system, no conflict
     gsap.to(innerRef.current, {
-      rotateX: 0, rotateY: 0, z: 0,
-      duration: 0.65, ease: 'power3.out', overwrite: 'auto',
+      y: 0,
+      duration: 0.3,
+      ease: 'power2.out',
+      overwrite: 'auto',
     });
   }, []);
 
   const handleClick = useCallback(() => {
     setIsClicked(true);
     gsap.timeline()
-      .to(innerRef.current, { scale: 0.93, duration: 0.1,  ease: 'power2.in' })
-      .to(innerRef.current, { scale: 1,    duration: 0.55, ease: 'elastic.out(1, 0.55)' });
-    setTimeout(() => { setIsClicked(false); onClick(work.id); }, 120);
+      .to(innerRef.current, { scale: 0.93, duration: 0.05,  ease: 'power2.in' })
+      .to(innerRef.current, { scale: 1,    duration: 0.35, ease: 'elastic.out(1, 0.5)' });
+    setTimeout(() => { setIsClicked(false); onClick(work.id); }, 100);
   }, [work.id, onClick]);
 
   return (
@@ -139,8 +132,29 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
   const stackAmountObj  = useRef({ value: 0 });
   const stackTween      = useRef(null);
   const isScrolling     = useRef(false);
+  const cardsData       = useRef([]); // Cache for layout thrashing prevention
 
   const [activeIndex, setActiveIndex] = useState(0);
+
+  /* ── CACHE CARD POSITIONS ON MOUNT / RESIZE ─────────────────── */
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const updateCache = () => {
+      cardsData.current = Array.from(track.querySelectorAll('.work-card')).map(card => ({
+        card,
+        inner: card.querySelector(`.${styles['card-inner']}`),
+        cx: card.offsetLeft + card.offsetWidth / 2,
+      }));
+    };
+    // Need to wait slightly for layout to settle (e.g. images loading)
+    const t = setTimeout(updateCache, 100);
+    window.addEventListener('resize', updateCache);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('resize', updateCache);
+    };
+  }, []);
 
   /* ── Forward DOM ref (HomeGrid needs the real DOM node for GSAP) ── */
   useEffect(() => {
@@ -167,8 +181,8 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
 
     // Brief deck pulse before dealing
     if (slots[0]) {
-      tl.to(slots[0], { scale: 0.82, duration: 0.15, ease: 'power2.out' }, 0)
-        .to(slots[0], { scale: 0.75, duration: 0.10, ease: 'power2.in'  }, 0.15);
+      tl.to(slots[0], { scale: 0.82, duration: 0.08, ease: 'power2.out' }, 0)
+        .to(slots[0], { scale: 0.75, duration: 0.05, ease: 'power2.in'  }, 0.08);
     }
 
     // Deal each card with spring physics
@@ -177,8 +191,8 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
       const restRot = mid === 0 ? 0 : ((i - mid) / mid) * 3.5;
       tl.to(slot, {
         opacity: 1, y: 0, scale: 1, rotation: restRot,
-        duration: 0.75, ease: 'elastic.out(1, 0.72)',
-      }, 0.06 + i * 0.065);
+        duration: 0.45, ease: 'elastic.out(1, 0.7)',
+      }, 0.03 + i * 0.03);
     });
     return tl;
   }, []);
@@ -209,28 +223,39 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
      Uses a generic 0..1 proxy so animations are never abruptly cut. */
   const renderStack = useCallback(() => {
     const track = trackRef.current;
-    if (!track) return;
+    if (!track || !cardsData.current.length) return;
     
     const amt = stackAmountObj.current.value;
-    const cards = Array.from(track.querySelectorAll('.work-card'));
-    const trackRect = track.getBoundingClientRect();
-    const trackCX = trackRect.left + trackRect.width / 2;
-    const trackW = trackRect.width;
+    const scrollX = track.scrollLeft;
+    const trackW = track.clientWidth;
+    const trackCX = scrollX + trackW / 2;
 
-    cards.forEach((card) => {
-      const inner = card.querySelector(`.${styles['card-inner']}`);
+    cardsData.current.forEach(({ card, inner, cx }) => {
       if (!inner) return;
 
-      const cardRect = card.getBoundingClientRect();
-      const cardCX = cardRect.left + cardRect.width / 2;
-      const offset = cardCX - trackCX; 
+      const offset = cx - trackCX; 
 
-      const pullX = -offset * 0.75 * amt;
-      const pushZ = -Math.abs(offset) * 0.4 * amt;
-      const rotateY = gsap.utils.clamp(-40, 40, (offset / trackW) * -80) * amt;
+      // Fluid and correct same-side stacking
+      // Pull almost entirely to center (0.97) to tightly pack like a deck
+      const pullX = -offset * 0.97 * amt;
+      // Reduce Z pushback so the deck is physically thinner
+      const pushZ = -Math.abs(offset) * 0.15 * amt;
+      const rotateY = -28 * amt; // All cards face the same side
+      
+      // Smooth wave slide-up for the center card
+      const dist = Math.abs(offset);
+      // Creates a smooth peak exactly at the center
+      const slideUpFactor = Math.max(0, 1 - (dist / 280)); 
+      const pullY = -60 * Math.pow(slideUpFactor, 1.5) * amt;
+      
+      // Dynamically compute zIndex so the center-most card is ALWAYS on top.
+      // This prevents clipping when scrolling quickly before the active class updates.
+      const zIndex = Math.round(1000 - Math.abs(offset));
 
+      gsap.set(card, { zIndex });
       gsap.set(inner, {
         x: pullX,
+        y: pullY,
         z: pushZ,
         rotateY: rotateY,
       });
@@ -243,7 +268,7 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
     if (stackTween.current) stackTween.current.kill();
     stackTween.current = gsap.to(stackAmountObj.current, {
       value: 1,
-      duration: 0.5,
+      duration: 0.15,
       ease: 'power2.out',
       onUpdate: renderStack
     });
@@ -255,8 +280,8 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
     if (stackTween.current) stackTween.current.kill();
     stackTween.current = gsap.to(stackAmountObj.current, {
       value: 0,
-      duration: 0.8,
-      ease: 'elastic.out(1, 0.75)',
+      duration: 0.35,
+      ease: 'power2.out',
       onUpdate: renderStack
     });
   }, [renderStack]);
@@ -264,13 +289,17 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
   /* ── ACTIVE CARD INDEX SYNC ─────────────────────────────────── */
   const syncActiveIndex = useCallback(() => {
     const track = trackRef.current;
-    if (!track) return;
-    const trackCX = track.getBoundingClientRect().left + track.getBoundingClientRect().width / 2;
+    if (!track || !cardsData.current.length) return;
+    
+    const scrollX = track.scrollLeft;
+    const trackW = track.clientWidth;
+    const trackCX = scrollX + trackW / 2;
+    
     let closestIdx = 0;
     let closestDist = Infinity;
-    Array.from(track.querySelectorAll('.work-card')).forEach((slot, i) => {
-      const r    = slot.getBoundingClientRect();
-      const dist = Math.abs((r.left + r.width / 2) - trackCX);
+    
+    cardsData.current.forEach(({ cx }, i) => {
+      const dist = Math.abs(cx - trackCX);
       if (dist < closestDist) { closestDist = dist; closestIdx = i; }
     });
     setActiveIndex(closestIdx);
@@ -293,7 +322,7 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
 
       // Stop stack after scrolling ceases
       clearTimeout(scrollEndTimer.current);
-      scrollEndTimer.current = setTimeout(stopStacking, 150);
+      scrollEndTimer.current = setTimeout(stopStacking, 80);
     };
 
     track.addEventListener('scroll', onScroll, { passive: true });
@@ -311,9 +340,7 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
     if (!track) return;
     const slot = track.querySelectorAll('.work-card')[index];
     if (!slot) return;
-    const tr = track.getBoundingClientRect();
-    const sr = slot.getBoundingClientRect();
-    track.scrollBy({ left: sr.left - tr.left - (tr.width - sr.width) / 2, behavior: 'smooth' });
+    track.scrollTo({ left: slot.offsetLeft - (track.clientWidth - slot.offsetWidth) / 2, behavior: 'smooth' });
   }, []);
 
   /* ── KEYBOARD NAVIGATION ────────────────────────────────────── */
@@ -359,7 +386,7 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
     const onWheel = (e) => {
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
       e.preventDefault();
-      track.scrollLeft += e.deltaY * 1.2;
+      track.scrollLeft += e.deltaY * 1.8;
     };
     track.addEventListener('wheel', onWheel, { passive: false });
     return () => track.removeEventListener('wheel', onWheel);
@@ -372,9 +399,7 @@ const WorkCarousel = forwardRef(({ onSelect, style, id, className }, ref) => {
     requestAnimationFrame(() => {
       const first = track.querySelectorAll('.work-card')[0];
       if (!first) return;
-      const tr = track.getBoundingClientRect();
-      const cr = first.getBoundingClientRect();
-      track.scrollLeft = cr.left - tr.left - (tr.width - cr.width) / 2;
+      track.scrollLeft = first.offsetLeft - (track.clientWidth - first.offsetWidth) / 2;
     });
   }, []);
 
