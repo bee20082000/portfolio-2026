@@ -3,7 +3,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #13131A; /* matching the deep brand dark */
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF; /* Requested white */
+  color: #111111;
   font-family: 'Pardon 4x4', monospace;
   font-size: 1.25rem; /* Make it small, matching the "About" and "Contact" text */
   line-height: 1;

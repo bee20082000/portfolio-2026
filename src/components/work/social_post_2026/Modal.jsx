@@ -25,7 +25,7 @@ export default function SocialPost2026Modal() {
         gridColumn: 'span 12',
         borderRadius: '8px',
         overflow: 'hidden',
-        backgroundColor: '#1c1d22',
+        backgroundColor: 'var(--bg2, #F5F5F7)',
         height: '100%',
       }}>
         <img

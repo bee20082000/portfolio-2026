@@ -68,7 +68,7 @@ export default function ICoffeeModal() {
           fontWeight: '400',
           lineHeight: '0.9',
           letterSpacing: '0em',
-          color: '#ffffff',
+          color: 'var(--text, #111111)',
           textTransform: 'uppercase',
         }}>
           iCoffee New Packaging
@@ -98,7 +98,7 @@ export default function ICoffeeModal() {
         gridColumn: 'span 4',
         borderRadius: '8px',
         overflow: 'hidden',
-        backgroundColor: '#1c1d22'
+        backgroundColor: 'var(--bg2, #F5F5F7)'
       }}>
         <video
           src={img('coffee-pouring.mp4')}

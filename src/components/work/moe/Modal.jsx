@@ -192,7 +192,7 @@ export default function MoeModal() {
           fontWeight: '400',
           lineHeight: '0.9',
           letterSpacing: '0em',
-          color: '#ffffff',
+          color: 'var(--text, #111111)',
           textTransform: 'uppercase',
         }}>
           MOE COFFEE AND GIFT SHOP

@@ -144,24 +144,24 @@ html {
 }
 
 :root {
-  --bg: #13131A;
-  --bg2: #15161A;
-  --bg3: #202127;
-  --bg4: #2B2D36;
-  --border: transparent;
-  --border2: rgba(255, 255, 255, 0.05);
+  --bg: #FFFFFF;
+  --bg2: #F5F5F7;
+  --bg3: #EBEBEF;
+  --bg4: #E0E0E5;
+  --border: rgba(0, 0, 0, 0.06);
+  --border2: rgba(0, 0, 0, 0.08);
 
-  --text: #FFFFFF;
-  --text2: #9EA2B0;
-  --text3: #626573;
+  --text: #111111;
+  --text2: #55555C;
+  --text3: #8E8E93;
 
-  --accent: #FFFFFF;
+  --accent: #111111;
   --accent2: #4F46E5;
-  --glow: rgba(255, 255, 255, 0.03);
+  --glow: rgba(0, 0, 0, 0.04);
 
-  --shadow: none;
-  --shadow-s: none;
-  --tile-border: transparent;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-s: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --tile-border: 1px solid rgba(0, 0, 0, 0.06);
   --tile-radius: 32px;
   --body-size: 0.9375rem;
   --h1-size: 3rem;
@@ -475,7 +475,7 @@ input,
   width: 100vw !important;
   height: 100vh !important;
   border-radius: 0px !important;
-  background: var(--bg, #13131a) !important;
+  background: var(--bg, #FFFFFF) !important;
   display: block !important;
   overflow-y: auto !important;
 }

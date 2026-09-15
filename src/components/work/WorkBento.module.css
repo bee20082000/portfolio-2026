@@ -48,7 +48,7 @@
   font-size: clamp(2.5rem, 7.2vw, 6.375rem);
   line-height: 0.75;
   letter-spacing: 0em;
-  color: #EBEBEB;
+  color: var(--text, #111111);
   background: none;
   border: none;
   padding: 0;
@@ -68,7 +68,7 @@
 
 /* Hover state: Clean, responsive translation (No scale, no bounce, no text shadow) */
 .work-list-container .work-list-item.hovered {
-  color: #FFFFFF;
+  color: #000000;
 }
 
 /* Click animation state */

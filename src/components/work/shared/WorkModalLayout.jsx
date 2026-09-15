@@ -45,7 +45,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
 
   const bodyTextStyle = {
     fontSize: '1rem',
-    color: '#ffffffff',
+    color: 'var(--text2, #55555C)',
     margin: 0,
     fontWeight: '400',
     lineHeight: '1.2em',
@@ -116,7 +116,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
       ref={containerRef}
       style={{
         margin: '0 auto',
-        color: '#ffffff',
+        color: 'var(--text, #111111)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -196,7 +196,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
 
         /* ── Unified body text used inside the bento grid ── */
         .work-modal-body-text {
-          color: rgba(255, 255, 255, 1);
+          color: var(--text, #111111);
           font-size: 1rem;
           line-height: 1.2;
           margin: 20px 0;
@@ -231,7 +231,7 @@ export default function WorkModalLayout({ data, customPills, children }) {
             fontWeight: '400',
             lineHeight: '0.9',
             letterSpacing: '0em',
-            color: '#ffffff',
+            color: 'var(--text, #111111)',
             textTransform: 'uppercase',
             margin: 0,
             maxWidth: '100%',

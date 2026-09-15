@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import useSmoothScroll from "../../../hooks/useSmoothScroll";
 import "./HeroTile.css";
-import WorkBento from "../../work/WorkBento";
+import WorkCarousel from "../../work/WorkCarousel";
 import { audioManager } from "../../../utils/audio";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -396,8 +396,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           gridRow: "1 / -1",
           height: '100%',
           backgroundColor: "transparent",
-          color: "#FFFFFF",
-          "--text": "#FFFFFF", "--text2": "#FFFFFF", "--text3": "#FFFFFF",
+          color: "var(--text, #111111)",
           "--tile-radius": "0px",
           borderRadius: "0px",
           overflowY: 'auto',
@@ -443,7 +442,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               >
                 About
                 <svg className="doodle-circle" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" />
+                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                 </svg>
               </a>
             </div>
@@ -461,7 +460,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
               >
                 Contact
                 <svg className="doodle-circle" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
-                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" />
+                  <path className="doodle-path" pathLength="100" d="M15,35 C10,20 25,8 60,5 C95,2 115,15 115,30 C115,45 90,58 60,58 C25,58 5,45 15,25" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
                 </svg>
               </a>
             </div>
@@ -482,9 +481,9 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
           </div>
 
-          {/* ── Section 2: Work grid ── */}
+          {/* ── Section 2: Work carousel ── */}
           <div className="hero-work-section">
-            <WorkBento onSelect={onSelect} scroller={tileRef} />
+            <WorkCarousel onSelect={onSelect} />
           </div>
 
           {/* Bottom Contact Section */}

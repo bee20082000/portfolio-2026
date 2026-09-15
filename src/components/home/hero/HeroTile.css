@@ -85,7 +85,7 @@
   font-family: var(--font-family) !important;
   font-weight: 400 !important;
   font-size: 0.875rem;
-  color: #FFFFFF;
+  color: var(--text, #111111);
   text-decoration: none;
   letter-spacing: -0.02em !important;
   cursor: pointer;
@@ -115,7 +115,7 @@
 }
 
 .hero-topbar-link:hover {
-  color: #FFFFFF;
+  color: var(--text, #111111);
   opacity: 1;
   transform: scale(1.12) rotate(-2deg);
 }
@@ -170,7 +170,7 @@
   align-self: flex-end;
   padding-bottom: clamp(50px, 8vh, 100px);
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: var(--text3, #8E8E93);
   font-size: 0.8125rem;
   text-transform: lowercase;
   display: flex;
@@ -198,7 +198,7 @@
   font-family: var(--font-family);
   font-size: 0.875rem;
   line-height: 1.45;
-  color: #FFFFFF;
+  color: var(--text2, #55555C);
   font-weight: 400;
   letter-spacing: -0.02em;
   pointer-events: none;
@@ -211,7 +211,7 @@
   font-size: 16vw;
   line-height: 0.8;
   letter-spacing: 0em;
-  color: #FFFFFF;
+  color: var(--text, #111111);
   white-space: nowrap;
   display: block;
   visibility: hidden;
@@ -315,6 +315,7 @@
   border-radius: 8px;
   padding: 24px 32px;
   box-sizing: border-box;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
   will-change: transform;
 }
 
@@ -496,7 +497,7 @@
 }
 
 .hero-footer a {
-  color: #FFFFFF;
+  color: var(--text, #111111);
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: opacity 0.2s ease;

@@ -1,0 +1,204 @@
+/* ── WORK GRID WRAPPER (VERTICAL EDITORIAL) ─────────────────── */
+.grid-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  margin: 20px 0 64px 0;
+}
+
+/* ── ASYMMETRICAL 12-COLUMN GRID (TIGHT 10px GAP) ───────────── */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── SPAN CLASSES FOR EDITORIAL ASYMMETRY ───────────────────── */
+.span-12 {
+  grid-column: span 12;
+}
+
+.span-8 {
+  grid-column: span 8;
+}
+
+.span-7 {
+  grid-column: span 7;
+}
+
+.span-6 {
+  grid-column: span 6;
+}
+
+.span-5 {
+  grid-column: span 5;
+}
+
+.span-4 {
+  grid-column: span 4;
+}
+
+/* ── ASPECT RATIOS FOR BIG PHOTOS ───────────────────────────── */
+.aspect-hero {
+  aspect-ratio: 21 / 10;
+  min-height: 380px;
+}
+
+.aspect-wide {
+  aspect-ratio: 16 / 10;
+  min-height: 320px;
+}
+
+.aspect-standard {
+  aspect-ratio: 16 / 11;
+  min-height: 300px;
+}
+
+.aspect-tall {
+  aspect-ratio: 4 / 3.4;
+  min-height: 320px;
+}
+
+/* ── CARD BASE (PURE 2D, NO 3D, CRISP 6px RADIUS) ─────────────── */
+.card-item {
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg2, #F5F5F7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  outline: none;
+  content-visibility: auto;
+  contain-intrinsic-size: 350px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease;
+}
+
+.card-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.card-item:active {
+  transform: translateY(0);
+}
+
+/* ── COVER MEDIA WRAPPER (NO ZOOM ON HOVER) ─────────────────── */
+.media-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cover-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* Strictly no zoom as requested */
+  transform: none !important;
+}
+
+/* ── HOVER OVERLAY: BIG MIDDLE TITLE ONLY ────────────────────── */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.48); /* Smooth dark tint for crisp title contrast */
+  opacity: 0;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.card-item:hover .card-overlay,
+.card-item:focus-visible .card-overlay {
+  opacity: 1;
+}
+
+/* ── BIG MIDDLE TITLE ───────────────────────────────────────── */
+.card-title {
+  font-family: 'Maroni Condensed', sans-serif;
+  font-size: clamp(2.2rem, 5.2vw, 4.6rem);
+  font-weight: 400;
+  line-height: 0.92;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-align: center;
+  max-width: 90%;
+  user-select: none;
+  transform: translateY(4px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-item:hover .card-title {
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE TABLET & MOBILE ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .span-8,
+  .span-7,
+  .span-5,
+  .span-4 {
+    grid-column: span 6;
+  }
+
+  .aspect-hero,
+  .aspect-wide,
+  .aspect-tall {
+    aspect-ratio: 16 / 10;
+    min-height: 260px;
+  }
+
+  .card-title {
+    font-size: clamp(1.85rem, 4.2vw, 3rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .span-12,
+  .span-8,
+  .span-7,
+  .span-6,
+  .span-5,
+  .span-4 {
+    grid-column: 1 / -1;
+  }
+
+  .aspect-hero,
+  .aspect-wide,
+  .aspect-standard,
+  .aspect-tall {
+    aspect-ratio: 16 / 11;
+    min-height: 220px;
+  }
+
+  /* On mobile touch devices, keep overlay legible */
+  .card-overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .card-title {
+    font-size: 2rem;
+  }
+}

@@ -102,7 +102,7 @@ export default function TuonganModal() {
       {/* Bento 1: Carousel Gallery */}
       <div style={cell(8, {
         height: '540px',
-        backgroundColor: '#1c1d22',
+        backgroundColor: 'var(--bg2, #F5F5F7)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -157,7 +157,7 @@ export default function TuonganModal() {
         style={cell(4, {
           gridRow: 'span 2', // Allows the phone to take up 2 rows in the grid
           height: '540px', // Roughly 260px * 2 + 20px gap
-          backgroundColor: '#1c1d22',
+          backgroundColor: 'var(--bg2, #F5F5F7)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -197,7 +197,7 @@ export default function TuonganModal() {
           transform: isPhoneHovered ? 'translate(-50%, -4px)' : 'translate(-50%, 0)',
           fontSize: '0.8125rem',
           fontWeight: 500,
-          color: '#ffffffff',
+          color: 'var(--text, #111111)',
           letterSpacing: '0.06em',
           pointerEvents: 'none',
           opacity: isPhoneHovered ? 0 : 0.6,

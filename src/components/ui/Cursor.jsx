@@ -97,12 +97,12 @@ export default function Cursor() {
     // GSAP Interactive Elements Hover Bounce Sequence
     let hoveredEl = null
 
-    const showPill = (text, bg = '#ffffff', color = '#000000') => {
+    const showPill = (text, bg = '#111111', color = '#ffffff') => {
       if (pillTextRef.current) pillTextRef.current.textContent = text
       if (pillRef.current) {
         pillRef.current.style.background = bg
         pillRef.current.style.color = color
-        pillRef.current.style.borderColor = bg === '#ffffff' ? '#000000' : bg
+        pillRef.current.style.borderColor = bg === '#111111' ? 'rgba(255, 255, 255, 0.15)' : bg
       }
       gsap.set(pillRef.current, { display: 'flex' })
       gsap.fromTo(pillRef.current,
@@ -191,7 +191,7 @@ export default function Cursor() {
           hoveredEl = 'case'
           hideHand()
           hideSvg()
-          showPill('View Work →', '#ffffffff', '#000000ff')
+          showPill('View Work →', '#111111', '#ffffff')
         }
       } else if (isWorkList) {
         if (hoveredEl !== 'worklist') {
@@ -199,7 +199,7 @@ export default function Cursor() {
           hideHand()
           gsap.set(svgRef.current, { display: 'block' })
           showSvgHover() // Keep the cursor visible and enlarge it
-          showPill('view', '#ffffffff', '#000000ff') // Show the pill aligned as a tooltip
+          showPill('view', '#111111', '#ffffff') // Show the pill aligned as a tooltip
         }
       } else if (el) {
         if (hoveredEl !== el) {
@@ -322,8 +322,8 @@ export default function Cursor() {
           ref={pillRef}
           className={`cursor-pill ${styles.cursorPill}`}
           style={{
-            background: '#ffffff',
-            color: '#000000',
+            background: '#111111',
+            color: '#ffffff',
           }}
         >
           <span ref={pillTextRef} style={{ fontWeight: 700 }}>Make it short please!</span>

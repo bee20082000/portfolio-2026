@@ -1,7 +1,7 @@
 .blog-overlay {
   position: fixed;
   inset: 0;
-  background: var(--bg, #13131a);
+  background: var(--bg, #FFFFFF);
   z-index: 9999;
   /* overflow: hidden — content is scrolled via transform: translateY()
      driven by the global Lenis instance. No scrollTop, no native scroll. */
@@ -16,21 +16,25 @@
 }
 
 .blog-overlay::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .blog-overlay::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 99px;
   transition: background 0.2s;
 }
 
 .blog-overlay::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="light"] .blog-overlay {
+  background: var(--bg, #FFFFFF);
 }
 
 [data-theme="dark"] .blog-overlay {
-  background: var(--bg, #13131a);
+  background: #13131a;
 }
 
 /* Vertical Scrolling Body Container */
@@ -59,7 +63,7 @@
 
 :global(.blog-slide-num) {
   font-size: 5rem;
-  color: rgba(255, 255, 255, 0.02);
+  color: rgba(0, 0, 0, 0.04);
   position: absolute;
   top: -40px;
   left: -10px;

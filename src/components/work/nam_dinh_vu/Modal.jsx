@@ -41,7 +41,7 @@ export default function NamDinhVuModal() {
               gridColumn: `span ${span}`,
               borderRadius: '8px',
               overflow: 'hidden',
-              backgroundColor: '#1c1d22'
+              backgroundColor: 'var(--bg2, #F5F5F7)'
             }}
           >
             <img

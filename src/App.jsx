@@ -29,9 +29,9 @@ export default function App() {
   }, [activeCase])
 
 
-  // Lock dark mode & disable browser scroll restoration
+  // Lock light mode & disable browser scroll restoration
   useEffect(() => {
-    document.documentElement.dataset.theme = 'dark'
+    document.documentElement.dataset.theme = 'light'
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
     }

@@ -51,7 +51,7 @@ export default function AxonActiveModal() {
           fontWeight: '400',
           lineHeight: '0.9',
           letterSpacing: '0em',
-          color: '#ffffff',
+          color: 'var(--text, #111111)',
           textTransform: 'uppercase',
         }}>
           Thu Duc Office
@@ -207,7 +207,7 @@ export default function AxonActiveModal() {
           fontWeight: '400',
           lineHeight: '0.9',
           letterSpacing: '0em',
-          color: '#ffffff',
+          color: 'var(--text, #111111)',
           textTransform: 'uppercase',
         }}>
           Can Tho Office

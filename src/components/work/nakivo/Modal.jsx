@@ -29,7 +29,7 @@ export default function NakivoModal() {
               gridColumn: `span ${span}`,
               borderRadius: '8px',
               overflow: 'hidden',
-              backgroundColor: '#1c1d22'
+              backgroundColor: 'var(--bg2, #F5F5F7)'
             }}
           >
             <img
@@ -48,7 +48,7 @@ export default function NakivoModal() {
         gridColumn: 'span 12',
         borderRadius: '8px',
         overflow: 'hidden',
-        backgroundColor: '#1c1d22'
+        backgroundColor: 'var(--bg2, #F5F5F7)'
       }}>
         <video
           src="/asset/images/nakivo/Sequence-01.mp4"

@@ -15,7 +15,7 @@ const cell = (span, extra = {}) => ({
   borderRadius: '8px',
   overflow: 'hidden',
   height: '100%',
-  backgroundColor: '#1c1d22',
+  backgroundColor: 'var(--bg2, #F5F5F7)',
   ...extra,
 });
 
