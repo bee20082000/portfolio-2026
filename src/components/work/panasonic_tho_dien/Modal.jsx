@@ -1,4 +1,5 @@
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Dien Pho Xuyen Viet',
@@ -115,7 +116,7 @@ export default function PanasonicThoDienModal() {
         <img src={img('Social/Pana-AOC-post-7.webp')} alt="Pana - AOC post 7" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1200} />
       </div>
       <div style={cell(4)}>
-        <video src={img('Social/Pana-AOC-post-8.mp4')} autoPlay loop muted playsInline style={imgStyle} />
+        <ModalVideo src={img('Social/Pana-AOC-post-8.mp4')} />
       </div>
       <div style={cell(4)}>
         <img src={img('Social/Pana-Nam-moi.webp')} alt="Pana - Nam moi" loading="lazy" decoding="async" style={imgStyle} width={1200} height={1200} />

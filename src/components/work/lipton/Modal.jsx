@@ -1,4 +1,5 @@
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Lipton summer',
@@ -47,10 +48,10 @@ export default function LiptonModal() {
 
       {/* Social post videos side by side */}
       <div style={cellStyle(4)}>
-        <video src={img('summer/Lipton_post2_FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
+        <ModalVideo src={img('summer/Lipton_post2_FA.mp4')} />
       </div>
       <div style={cellStyle(4)}>
-        <video src={img('summer/Lipton-Post-4-video-FA.mp4')} autoPlay loop muted playsInline style={videoStyle} />
+        <ModalVideo src={img('summer/Lipton-Post-4-video-FA.mp4')} />
       </div>
 
     </WorkModalLayout>

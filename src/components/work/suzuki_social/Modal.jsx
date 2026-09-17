@@ -1,4 +1,5 @@
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Suzuki Social Project',
@@ -47,14 +48,7 @@ export default function SuzukiSocialModal() {
             }}
           >
             {src.endsWith('.mp4') ? (
-              <video
-                src={src}
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{ width: '100%', height: 'auto', display: 'block' }}
-              />
+              <ModalVideo src={src} />
             ) : (
               <img
                 src={src}

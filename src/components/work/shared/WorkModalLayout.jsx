@@ -191,7 +191,8 @@ export default function WorkModalLayout({ data, customPills, children }) {
 
         .work-modal-bento-item {
           overflow: hidden !important;
-          -webkit-mask-image: -webkit-radial-gradient(white, black);
+          isolation: isolate;
+          transform: translateZ(0);
         }
 
         /* ── Unified body text used inside the bento grid ── */

@@ -1,4 +1,5 @@
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Lipton Tet',
@@ -63,11 +64,7 @@ export default function LiptonTet2024Modal() {
       {/* Motion clips side by side */}
       <div style={{ gridColumn: 'span 6' }} />
       <div style={cellStyle(6)}>
-        <video
-          src={img('Lipton-AOC-vid-3.mp4')}
-          autoPlay loop muted playsInline
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
+        <ModalVideo src={img('Lipton-AOC-vid-3.mp4')} />
       </div>
 
     </WorkModalLayout >

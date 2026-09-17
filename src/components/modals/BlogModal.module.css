@@ -3,11 +3,12 @@
   inset: 0;
   background: var(--bg, #FFFFFF);
   z-index: 9999;
-  /* overflow: hidden — content is scrolled via transform: translateY()
-     driven by the global Lenis instance. No scrollTop, no native scroll. */
-  overflow: hidden;
+  /* Native container scrolling with compositor acceleration */
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   opacity: 0;
-  /* Enforced by GSAP */
 }
 
 /* Custom premium scrollbar for vertical blog modal overlay */

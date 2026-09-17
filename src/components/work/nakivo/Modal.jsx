@@ -1,4 +1,5 @@
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Nakivo Calendar',
@@ -50,18 +51,7 @@ export default function NakivoModal() {
         overflow: 'hidden',
         backgroundColor: 'var(--bg2, #F5F5F7)'
       }}>
-        <video
-          src="/asset/images/nakivo/Sequence-01.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block'
-          }}
-        />
+        <ModalVideo src="/asset/images/nakivo/Sequence-01.mp4" />
         <div style={{
           fontFamily: 'Install Rounded',
           position: 'absolute',

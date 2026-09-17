@@ -1,4 +1,5 @@
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Santen',
@@ -15,7 +16,7 @@ const data = {
   solution: 'Achieved high organic share rates and successfully educated audiences on daily digital eye strain relief.',
   metrics: [{ val: '+48%', lbl: 'Audience Reach' }, { val: '5M+', lbl: 'Campaign Views' }, { val: '+35%', lbl: 'Engagement Rate' }],
   images: [
-    '/asset/images/santen/ST_DramaTrend_Post1_220914.gif',
+    '/asset/images/santen/ST_DramaTrend_Post1_220914.mp4',
     '/asset/images/santen/ST_KARI-UNI_230221_FA.webp',
     '/asset/images/santen/ST_Sancoba_230203.FA.webp',
     '/asset/images/santen/ST_Sancoba_230210.webp',
@@ -49,18 +50,7 @@ export default function SantenModal() {
             }}
           >
             {isVideo ? (
-              <video
-                src={src}
-                autoPlay
-                loop
-                muted
-                playsInline
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block',
-                }}
-              />
+              <ModalVideo src={src} />
             ) : (
               <img
                 src={src}

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import WorkModalLayout from '../shared/WorkModalLayout';
+import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Gori Coffee',
@@ -42,7 +43,7 @@ export default function MoeModal() {
     const preconnect1 = document.createElement('link');
     preconnect1.rel = 'preconnect';
     preconnect1.href = 'https://fonts.googleapis.com';
-    
+
     const preconnect2 = document.createElement('link');
     preconnect2.rel = 'preconnect';
     preconnect2.href = 'https://fonts.gstatic.com';
@@ -75,7 +76,7 @@ export default function MoeModal() {
       </div>
       {/* Old identity + KV video side by side */}
       <div style={cell(6)}>
-        <video
+        <ModalVideo
           src={img('gori-kv-12fps.mp4')}
           autoPlay muted loop playsInline
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
@@ -122,12 +123,13 @@ export default function MoeModal() {
           textAlign: 'left',
           pointerEvents: 'none',
           lineHeight: '0.9',
+          marginLeft: '10px',
         }}>
           Before
         </div>
       </div>
       <div style={cell(6)}>
-        <video
+        <ModalVideo
           src={img('new-gori-pack.mp4')}
           autoPlay muted loop playsInline
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
@@ -143,6 +145,8 @@ export default function MoeModal() {
           textAlign: 'left',
           pointerEvents: 'none',
           lineHeight: '0.9',
+          marginLeft: '10px',
+
         }}>
           After
         </div>
@@ -200,7 +204,7 @@ export default function MoeModal() {
       </div>
       {/* GIF cover — full width with overlay text */}
       <div style={{ ...cell(8), position: 'relative' }}>
-        <video src={img('moe-cover.mp4')} autoPlay loop muted playsInline style={imgStyle} />
+        <ModalVideo src={img('moe-cover.mp4')} autoPlay loop muted playsInline style={imgStyle} />
         <div style={{
           position: 'absolute',
           fontFamily: 'Dela Gothic One',

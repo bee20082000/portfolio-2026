@@ -71,55 +71,19 @@ export default function App() {
     return () => window.removeEventListener('click', onClick)
   }, [])
 
-  const isScrollLocked = (isBioOpen || activeTab === 'home') && !activeCase
+  const isScrollLocked = isBioOpen || activeTab === 'home' || !!activeCase
   // ── Global smooth scroll (starts only after the page is revealed) ──
   const lenisRef = useSmoothScroll({ enabled: loaded, isLocked: isScrollLocked })
 
-  // ── Page-swap freeze: freeze background when modal is open ──
-  // Instead of stopping Lenis, we freeze the page visually and let
-  // Lenis continue driving window.scrollY for the modal content.
+  // Lock body scroll when modal is open, and refresh ScrollTrigger on close
   useEffect(() => {
-    const pageWrapper = document.querySelector('[data-page-wrapper]')
-
-    const handleModalOpen = (e) => {
-      const savedScroll = e.detail ?? 0
-      if (pageWrapper) {
-        // Freeze background visually at its current position
-        pageWrapper.style.position = 'fixed'
-        pageWrapper.style.top = `-${savedScroll}px`
-        pageWrapper.style.left = '0'
-        pageWrapper.style.right = '0'
-      }
-    }
-
-    const handleModalClose = (e) => {
-      const savedScroll = e.detail ?? 0
-      if (pageWrapper) {
-        // Unfreeze background
-        pageWrapper.style.position = ''
-        pageWrapper.style.top = ''
-        pageWrapper.style.left = ''
-        pageWrapper.style.right = ''
-      }
-      // Restore background scroll position instantly
-      if (window.lenis) {
-        window.lenis.resize()
-        window.lenis.scrollTo(savedScroll, { immediate: true })
-      } else {
-        window.scrollTo(0, savedScroll)
-      }
-      // Synchronously recalculate layout measurements for ScrollTriggers
-      // to prevent stale measurement jumps in the next frames
+    if (activeCase) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
       ScrollTrigger.refresh()
     }
-
-    window.addEventListener('modalScrollOpen', handleModalOpen)
-    window.addEventListener('modalScrollClose', handleModalClose)
-    return () => {
-      window.removeEventListener('modalScrollOpen', handleModalOpen)
-      window.removeEventListener('modalScrollClose', handleModalClose)
-    }
-  }, [])
+  }, [activeCase])
 
   // Bio scroll-lock events dispatched from HeroTile
   useEffect(() => {
