@@ -1,31 +1,31 @@
-import { useEffect } from 'react';
 import WorkModalLayout from '../shared/WorkModalLayout';
 import ModalVideo from '../shared/ModalVideo';
 
 const data = {
   title: 'Gori Coffee',
   category: 'Branding, Packaging',
-  timeline: '2026',
+  timeline: '2024',
   subtitle: 'Designing a warm, premium, and highly memorable visual identity and packaging system for Moe Cafe.',
   challenge: (
-    <p>
+    <>
       Gori Coffee was founded by Suzuki-san, a Japanese coffee enthusiast living in Vietnam who wanted to make Vietnamese specialty coffee easier for Japanese consumers to discover, enjoy, and bring home.
       <br />
       <br />
       The challenge wasn't the coffee, it was already great, it was the first impression, since the previous design felt dated and visually busy, making it difficult to stand out on crowded shelves or communicate the brand's unique personality at a glance.
-    </p>
+    </>
   ),
   strategy1: (
-    <p>
+    <>
       Instead of looking for something that didn't exist, I focused on finding something that was already present but hadn't yet received attention.
-    </p>
-  ), strategy2: 'Implemented customized typographic grids and subtle logo marks across retail packaging boxes, cups, and visual assets.',
+    </>
+  ),
+  strategy2: 'Implemented customized typographic grids and subtle logo marks across retail packaging boxes, cups, and visual assets.',
   solutionDesc: 'A premium package design balancing modern cozy layouts, tactile paper components, and clean modern styling.',
   solution: 'Successfully launched across all retail locations, significantly enhancing consumer unboxing experiences and brand affinity.',
   metrics: [],
   accent: '#c8b195',
   usePillMetadata: true,
-}
+};
 
 const img = (name) => `/asset/images/Moe-Cafe/${name}`;
 const imgStyle = { width: '100%', height: '100%', objectFit: 'cover', display: 'block' };
@@ -34,39 +34,12 @@ const cell = (span, extra = {}) => ({
   borderRadius: '8px',
   overflow: 'hidden',
   height: '100%',
+  position: 'relative',
+  alignSelf: 'stretch',
   ...extra,
 });
 
 export default function MoeModal() {
-  useEffect(() => {
-    // 1. Create preconnect links
-    const preconnect1 = document.createElement('link');
-    preconnect1.rel = 'preconnect';
-    preconnect1.href = 'https://fonts.googleapis.com';
-
-    const preconnect2 = document.createElement('link');
-    preconnect2.rel = 'preconnect';
-    preconnect2.href = 'https://fonts.gstatic.com';
-    preconnect2.crossOrigin = 'anonymous';
-
-    // 2. Create the Google Font link
-    const fontLink = document.createElement('link');
-    fontLink.rel = 'stylesheet';
-    fontLink.href = 'https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap';
-
-    // Append to head
-    document.head.appendChild(preconnect1);
-    document.head.appendChild(preconnect2);
-    document.head.appendChild(fontLink);
-
-    return () => {
-      // Clean up on unmount
-      if (document.head.contains(preconnect1)) document.head.removeChild(preconnect1);
-      if (document.head.contains(preconnect2)) document.head.removeChild(preconnect2);
-      if (document.head.contains(fontLink)) document.head.removeChild(fontLink);
-    };
-  }, []);
-
   return (
     <WorkModalLayout data={data}>
 
@@ -82,48 +55,48 @@ export default function MoeModal() {
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
       </div>
+
       {/* Row filler + description */}
       <div style={{
-        gridColumn: '1 / 6',
+        gridColumn: 'span 6',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         padding: '0 4px',
       }}>
-
         <p className="work-modal-body-text">
           For years, Gori Coffee's logo featured the gorilla, but the gorilla itself was just a placeholder within the packagings' design.
         </p>
       </div>
 
       <div style={{
-        gridColumn: '7 / -1',
+        gridColumn: 'span 6',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         padding: '0 4px',
       }}>
-
         <p className="work-modal-body-text">
           By elevating the gorilla within the branding, I helped transform a silent player into a central figure in the brand experience—a memorable mascot that would help distinguish the packaging, establish immediate recognition, and create lasting memories within the consumer's mind.
         </p>
       </div>
 
-      {/* Old identity + KV video side by side */}
+      {/* Old identity + KV video side by side with Before / After labels */}
       <div style={cell(6)}>
         <img src={img('gori-old-2.jpg')} alt="Gori Old Identity" loading="lazy" decoding="async" style={imgStyle} width={1600} height={1200} />
         <div style={{
-          fontFamily: "Install Rounded",
+          fontFamily: "'Install Rounded', sans-serif",
           position: 'absolute',
           bottom: '20px',
+          left: '20px',
           zIndex: 2,
           fontSize: 'clamp(30px, 7.5vw, 55px)',
           fontWeight: '300',
-          color: '#ffffffff',
+          color: '#ffffff',
           textAlign: 'left',
           pointerEvents: 'none',
           lineHeight: '0.9',
-          marginLeft: '10px',
+          textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
         }}>
           Before
         </div>
@@ -135,24 +108,24 @@ export default function MoeModal() {
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
         <div style={{
-          fontFamily: "Install Rounded",
+          fontFamily: "'Install Rounded', sans-serif",
           position: 'absolute',
           bottom: '20px',
+          left: '20px',
           zIndex: 2,
           fontSize: 'clamp(30px, 7.5vw, 55px)',
           fontWeight: '300',
-          color: '#ffffffff',
+          color: '#ffffff',
           textAlign: 'left',
           pointerEvents: 'none',
           lineHeight: '0.9',
-          marginLeft: '10px',
-
+          textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
         }}>
           After
         </div>
       </div>
-      {/* Row filler + description */}
-      <div style={{ gridColumn: 'span 6' }} />
+
+      {/* Description aligned to right */}
       <div style={{
         gridColumn: '7 / -1',
         display: 'flex',
@@ -167,82 +140,83 @@ export default function MoeModal() {
         </p>
       </div>
 
-      {/* Cover — full width */}
+      {/* Cover */}
       <div style={cell(6)}>
         <img src={img('moe-cover.webp')} alt="Moe Packaging Cover" loading="lazy" decoding="async" style={imgStyle} width={1792} height={2400} />
       </div>
 
-
-      {/* Photo 3 — full width */}
+      {/* Photo 3 */}
       <div style={cell(6)}>
         <img src={img('photo-3.jpg')} alt="Moe Packaging Photo 3" loading="lazy" decoding="async" style={imgStyle} width={2400} height={1792} />
       </div>
 
-      {/* Photo 2 + Photo 1 */}
+      {/* Photo 1 full width */}
       <div style={cell(12)}>
         <img src={img('photo-1.jpg')} alt="Moe Packaging Photo 1" loading="lazy" decoding="async" style={imgStyle} width={1200} height={896} />
       </div>
 
-
-      {/* 2nd project */}
+      {/* 2nd project section title */}
       <div style={{
         gridColumn: '1 / -1',
         display: 'block',
-        padding: '32px 4px 16px 4px',
+        padding: '48px 4px 16px 4px',
       }}>
-        <h1 className="work-modal-title" style={{
-          fontFamily: "'Maroni Condensed'",
-          fontSize: 'clamp(4rem, 6vw, 8rem)',
+        <h2 style={{
+          fontFamily: "'Maroni Condensed', sans-serif",
+          fontSize: 'clamp(3.5rem, 6vw, 7rem)',
           fontWeight: '400',
           lineHeight: '0.9',
           letterSpacing: '0em',
           color: 'var(--text, #111111)',
           textTransform: 'uppercase',
+          margin: 0,
         }}>
           MOE COFFEE AND GIFT SHOP
-        </h1>
+        </h2>
       </div>
+
       {/* GIF cover — full width with overlay text */}
       <div style={{ ...cell(8), position: 'relative' }}>
         <ModalVideo src={img('moe-cover.mp4')} autoPlay loop muted playsInline style={imgStyle} />
         <div style={{
           position: 'absolute',
-          fontFamily: 'Dela Gothic One',
+          fontFamily: "'Dela Gothic One', sans-serif",
           bottom: '20px',
           left: '40px',
           right: '40px',
           zIndex: 2,
           fontSize: 'clamp(20px, 3vw, 80px)',
-          fontWeight: '300',
+          fontWeight: '400',
           color: '#EFCF26',
           textAlign: 'justify',
           textAlignLast: 'justify',
           pointerEvents: 'none',
           lineHeight: '0.9',
+          textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)',
         }}>
           2 Phùng Khắc Khoan
         </div>
         <div style={{
-          fontFamily: 'Dela Gothic One',
+          fontFamily: "'Dela Gothic One', sans-serif",
           position: 'absolute',
           top: '20px',
           left: '40px',
           right: '40px',
           zIndex: 2,
           fontSize: 'clamp(20px, 3vw, 80px)',
-          fontWeight: '300',
+          fontWeight: '400',
           color: '#EFCF26',
           textAlign: 'justify',
           textAlignLast: 'justify',
           pointerEvents: 'none',
           lineHeight: '0.9',
+          textShadow: '0 2px 12px rgba(0, 0, 0, 0.4)',
         }}>
           MOEカフェ＆
           <br />
           ギフトショップ
         </div>
       </div>
-
 
       {/* Photo 4 + Photo 5 */}
       <div style={cell(4)}>
@@ -261,5 +235,5 @@ export default function MoeModal() {
       </div>
 
     </WorkModalLayout>
-  )
+  );
 }

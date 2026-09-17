@@ -36,7 +36,12 @@ const ModalVideo = memo(function ModalVideo({ src, style, className }) {
         muted
         playsInline
         preload="metadata"
-        style={{ width: '100%', height: 'auto', display: 'block' }}
+        style={{
+          width: '100%',
+          height: style?.height === '100%' ? '100%' : 'auto',
+          objectFit: style?.objectFit || 'cover',
+          display: 'block',
+        }}
       />
     </div>
   );

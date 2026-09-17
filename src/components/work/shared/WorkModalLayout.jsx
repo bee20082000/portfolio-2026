@@ -259,13 +259,21 @@ export default function WorkModalLayout({ data, customPills, children }) {
 
         {/* Challenge/Context */}
         <div className="work-modal-challenge">
-          <p style={bodyTextStyle}>{contextText}</p>
+          {typeof contextText === 'string' ? (
+            <p style={bodyTextStyle}>{contextText}</p>
+          ) : (
+            <div style={bodyTextStyle}>{contextText}</div>
+          )}
         </div>
 
 
         {/* Approach */}
         <div className="work-modal-approach" style={{ marginTop: '10px' }}>
-          <p style={bodyTextStyle}>{approachText}</p>
+          {typeof approachText === 'string' ? (
+            <p style={bodyTextStyle}>{approachText}</p>
+          ) : (
+            <div style={bodyTextStyle}>{approachText}</div>
+          )}
         </div>
       </div>
 
