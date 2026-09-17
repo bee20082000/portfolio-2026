@@ -406,6 +406,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
           {/* Sticky Top Bar Overlay */}
           <div className="hero-topbar">
+            <div className="hero-topbar-glass" aria-hidden="true" />
             <div className="hero-topbar-item hero-topbar-name">
               <div ref={namePlaceholderRef} className="hero-name-placeholder" style={{ visibility: 'hidden' }}>Hi, I am Huy</div>
               <a
