@@ -15,6 +15,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
   const h1Ref = useRef(null);
   const measureRef = useRef(null);
   const namePlaceholderRef = useRef(null);
+  const nameBackdropRef = useRef(null);
   const entranceAnimated = useRef(false);
   const scrollTriggerRef = useRef(null);
   const baselineHelperRef = useRef(null);
@@ -242,16 +243,28 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       gsap.set(textEl, { y: transY, scale: 1, autoAlpha: 1 });
 
       // 4. Create scrub timeline
+      const nameBackdropEl = nameBackdropRef.current;
+      const scrubTimeline = gsap.timeline();
+      scrubTimeline.fromTo(textEl,
+        { y: transY, scale: 1 },
+        { y: 0, scale: smallScale, ease: "none", force3D: true },
+        0
+      );
+      if (nameBackdropEl) {
+        scrubTimeline.fromTo(nameBackdropEl,
+          { opacity: 0 },
+          { opacity: 1, ease: "power1.in" },
+          0.6
+        );
+      }
+
       scrollTriggerRef.current = ScrollTrigger.create({
         trigger: tileEl,
         scroller: tileEl,
         start: "top top",
         end: `+=${transY}px`,
         scrub: true, // Bind directly to scroll position to prevent delay-induced lag
-        animation: gsap.fromTo(textEl,
-          { y: transY, scale: 1 },
-          { y: 0, scale: smallScale, ease: "none", force3D: true }
-        ),
+        animation: scrubTimeline,
         invalidateOnRefresh: true,
       });
 
@@ -417,8 +430,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
 
           {/* Sticky Top Bar Overlay */}
           <div className="hero-topbar">
-            <div className="hero-topbar-glass" aria-hidden="true" />
             <div className="hero-topbar-item hero-topbar-name">
+              <div ref={nameBackdropRef} className="hero-name-fill" aria-hidden="true" />
               <div ref={namePlaceholderRef} className="hero-name-placeholder" style={{ visibility: 'hidden' }}>Hi, I am Huy</div>
               <a
                 href="#top"

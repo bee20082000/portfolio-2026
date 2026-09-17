@@ -36,7 +36,7 @@
   letter-spacing: -0.02em !important;
 }
 
-/* ── Sticky Top Bar Overlay ── */
+/* ── Sticky Top Bar Overlay (No full-width bar; fills wrap text only) ── */
 .hero-topbar {
   position: sticky;
   top: 0;
@@ -52,34 +52,6 @@
   pointer-events: none;
 }
 
-/* ── White Glass Fill & Backdrop Blur (Full width, no border, no shadow, extends off-screen at top) ── */
-.hero-topbar-glass {
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%) translateZ(0);
-  width: 100vw;
-  height: calc(clamp(16px, 2.5vh, 32px) + 36px + clamp(28px, 4vh, 48px) + 60px);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(50px) saturate(190%);
-  -webkit-backdrop-filter: blur(50px) saturate(190%);
-  border: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-  pointer-events: none;
-  z-index: 1;
-}
-
-[data-theme="dark"] .hero-topbar-glass {
-  background: rgba(19, 19, 26, 0.75);
-  backdrop-filter: blur(50px) saturate(190%);
-  -webkit-backdrop-filter: blur(50px) saturate(190%);
-  border: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
 .hero-topbar-item {
   align-self: baseline;
   z-index: 10;
@@ -89,7 +61,28 @@
 .hero-topbar-name {
   grid-column: 1 / 4;
   position: relative;
+  width: fit-content;
   pointer-events: none;
+}
+
+.hero-name-fill {
+  position: absolute;
+  top: -8px;
+  left: -16px;
+  right: -16px;
+  bottom: -8px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 99px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+}
+
+[data-theme="dark"] .hero-name-fill {
+  background: rgba(19, 19, 26, 0.85);
 }
 
 .hero-topbar-about {
@@ -113,7 +106,9 @@
 
 .hero-topbar-link {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-family) !important;
   font-weight: 400 !important;
   font-size: 0.875rem;
@@ -121,11 +116,20 @@
   text-decoration: none;
   letter-spacing: -0.02em !important;
   cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 99px;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s ease;
   pointer-events: auto;
   outline: none !important;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+[data-theme="dark"] .hero-topbar-link {
+  background: rgba(19, 19, 26, 0.85);
 }
 
 .doodle-circle {
@@ -259,6 +263,7 @@
   pointer-events: auto;
   cursor: pointer;
   text-decoration: none;
+  z-index: 2;
   transition: opacity 0.3s ease;
   will-change: transform, opacity;
 }
