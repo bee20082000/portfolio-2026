@@ -66,6 +66,14 @@ export default function useSmoothScroll({
         wheelMultiplier:    1.1, // Slightly higher multiplier for responsive feed
         touchMultiplier:    1.5, // Responsive inertia match for mobile
         syncTouch:          true,  // Enable touch scroll on tablets
+        prevent: (node) => {
+          return (
+            node?.hasAttribute?.('data-lenis-prevent') ||
+            node?.closest?.('[data-lenis-prevent]') ||
+            node?.classList?.contains('blog-overlay') ||
+            node?.closest?.('[class*="blog-overlay"]')
+          );
+        },
       };
 
       if (!options.duration && !options.easing && !('lerp' in options)) {

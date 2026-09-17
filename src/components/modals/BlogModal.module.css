@@ -9,6 +9,7 @@
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   opacity: 0;
+  pointer-events: auto;
 }
 
 /* Custom premium scrollbar for vertical blog modal overlay */

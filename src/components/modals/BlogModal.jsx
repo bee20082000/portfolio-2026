@@ -43,6 +43,7 @@ export default function BlogModal({ activeCase, onClose }) {
   // GSAP Entry Animation
   useGSAP(() => {
     if (localCase && containerRef.current) {
+      containerRef.current.style.pointerEvents = 'auto'
       containerRef.current.scrollTop = 0
       const tl = gsap.timeline()
       // 1. Fade in the overlay background
@@ -122,22 +123,37 @@ export default function BlogModal({ activeCase, onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localCase])
 
+  // Ensure native wheel & touch scrolling is never captured or cancelled by window-level listeners
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const stopProp = (e) => {
+      e.stopPropagation()
+    }
+    el.addEventListener('wheel', stopProp, { passive: true })
+    el.addEventListener('touchmove', stopProp, { passive: true })
+    return () => {
+      el.removeEventListener('wheel', stopProp)
+      el.removeEventListener('touchmove', stopProp)
+    }
+  }, [localCase])
+
   if (!localCase) return null
 
   const ContentComponent = COMPONENTS[localCase]
 
   return (
-    <div ref={modalRef}>
+    <div ref={modalRef} data-lenis-prevent>
       <div className="blog-close" ref={closeRef}>
         <CloseButton onClick={handleClose} label="Close" />
       </div>
-      {/* Overlay clips content — overflow: hidden, Lenis drives scrollY externally */}
+      {/* Native scrolling modal container with Lenis prevention */}
       <div
         className={`${styles['blog-overlay']} ${activeCase ? styles.open : ''}`}
         ref={containerRef}
+        data-lenis-prevent
       >
-        {/* Content slides up via transform driven by global Lenis */}
-        <div className={styles['blog-body']} ref={scrollRef}>
+        <div className={styles['blog-body']} ref={scrollRef} data-lenis-prevent>
           {ContentComponent ? (
             <Suspense fallback={<div style={{ padding: '60px', color: 'var(--text3)', textAlign: 'center' }}>Loading…</div>}>
               <ContentComponent />
