@@ -10,6 +10,10 @@
 .tile-hero-scroll-container {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  border: none !important;
+  outline: none !important;
+  margin: 0 !important;
+  padding-top: 0 !important;
 }
 
 @keyframes bounce {
@@ -48,18 +52,18 @@
   pointer-events: none;
 }
 
-/* ── White Glass Fill & Backdrop Blur (Full width, no border, no shadow) ── */
+/* ── White Glass Fill & Backdrop Blur (Full width, no border, no shadow, extends off-screen at top) ── */
 .hero-topbar-glass {
   position: absolute;
-  top: 0;
+  top: -60px;
   left: 50%;
   right: auto;
   transform: translateX(-50%) translateZ(0);
   width: 100vw;
-  height: calc(clamp(16px, 2.5vh, 32px) + 36px + clamp(12px, 2vh, 18px));
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(48px) saturate(200%);
-  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  height: calc(clamp(16px, 2.5vh, 32px) + 36px + clamp(28px, 4vh, 48px) + 60px);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(50px) saturate(190%);
+  -webkit-backdrop-filter: blur(50px) saturate(190%);
   border: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
@@ -68,9 +72,9 @@
 }
 
 [data-theme="dark"] .hero-topbar-glass {
-  background: rgba(19, 19, 26, 0.5);
-  backdrop-filter: blur(48px) saturate(200%);
-  -webkit-backdrop-filter: blur(48px) saturate(200%);
+  background: rgba(19, 19, 26, 0.75);
+  backdrop-filter: blur(50px) saturate(190%);
+  -webkit-backdrop-filter: blur(50px) saturate(190%);
   border: none !important;
   border-bottom: none !important;
   box-shadow: none !important;

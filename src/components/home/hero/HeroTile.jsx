@@ -408,6 +408,8 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           color: "var(--text, #111111)",
           "--tile-radius": "0px",
           borderRadius: "0px",
+          border: "none",
+          outline: "none",
           overflowY: 'auto'
         }}
       >
