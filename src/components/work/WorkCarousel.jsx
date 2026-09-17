@@ -3,6 +3,7 @@ import {
   memo,
   useRef,
   useEffect,
+  useState,
 } from 'react';
 import { audioManager } from '../../utils/audio';
 import styles from './WorkCarousel.module.css';
@@ -13,6 +14,7 @@ export const WORKS = [
     id: 'moe',
     name: 'Gori Coffee',
     cover: '/asset/images/Moe-Cafe/cover.mp4',
+    poster: '/asset/images/Moe-Cafe/cover.poster.webp',
     category: 'Packaging, Branding',
     year: '2024',
     spanClass: 'span-7',
@@ -22,6 +24,7 @@ export const WORKS = [
     id: 'chivas',
     name: 'Chivas Tet Catalog',
     cover: '/asset/images/chivas/chivas-cover.mp4',
+    poster: '/asset/images/chivas/chivas-cover.poster.webp',
     category: 'Catalog, 3D Mockup',
     year: '2024',
     spanClass: 'span-5',
@@ -40,6 +43,7 @@ export const WORKS = [
     id: 'icoffee',
     name: 'GLCF & iCoffee',
     cover: '/asset/images/icoffee/cover.mp4',
+    poster: '/asset/images/icoffee/cover.poster.webp',
     category: 'Social Campaign, Branding',
     year: '2025',
     spanClass: 'span-6',
@@ -49,6 +53,7 @@ export const WORKS = [
     id: 'suzuki_social',
     name: 'Suzuki Social',
     cover: '/asset/images/suzuki/web/cover.mp4',
+    poster: '/asset/images/suzuki/web/cover.poster.webp',
     category: 'Social Campaign, Key Visual',
     year: '2024',
     spanClass: 'span-6',
@@ -58,6 +63,7 @@ export const WORKS = [
     id: 'panasonic_tho_dien',
     name: 'Panasonic ElectRI"CITY"',
     cover: '/asset/images/Panasonic/cover.mp4',
+    poster: '/asset/images/Panasonic/cover.poster.webp',
     category: 'Key Visual, Advertising',
     year: '2023',
     spanClass: 'span-8',
@@ -85,6 +91,7 @@ export const WORKS = [
     id: 'nakivo',
     name: 'Nakivo Calendar',
     cover: '/asset/images/nakivo/cover.mp4',
+    poster: '/asset/images/nakivo/cover.poster.webp',
     category: 'Calendar Design, Print',
     year: '2023',
     spanClass: 'span-7', // Made bigger as requested
@@ -103,6 +110,7 @@ export const WORKS = [
     id: 'lipton',
     name: 'Lipton Summer',
     cover: '/asset/images/Lipton/summer/Lipton_logo_in_tropical_scene_202605232158.mp4',
+    poster: '/asset/images/Lipton/summer/Lipton_logo_in_tropical_scene_202605232158.poster.webp',
     category: 'Key Visual, TVC Concept',
     year: '2025',
     spanClass: 'span-6',
@@ -128,48 +136,83 @@ export const WORKS = [
   },
 ];
 
-/* ─── PERFORMANT MEDIA COVER (NO ZOOM, LAZY PLAYBACK) ────────── */
+/* ─── PERFORMANT MEDIA COVER (NO ZOOM, LAZY MOUNT & PLAYBACK) ─── */
 const CardCoverMedia = memo(({ work }) => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const isVideo = work.cover.endsWith('.mp4');
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
+  // 1. Defer video src mounting until card is near viewport (250px margin)
   useEffect(() => {
-    if (!isVideo || !videoRef.current || !containerRef.current) return;
+    if (!isVideo || !containerRef.current) return;
+    const container = containerRef.current;
 
-    const videoEl = videoRef.current;
-    let isIntersecting = false;
-
-    const observer = new IntersectionObserver(
+    const loadObserver = new IntersectionObserver(
       ([entry]) => {
-        isIntersecting = entry.isIntersecting;
-        if (isIntersecting) {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          loadObserver.disconnect();
+        }
+      },
+      { rootMargin: '250px 0px' }
+    );
+
+    loadObserver.observe(container);
+    return () => loadObserver.disconnect();
+  }, [isVideo]);
+
+  // 2. Play video when visible, pause when scrolled away
+  useEffect(() => {
+    if (!isVideo || !shouldLoadVideo || !videoRef.current || !containerRef.current) return;
+    const videoEl = videoRef.current;
+
+    const playObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
           videoEl.play().catch(() => {});
         } else {
           videoEl.pause();
         }
       },
-      { threshold: 0.05, rootMargin: '100px 0px' }
+      { threshold: 0.1, rootMargin: '50px 0px' }
     );
 
-    observer.observe(containerRef.current);
+    playObserver.observe(containerRef.current);
     return () => {
-      observer.disconnect();
+      playObserver.disconnect();
       videoEl.pause();
     };
-  }, [isVideo]);
+  }, [isVideo, shouldLoadVideo]);
 
   return isVideo ? (
-    <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
-      <video
-        ref={videoRef}
-        src={work.cover}
-        loop
-        muted
-        playsInline
-        preload="metadata"
+    <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
+      {/* Poster thumbnail loads immediately so card is never empty */}
+      <img
+        src={work.poster}
+        alt={work.name}
+        loading="lazy"
+        decoding="async"
         className={styles['cover-media']}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+        }}
       />
+      {shouldLoadVideo && (
+        <video
+          ref={videoRef}
+          src={work.cover}
+          poster={work.poster}
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          className={styles['cover-media']}
+          style={{ position: 'relative', zIndex: 2 }}
+        />
+      )}
     </div>
   ) : (
     <img
@@ -190,7 +233,7 @@ CardCoverMedia.displayName = 'CardCoverMedia';
 const WorkGridCard = memo(({ work, onClick }) => {
   return (
     <div
-      className={`work-card ${styles['card-item']} ${styles[work.spanClass]} ${styles[work.aspectClass]}`}
+      className={`tile-case work-card ${styles['card-item']} ${styles[work.spanClass]} ${styles[work.aspectClass]}`}
       onClick={() => onClick(work.id)}
       role="button"
       tabIndex={0}

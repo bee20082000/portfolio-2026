@@ -222,15 +222,7 @@ export default function Cursor() {
 
     const handleMouseOver = (e) => updateHoverState(e.target)
 
-    const onScroll = () => {
-      if (hasMoved) {
-        const target = document.elementFromPoint(mx, my)
-        updateHoverState(target)
-      }
-    }
-
     window.addEventListener('mouseover', handleMouseOver, { passive: true })
-    window.addEventListener('scroll', onScroll, { passive: true })
 
     // Cursor press-bounce on mousedown / mouseup
     const onDown = () => {
@@ -257,7 +249,6 @@ export default function Cursor() {
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', handleMouseOver)
-      window.removeEventListener('scroll', onScroll)
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('mouseup', onUp)
       document.removeEventListener('mouseleave', onMouseLeave)

@@ -72,8 +72,8 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   cursor: pointer;
   outline: none;
-  content-visibility: auto;
-  contain-intrinsic-size: 350px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.2s ease;
 }

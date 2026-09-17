@@ -399,8 +399,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
           color: "var(--text, #111111)",
           "--tile-radius": "0px",
           borderRadius: "0px",
-          overflowY: 'auto',
-          willChange: 'transform'
+          overflowY: 'auto'
         }}
       >
         <div ref={scrollRef} style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
