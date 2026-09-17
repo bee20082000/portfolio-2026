@@ -122,7 +122,7 @@ export default function App() {
       >
         <div className={isBioOpen ? 'bio-active' : ''}>
           <div className={styles['page-content']}>
-            <HomeGrid onSelect={setActiveCase} loaded={loaded} introReady={screenUnmounted} activeTab={activeTab} />
+            <HomeGrid onSelect={setActiveCase} loaded={loaded} introReady={screenUnmounted} activeTab={activeTab} activeCase={activeCase} />
           </div>
         </div>
       </div>

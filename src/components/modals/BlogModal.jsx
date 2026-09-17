@@ -2,7 +2,6 @@ import { useEffect, useState, useRef, Suspense, lazy } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import CloseButton from '../ui/CloseButton'
-import useSmoothScroll from '../../hooks/useSmoothScroll'
 import styles from './BlogModal.module.css'
 
 // Lazy-load each case's modal from its own folder
@@ -41,14 +40,6 @@ export default function BlogModal({ activeCase, onClose }) {
     }
   }, [activeCase])
 
-  // Dedicated container-level Lenis instance for silky smooth modal scrolling
-  // without mutating transform: translateY on the DOM every frame.
-  const modalLenisRef = useSmoothScroll({
-    wrapperRef: containerRef,
-    contentRef: scrollRef,
-    enabled: !!localCase,
-  })
-
   // GSAP Entry Animation
   useGSAP(() => {
     if (localCase && containerRef.current) {
@@ -83,11 +74,6 @@ export default function BlogModal({ activeCase, onClose }) {
 
     // Disable pointer-events immediately
     containerRef.current.style.pointerEvents = 'none'
-
-    // Stop modal scroll during exit transition
-    if (modalLenisRef.current) {
-      modalLenisRef.current.stop()
-    }
 
     const tl = gsap.timeline({
       onComplete: () => {

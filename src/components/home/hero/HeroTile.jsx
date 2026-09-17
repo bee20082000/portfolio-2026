@@ -9,7 +9,7 @@ import { audioManager } from "../../../utils/audio";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, loaded, introReady }) {
+const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, loaded, introReady, activeCase }) {
   const tileRef = useRef(null);
   const scrollRef = useRef(null);
   const h1Ref = useRef(null);
@@ -363,6 +363,7 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
   const localLenisRef = useSmoothScroll({
     wrapperRef: tileRef,
     contentRef: scrollRef,
+    isLocked: !!activeCase,
     options: {
       syncTouch: true,
       touchMultiplier: 1.5,
@@ -371,6 +372,14 @@ const HeroTile = memo(function HeroTile({ activeTab, onSelect, bentoClassName, l
       ScrollTrigger.update();
     }
   });
+
+  // Re-sync HeroTile Lenis scroll and refresh ScrollTrigger when modal closes
+  useEffect(() => {
+    if (!activeCase && localLenisRef.current) {
+      localLenisRef.current.resize();
+      ScrollTrigger.refresh();
+    }
+  }, [activeCase]);
 
   return (
     <>

@@ -9,7 +9,7 @@ import styles from './HomeGrid.module.css'
 import HomeBento from './HomeBento'
 import AboutBento from '../about/AboutBento'
 
-const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTab }) {
+const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTab, activeCase }) {
   const bentoRef = useRef(null)       // Home bento grid
   const bentoAboutRef = useRef(null)  // About bento grid
   const bentoParentRef = useRef(null) // Wrapping container
@@ -59,24 +59,20 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
     gsap.delayedCall(0.6, () => {
       homeTiles.forEach(el => {
         const fills = el.querySelectorAll('.tool-bar-fill')
-        fills.forEach(fill => fill.style.width = fill.dataset.w + '%')
+        fills.forEach(fill => {
+          const targetWidth = fill.getAttribute('data-fill-width')
+          if (targetWidth) fill.style.width = targetWidth
+        })
       })
     })
   }, { dependencies: [loaded], scope: bentoParentRef })
 
-  // 2. Tab Transition Logic (Home <-> About)
+  // 2. Optimized Tab Transition Logic
   useGSAP(() => {
-    if (isInitialMount.current) {
+    if (!loaded || isInitialMount.current) {
       isInitialMount.current = false
       return
     }
-    if (!loaded) return
-
-    const bentoHome = bentoRef.current
-    const bentoAbout = bentoAboutRef.current
-    if (!bentoHome || !bentoAbout) return
-
-    const prevTab = prevTabRef.current
     if (prevTab === activeTab) return
     prevTabRef.current = activeTab
 
@@ -140,6 +136,7 @@ const HomeGrid = memo(function HomeGrid({ onSelect, loaded, introReady, activeTa
           padding: 0,
         }}
         activeTab={activeTab}
+        activeCase={activeCase}
         onSelect={onSelect}
         loaded={loaded}
         introReady={introReady}

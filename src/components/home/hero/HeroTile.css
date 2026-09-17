@@ -61,7 +61,7 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border, rgba(0, 0, 0, 0.06));
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-  pointer-events: auto;
+  pointer-events: none;
   z-index: 1;
   transform: translateZ(0);
 }
@@ -227,8 +227,13 @@
   pointer-events: none;
 }
 
+.hero-name-text,
+.hero-name-placeholder,
+.hero-name-measure {
+  font-family: 'Pardon 4x4', sans-serif !important;
+}
+
 .hero-name-text {
-  font-family: 'Pardon 4x4';
   text-transform: uppercase;
   font-weight: 400;
   font-size: 16vw;
@@ -255,7 +260,7 @@
 
 .hero-char {
   display: inline-block;
-  font-family: inherit;
+  font-family: 'Pardon 4x4', sans-serif !important;
   letter-spacing: 0em;
   will-change: transform, opacity;
   pointer-events: none;
