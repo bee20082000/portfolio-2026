@@ -72,7 +72,7 @@ export const WORKS = [
   {
     id: 'lipton_tet_2024',
     name: 'Lipton Tet',
-    cover: '/asset/images/Lipton/tet/Mockup.jpg',
+    cover: '/asset/images/Lipton/tet/Mockup.webp',
     category: 'Packaging, Key Visual',
     year: '2024',
     spanClass: 'span-4',

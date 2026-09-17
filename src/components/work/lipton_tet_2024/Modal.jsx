@@ -53,11 +53,11 @@ export default function LiptonTet2024Modal() {
 
       <div style={cellStyle(12)}>
         <img
-          src={img('Mockup.jpg')}
+          src={img('Mockup.webp')}
           alt="Lipton Tet Cover"
           loading="lazy" decoding="async"
           style={{ width: '100%', height: '100%', minHeight: '400px', objectFit: 'cover', display: 'block' }}
-        width={2752} height={1536} />
+        width={1200} height={670} />
       </div>
 
       {/* Motion clips side by side */}

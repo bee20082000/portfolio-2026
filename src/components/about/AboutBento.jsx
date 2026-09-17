@@ -328,7 +328,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[0] = el; }}
         >
           <img
-            src="/asset/images/Bio/intro-card.jpg"
+            src="/asset/images/Bio/intro-card.webp"
             alt=""
             className="about-video-bg"
           />
@@ -362,7 +362,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[1] = el; }}
         >
           <img
-            src="/asset/images/Bio/exp-card.jpg"
+            src="/asset/images/Bio/exp-card.webp"
             alt=""
             className="about-video-bg"
           />
@@ -375,7 +375,7 @@ const AboutBento = memo(forwardRef(({ className, style, id, activeTab }, ref) =>
           ref={(el) => { cardRefs.current[2] = el; }}
         >
           <img
-            src="/asset/images/Bio/final-card.jpg"
+            src="/asset/images/Bio/final-card.webp"
             alt=""
             className="about-video-bg"
           />
