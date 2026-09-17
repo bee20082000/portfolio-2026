@@ -5,7 +5,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { audioManager } from '../../utils/audio';
 import styles from './WorkCarousel.module.css';
 
 /* ─── ALL 13 PROJECTS (NAKIVO ENLARGED TO SPAN-7 WIDE) ────────── */
@@ -265,11 +264,6 @@ const WorkCarousel = forwardRef(({ onSelect, className, style, id }, ref) => {
   const containerRef = useRef(null);
 
   const handleCardClick = (workId) => {
-    try {
-      audioManager
-        .play('/asset/audio/denielcz-immersivecontrol-button-click-sound-463065.mp3', 0.4)
-        .catch(() => {});
-    } catch (err) {}
     onSelect(workId);
   };
 
