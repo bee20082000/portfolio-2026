@@ -171,17 +171,7 @@ Special appreciation to the following independent type foundries and designers w
 
 ---
 
-## ✦ Contact & Connect
-
-- **Designer:** Huy Nguyen (Nguyen Quoc Huy)
-- **Location:** Ho Chi Minh City, Vietnam (GMT+7)
-- **Email:** [huy.nguyen20800@gmail.com](mailto:huy.nguyen20800@gmail.com)
-- **Phone:** `+84 79 373 6688`
-- **LinkedIn:** [linkedin.com/in/huy-nguyen-20820](https://www.linkedin.com/in/huy-nguyen-20820/)
-- **Portfolio:** [portfolio-2026-self-sigma.vercel.app](https://portfolio-2026-self-sigma.vercel.app/)
-
----
-
 <p align="center">
   <sub>© 2026 Huy Nguyen. Built with care & Google Antigravity.</sub>
 </p>
+
